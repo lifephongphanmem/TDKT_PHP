@@ -78,11 +78,22 @@ License: You must have a valid license purchased only from themeforest(the above
 									<p class="text-muted font-weight-bold">Nhập thông tin tài khoản</p>
 								</div>
 								{!! Form::open(['url'=>'/DangNhap','id' => 'form-kt_login_signin_form', 'class'=>'form text-left']) !!}
-									<div class="form-group py-2 m-0">
-										<input class="form-control h-auto border-1 px-5 placeholder-dark-75" title="Tên tài khoản" type="text" placeholder="Tên tài khoản truy cập" id="tendangnhap" name="tendangnhap" value="{{$input['tentaikhoan'] ?? ''}}" autocomplete="off" />
+									<div class="input-group form-group py-2 m-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<i class="fa fa-user"></i>
+											</span>
+										</div>
+										<input class="form-control border-1 px-5 placeholder-dark-75" title="Tên tài khoản" type="text" placeholder="Tên tài khoản truy cập" id="tendangnhap" name="tendangnhap" value="{{$input['tentaikhoan'] ?? ''}}" required autocomplete="off" />
 									</div>
-									<div class="form-group py-2 border-top m-0">
-										<input class="form-control h-auto border-1 px-5 placeholder-dark-75" title="Mật khẩu đăng nhập" type="Password" placeholder="Mật khẩu" id="matkhau" name="matkhau" />
+
+									<div class="input-group form-group py-2 m-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<i class="fa fa-lock"></i>
+											</span>
+										</div>
+										<input class="form-control border-1 px-5 placeholder-dark-75" title="Mật khẩu đăng nhập" type="Password" placeholder="Mật khẩu" id="matkhau" name="matkhau" required />
 									</div>
 									<div class="form-group d-flex flex-wrap justify-content-between align-items-center mt-5">
 										<div class="checkbox-inline">
@@ -93,7 +104,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										<a href="javascript:;" class="text-muted text-hover-primary font-weight-bold">Quên mật khẩu ?</a>
 									</div>
 									<div class="text-center mt-15">
-										<button type="submit" class="btn btn-primary btn-pill shadow-sm py-4 px-9 font-weight-bold" onclick="validatePassword()">ĐĂNG NHẬP</button>
+										<button type="submit" class="btn btn-primary btn-pill shadow-sm py-4 px-9 font-weight-bold" >ĐĂNG NHẬP</button>
 									</div>
 								{!! Form::close() !!}
 							</div>
@@ -159,9 +170,9 @@ License: You must have a valid license purchased only from themeforest(the above
 			<!--end::Login-->
 		</div>
 		<!--end::Main-->
-		<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
-		<script>
+		{{-- <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> --}}
+		{{-- <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script> --}}
+		{{-- <script>
 			jQuery(document).ready(function() {
 				$("#matkhau").keydown(function(event){
 					if(event.keyCode == 13){
@@ -169,21 +180,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					}
 				});
 		
-    		});
-			
-			function validatePassword(){		
-				var validator = $("#kt_login_signin_form").validate({
-					rules: {
-						tendangnhap :"required",
-						matkhau :"required"
-		
-					},
-					messages: {
-						tendangnhap :" Nhập tên tài khoản truy cập",
-						matkhau :" Nhập mật khẩu truy cập"
-					}
-				});
-			}
+    		}); --}}
 		</script>
 		<script>var HOST_URL = "https://phanmemcuocsong.com/";</script>
 		<!--begin::Global Config(global config for global JS scripts)-->

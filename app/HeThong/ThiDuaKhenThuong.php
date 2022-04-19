@@ -1,15 +1,25 @@
 <?php
 
 function getHeThongChung() {
-    return  \App\HeThongChung::all()->first() ?? new \App\HeThongChung();
+    return  \App\Model\HeThong\hethongchung::all()->first() ?? new \App\Model\HeThong\hethongchung();
 }
 
 function getPhanLoaiDonVi_DiaBan(){
     return array(
-        'ADMIN'=>'Đơn vị tổng hợp toàn Tỉnh',
+        //'ADMIN'=>'Đơn vị tổng hợp toàn Tỉnh',
         'T'=>'Đơn vị hành chính cấp Tỉnh',
         'H'=>'Đơn vị hành chính cấp Thành phố, Huyện',
         'X'=>'Đơn vị hành chính cấp Xã, Phường, Thị trấn',
+    );
+}
+
+function getPhamViApDung(){
+    return array(
+        //'ADMIN'=>'Đơn vị tổng hợp toàn Tỉnh',
+        'TW'=>'Cấp Trung ương',
+        'T'=>'Cấp Tỉnh',
+        'H'=>'Cấp Thành phố, Thị xã, Huyện',
+        'X'=>'Cấp Xã, Phường, Thị trấn',
     );
 }
 
@@ -26,6 +36,18 @@ function getPhanLoaiTDKT(){
         'CANHAN'=>'Danh hiệu thi đua đối với cá nhân',
         'TAPTHE'=>'Danh hiệu thi đua đối với tập thể',
         'HOGIADINH'=>'Danh hiệu thi đua đối với hộ gia đình',
+    );
+}
+
+function getPhanLoaiHinhThucKT(){
+    return array(
+        'HUANCHUONG'=>'Huân chương',
+        'HUYCHUONG'=>'Huy chương',
+        'DANHHIEUNN' =>'Danh hiệu vinh dự Nhà nước',
+        'GIAITHUONG' =>'Giải thưởng Hồ Chí Minh, Giải thưởng Nhà nước',
+        'KYNIEMCHUONG' =>'Kỷ niệm chương, Huy hiệu',
+        'BANGKHEN' =>'Bằng khen',
+        'GIAYKHEN' =>'Giấy khen',
     );
 }
 
@@ -54,7 +76,7 @@ function getGioiTinh(){
 }
 
 function getDiaBan_All($all = false){
-    $a_diaban = array_column(\App\DSDiaBan::all()->toarray(), 'tendiaban', 'madiaban');
+    $a_diaban = array_column(\App\Model\DanhMuc\dsdiaban::all()->toarray(), 'tendiaban', 'madiaban');
     if ($all) {
         $a_kq = ['null' => '-- Chọn địa bàn --'];
         foreach ($a_diaban as $k => $v) {

@@ -2358,14 +2358,14 @@ pre code {
 .table td {
   padding: 0.75rem;
   vertical-align: top;
-  border-top: 1px solid #EBEDF3;
+  border-top: 1px solid #333;
 }
 .table thead th {
   vertical-align: bottom;
-  border-bottom: 2px solid #EBEDF3;
+  border-bottom: 2px solid #333;
 }
 .table tbody + tbody {
-  border-top: 2px solid #EBEDF3;
+  border-top: 2px solid #333;
 }
 
 .table-sm th,
@@ -2374,11 +2374,11 @@ pre code {
 }
 
 .table-bordered {
-  border: 1px solid #EBEDF3;
+  border: 1px solid #333;
 }
 .table-bordered th,
 .table-bordered td {
-  border: 1px solid #EBEDF3;
+  border: 1px solid #333;
 }
 .table-bordered thead th,
 .table-bordered thead td {
@@ -2697,7 +2697,7 @@ pre code {
   height: calc(1.5em + 1.3rem + 2px);
   padding: 0.65rem 1rem;
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 450;
   line-height: 1.5;
   color: #3F4254;
   background-color: #ffffff;
@@ -64367,7 +64367,7 @@ code {
 }
 .form-group label {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
   color: #3F4254;
 }
 .form-group .invalid-feedback,
@@ -85065,4 +85065,35 @@ body {
     transition: all 0.3s ease;
     left: 100px;
   }
+}
+
+/***
+Customized Bootstrap Pagination
+***/
+.pagination {
+  margin: 10px 0;
+}
+.pagination.pagination-circle > li:first-child > a {
+  border-radius: 25px 0 0 25px !important;
+}
+.pagination.pagination-circle > li:last-child > a {
+  border-radius: 0 25px 25px 0 !important;
+}
+.pagination .active > a,
+.pagination .active > a:hover {
+  background: #eee;
+  border-color: #dddddd;
+  color: #333;
+}
+
+.pagination>li>a, .pagination>li>span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #337ab7;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
 }

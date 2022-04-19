@@ -6,5 +6,6 @@ Route::get('thongtinhotro',function(){
     return view('thongtinhotro')
         ->with('pageTitle','Thông tin hỗ trợ');
 });
-//System
-include('HeThong.php');
+//Hệ thống
+include('hethong.php');
+include('danhmuc.php');

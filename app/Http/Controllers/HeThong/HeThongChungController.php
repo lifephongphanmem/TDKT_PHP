@@ -4,13 +4,16 @@ namespace App\Http\Controllers\HeThong;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Model\DanhMuc\dsdiaban;
+use App\Model\DanhMuc\dsdonvi;
+use App\Model\DanhMuc\dstaikhoan;
 use Illuminate\Support\Facades\Session;
 
-class HeThongChungController extends Controller
+class hethongchungController extends Controller
 {
     public function index(){
         if (Session::has('admin')) {
-            return view('HeThong.TrangChu')
+            return view('HeThong.main')
                 ->with('model',getHeThongChung())
                 ->with('pageTitle', 'Thông tin hỗ trợ');
         } else {            
@@ -21,7 +24,7 @@ class HeThongChungController extends Controller
     public function DangNhap(Request $request)
     {
         $inputs = $request->all();
-        return view('HeThong.DangNhap')
+        return view('HeThong.dangnhap')
             ->with('inputs',$inputs)
             ->with('pageTitle', 'Đăng nhập hệ thống');
     }
@@ -29,8 +32,8 @@ class HeThongChungController extends Controller
     public function XacNhanDangNhap(Request $request)
     {
         $input = $request->all();
-        dd($input);
-        $ttuser = DSTaiKhoan::where('username', $input['username'])->first();
+        // dd($input);
+        $ttuser = dstaikhoan::where('tendangnhap', $input['tendangnhap'])->first();
         //Tài khoản không tồn tại
         if ($ttuser == null) {
             return view('errors.403')
@@ -44,7 +47,7 @@ class HeThongChungController extends Controller
         $a_HeThongChung = getHeThongChung();
         $solandn = chkDbl($a_HeThongChung->solandn);
         //Sai mật khẩu
-        if (md5($input['password']) != $ttuser->password) {
+        if (md5($input['matkhau']) != $ttuser->matkhau) {
             $ttuser->solandn = $ttuser->solandn + 1;
             if ($ttuser->solandn >= $solandn) {
                 $ttuser->status = 'Vô hiệu';
@@ -66,7 +69,7 @@ class HeThongChungController extends Controller
             //dd($ttuser);
             //2. level != SSA -> lấy thông tin đơn vị, hệ thống để thiết lập lại
 
-            $m_donvi = DSTaiKhoan::where('madonvi', $ttuser->madonvi)->first();
+            $m_donvi = dsdonvi::where('madonvi', $ttuser->madonvi)->first();
 
             //dd($ttuser);
             $ttuser->madiaban = $m_donvi->madiaban;
@@ -81,21 +84,30 @@ class HeThongChungController extends Controller
             $ttuser->chucvukythay = $m_donvi->chucvukythay;
             $ttuser->nguoiky = $m_donvi->nguoiky;
             $ttuser->diadanh = $m_donvi->diadanh;
-            $ttuser->chucnang = explode(';', $m_donvi->chucnang);
-
+            //Gán chức năng
+            $ttuser->chucnang = [];
+            if($ttuser->nhaplieu)
+                $ttuser->chucnang[] = 'nhaplieu';
+            if($ttuser->tonghop)
+                $ttuser->chucnang[] = 'tonghop';
+            if($ttuser->hethong)
+                $ttuser->chucnang[] = 'hethong';
+            if($ttuser->chucnangkhac)
+                $ttuser->chucnang[] = 'chucnangkhac';
             //Lấy thông tin địa bàn
-            $m_diaban = DSDiaBan::where('madiaban', $ttuser->madiaban)->first();
+            $m_diaban = dsdiaban::where('madiaban', $ttuser->madiaban)->first();
 
             $ttuser->tendiaban = $m_diaban->tendiaban;
-            $ttuser->level = $m_diaban->level;
+            $ttuser->capdo = $m_diaban->capdo;
+            $ttuser->phanquyen = json_decode($ttuser->phanquyen, true);
         } else {
             $ttuser->chucnang = array('SSA');
-            $ttuser->level = "SSA";
+            $ttuser->capdo = "SSA";
+            $ttuser->phanquyen = [];
         }
 
         //Lấy setting gán luôn vào phiên đăng nhập
-        $ttuser->setting = json_decode($a_HeThongChung->setting, true);
-        $ttuser->permission = json_decode($a_HeThongChung->permission, true);
+        $ttuser->thietlap = json_decode($a_HeThongChung->thietlap, true);
         $ttuser->ipf1 = $a_HeThongChung->ipf1;
         $ttuser->ipf2 = $a_HeThongChung->ipf2;
         $ttuser->ipf3 = $a_HeThongChung->ipf3;
