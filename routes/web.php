@@ -9,3 +9,4 @@ Route::get('thongtinhotro',function(){
 //Hệ thống
 include('hethong.php');
 include('danhmuc.php');
+include('thiduakhenthuongcaccap.php');
