@@ -13,3 +13,9 @@ Route::group(['prefix'=>'PhongTraoThiDua'], function(){
 
     //Route::get('Sua','system\DSTaiKhoanController@edit');
 });
+
+Route::group(['prefix'=>'HoSoThiDua'], function(){
+    Route::get('ThongTin','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThongTin');
+    Route::get('Them','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThayDoi');
+    Route::post('Them','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuHoSo');
+});

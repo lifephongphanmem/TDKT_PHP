@@ -13,8 +13,29 @@ class CreateDshosothiduaKhenthuongTable extends Migration
      */
     public function up()
     {
-        Schema::create('dshosothidua_khenthuong', function (Blueprint $table) {
+        Schema::create('dshosothiduakhenthuong_khenthuong', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('stt')->default(1);
+            $table->string('mahosotdkt')->nullable();
+            $table->string('madanhhieutd')->nullable();
+            $table->string('phanloai')->nullable();//cá nhân, tập thể           
+            //Thông tin cá nhân 
+            $table->string('madoituong')->nullable();
+            $table->string('maccvc')->nullable();
+            $table->string('tendoituong')->nullable();
+            $table->date('ngaysinh')->nullable();
+            $table->string('gioitinh')->nullable();
+            $table->string('chucvu')->nullable();
+            $table->boolean('lanhdao')->nullable();
+            //Thông tin tập thể
+            $table->string('matapthe')->nullable();
+            $table->string('tentapthe')->nullable();
+            $table->string('ghichu')->nullable();//
+            //Kết quả đánh giá
+            $table->boolean('ketqua')->default(0);//
+            $table->string('mahinhthuckt')->nullable();
+            $table->string('lydo')->nullable();
+            $table->string('madonvi')->nullable();//phục vụ lấy dữ liệu
             $table->timestamps();
         });
     }
@@ -26,6 +47,6 @@ class CreateDshosothiduaKhenthuongTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dshosothidua_khenthuong');
+        Schema::dropIfExists('dshosothiduakhenthuong_khenthuong');
     }
 }

@@ -124,5 +124,5 @@ function chkPhanQuyen()
 
 function getDonVi($capdo, $chucnang = null, $tenquyen = null)
 {
-    return App\Model\DanhMuc\dsdonvi::all();
+    return App\Model\View\viewdiabandonvi::all();
 }

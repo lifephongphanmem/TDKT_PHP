@@ -13,8 +13,16 @@ class CreateDshosothiduaTieuchuanTable extends Migration
      */
     public function up()
     {
-        Schema::create('dshosothidua_tieuchuan', function (Blueprint $table) {
+        Schema::create('dshosothiduakhenthuong_tieuchuan', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('stt')->default(1);
+            $table->string('mahosotdkt')->nullable();// ký hiệu
+            $table->string('madoituong')->nullable();
+            $table->string('matapthe')->nullable();
+            $table->string('madanhhieutd')->nullable();
+            $table->string('matieuchuandhtd')->nullable();
+            $table->boolean('dieukien')->default(0);
+            $table->string('mota')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +34,6 @@ class CreateDshosothiduaTieuchuanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dshosothidua_tieuchuan');
+        Schema::dropIfExists('dshosothiduakhenthuong_tieuchuan');
     }
 }

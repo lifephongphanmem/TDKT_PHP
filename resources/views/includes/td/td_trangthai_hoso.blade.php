@@ -12,9 +12,8 @@
         <td align="center"><span class="badge badge-warning">Công bố</span>
                 <br>Thời gian chuyển:<br><b>{{getDayVn($tt->ngaychuyen)}}</b>
         </td>
-@elseif($tt->trangthai == 'DONGTHOI')
-        <td align="center"><span class="badge badge-warning">Gửi đồng thời</span>
-                <br>Thời gian chuyển:<br><b>{{getDayVn($tt->ngaychuyen)}}</b>
+@elseif($tt->trangthai == 'CXD')
+        <td align="center"><span class="badge badge-warning">Chưa có</span>
         </td>
 @else
         <td align="center">
