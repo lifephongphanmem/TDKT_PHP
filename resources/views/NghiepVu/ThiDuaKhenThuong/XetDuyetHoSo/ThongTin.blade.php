@@ -16,11 +16,11 @@
         jQuery(document).ready(function() {
             TableManaged3.init();
             $('#madonvi').change(function() {
-                window.location.href = '/HoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
+                window.location.href = '/XetDuyetHoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
                     '&nam=' + $('#nam').val();
             });
             $('#nam').change(function() {
-                window.location.href = '/HoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
+                window.location.href = '/XetDuyetHoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
                     '&nam=' + $('#nam').val();
             });
         });
@@ -32,16 +32,9 @@
     <div class="card card-custom wave wave-animate-slow wave-info" style="min-height: 600px">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
-                <h3 class="card-label text-uppercase">Danh sách hồ sơ thi đua</h3>
+                <h3 class="card-label text-uppercase">Danh sách hồ sơ thi đua từ đơn vị cấp dưới</h3>
             </div>
-            <div class="card-toolbar">
-                <!--begin::Button-->
-                @if (chkPhanQuyen('dshosothidua', 'modify'))
-                    <a href="{{ url('/HoSoThiDua/Them?madonvi=' . $inputs['madonvi']) }}"
-                        class="btn btn-success btn-xs">
-                        <i class="fa fa-plus"></i> Thêm mới</a>
-                @endif
-                <!--end::Button-->
+            <div class="card-toolbar">                
             </div>
         </div>
         <div class="card-body">
@@ -75,19 +68,16 @@
                                 <th rowspan="2" width="2%">STT</th>
                                 <th rowspan="2">Đơn vị phát động</th>
                                 <th rowspan="2">Nội dung hồ sơ</th>
-                                <th colspan="4">Phong trào</th>
-                                <th colspan="2">Hồ sơ của đơn vị</th>
+                                <th colspan="5">Phong trào</th>
                                 <th rowspan="2" style="text-align: center" width="10%">Thao tác</th>
                             </tr>
-                            <tr>
+                            <tr class="text-center">
 
                                 <th width="8%">Ngày<br>bắt đầu</th>
                                 <th width="8%">Ngày<br>kết thúc</th>
                                 <th width="8%">Trạng thái</th>
-                                <th style="text-align: center" width="8%">Tổng số<br>hồ sơ</th>
-
-                                <th width="8%">Trạng thái</th>
-                                <th style="text-align: center" width="8%">Số lượng</th>
+                                <th width="5%">Số<br>hồ sơ</th>
+                                <th width="15%">Pham vị phát động</th>
                             </tr>
                         </thead>
                         @foreach($model as $key => $tt)
@@ -99,34 +89,20 @@
                                 <td>{{getDayVn($tt->denngay)}}</td>
                                 <td style="text-align: center">{{$a_trangthaihoso[$tt->nhanhoso]}}</td>
                                 <td style="text-align: center">{{chkDbl($tt->sohoso)}}</td>
-                                @include('includes.td.td_trangthai_hoso')
-                                <td style="text-align: center">{{chkDbl($tt->hosodonvi)}}</td>
+                                <td>{{$a_phamvi[$tt->phamviapdung] ?? ''}}</td>
 
                                 <td style="text-align: center">
-                                    <a title="Thông tin phong trào" href="{{url('/dangkytd/'.$tt->id)}}" class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                    <a title="Thông tin phong trào" href="{{url('/PhongTraoThiDua/Sua?maphongtraotd='.$tt->maphongtraotd.'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-success"></i></a>
                                     @if($tt->nhanhoso == 'DANGNHAN')
                                         @if(in_array($tt->trangthai, ['CC','BTL','CXD']))
-                                            <a title="Hồ sơ đăng ký phong trào" href="{{url('/HoSoThiDua/Them?mahosotdkt='.$tt->mahosotdkt.'&madonvi='.$inputs['madonvi'].'&maphongtraotd='.$tt->maphongtraotd.'&trangthai=true')}}" class="btn btn-sm btn-clean btn-icon">
-                                                <i class="icon-lg la fa-check-square text-primary"></i></a>
+                                            <a title="Danh sách chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=true')}}" class="btn btn-sm btn-clean btn-icon">
+                                                <i class="icon-lg la la-clipboard-list text-dark"></i></a>
                                         @else
-                                            <a title="Hồ sơ đăng ký phong trào" href="{{url('/HoSoThiDua/Them?mahosotdkt='.$tt->mahosotdkt.'&madonvi='.$inputs['madonvi'].'&maphongtraotd='.$tt->maphongtraotd.'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon">
-                                                <i class="icon-lg la fa-check-square text-primary"></i></a>
+                                            <a title="Danh sách chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon">
+                                                <i class="icon-lg la la-clipboard-list text-dark"></i></a>
                                         @endif
-                                        @if($tt->hosodonvi > 0 && in_array($tt->trangthai, ['CC','BTL']))
-                                        <button title="Trình hồ sơ đăng ký" type="button" onclick="confirmChuyen('{{$tt->mahosotdkt}}','/HoSoThiDua/ChuyenHoSo')" class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm" data-toggle="modal">
-                                            <i class="icon-lg la fa-share-square text-dark"></i></button>
-                                        @endif
-                                    @endif
-
-                                    @if($tt->trangthai == 'BTL')
-                                        <button title="Lý do hồ sơ bị trả lại" type="button" onclick="viewLiDo('{{$tt->mahosotdkt}}','{{$inputs['madonvi']}}')" class="btn btn-sm btn-clean btn-icon" data-target="#lydo-show" data-toggle="modal">
-                                            <i class="icon-lg la fa-archive text-info"></i></button>
-                                    @endif
-
-                                    @if(in_array($tt->trangthai, ['CC','BTL','CXD']) && $tt->hosodonvi > 0)
-                                        <button type="button" onclick="confirmDelete('{{$tt->id}}','/HoSoThiDua/Xoa')" class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal" data-toggle="modal">
-                                            <i class="icon-lg la fa-trash text-danger"></i></button>
+                                        
                                     @endif
 
                                 </td>
@@ -139,5 +115,4 @@
     </div>
     <!--end::Card-->
     @include('includes.modal.modal-delete')
-    @include('includes.modal.modal_approve_hs')
 @stop

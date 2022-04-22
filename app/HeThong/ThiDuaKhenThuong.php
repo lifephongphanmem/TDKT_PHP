@@ -84,19 +84,23 @@ function getGioiTinh()
     );
 }
 
-function getThang($all = false){
-    $a_tl = array('01' => '01','02' => '02','03' => '03',
-        '04' => '04','05' => '05','06' => '06',
-        '07' => '07','08' => '08','09' => '09',
-        '10' => '10','11' => '11','12' => '12');
-    if($all)
-        return array_merge(array('ALL'=>'--Tất cả--'), $a_tl);
+function getThang($all = false)
+{
+    $a_tl = array(
+        '01' => '01', '02' => '02', '03' => '03',
+        '04' => '04', '05' => '05', '06' => '06',
+        '07' => '07', '08' => '08', '09' => '09',
+        '10' => '10', '11' => '11', '12' => '12'
+    );
+    if ($all)
+        return array_merge(array('ALL' => '--Tất cả--'), $a_tl);
     else
         return $a_tl;
 }
 
-function getNam($all = false){
-    $a_tl = $all == true ? array('ALL'=>'Tất cả') : array();
+function getNam($all = false)
+{
+    $a_tl = $all == true ? array('ALL' => 'Tất cả') : array();
     for ($i = date('Y') - 2; $i <= date('Y') + 1; $i++) {
         $a_tl[$i] = $i;
     }
@@ -114,6 +118,46 @@ function getDiaBan_All($all = false)
         return $a_kq;
     }
     return $a_diaban;
+}
+
+function getDonViQuanLyDiaBan($madiaban, $kieudulieu = 'ARRAY')
+{
+    $m_diaban = \App\Model\DanhMuc\dsdiaban::where('madiaban', $madiaban)->first();
+    $model = \App\Model\DanhMuc\dsdonvi::where('madonvi', $m_diaban->madonviQL)->get();
+    switch($kieudulieu){
+        case 'MODEL': {
+            return $model;
+            break;
+        }
+        default: 
+            return array_column($model->toarray(), 'tendonvi', 'madonvi');
+    }
+}
+
+//lây các đơn vị có chức năng quản lý địa bàn
+function getDonViXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
+{
+    $model = \App\Model\View\viewdiabandonvi::wherein('capdo', ['T', 'H'])->get();
+    switch($kieudulieu){
+        case 'MODEL': {
+            return $model;
+            break;
+        }
+        default: 
+            return array_column($model->toarray(), 'tendonvi', 'madonvi');
+    }
+}
+function getDiaBanXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
+{
+    $model = \App\Model\DanhMuc\dsdiaban::wherein('capdo', ['T', 'H'])->get();
+    switch($kieudulieu){
+        case 'MODEL': {
+            return $model;
+            break;
+        }
+        default: 
+            return array_column($model->toarray(), 'tendiaban', 'madiaban');
+    }
 }
 
 //chưa làm 

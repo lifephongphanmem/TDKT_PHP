@@ -38,7 +38,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th colspan="3">STT</th>
-                                <th rowspan="2" >Tên địa bàn</th>
+                                <th rowspan="2">Tên địa bàn</th>
                                 <th rowspan="2" width="50%">Đơn vị quản lý địa bàn</th>
                                 <th rowspan="2" width="15%">Thao tác</th>
                             </tr>
@@ -50,44 +50,50 @@
                         </thead>
                         <tbody>
                             <?php
-                                $i = 1;
-                                $model_t= $model->where('capdo', 'T');
+                            $i = 1;
+                            $model_t = $model->where('capdo', 'T');
                             ?>
-                            @foreach($model_t as $ct_t)
+                            @foreach ($model_t as $ct_t)
                                 <tr class="success">
-                                    <td style="text-align: center">{{$i++}}</td>
+                                    <td style="text-align: center">{{ $i++ }}</td>
                                     <td></td>
                                     <td></td>
-                                    <td class="font-weight-bold">{{$ct_t->tendiaban}}</td>
-                                    <td></td>
+                                    <td class="font-weight-bold">{{ $ct_t->tendiaban }}</td>
+                                    <td>{{ $a_donvi[$ct_t->madonviQL] ?? '' }}</td>
                                     <td style="text-align: center">
-                                        @if(chkPhanQuyen('dsdonvi', 'modify'))
-                                            <a href="" class="btn btn-sm btn-clean btn-icon" title="Thay đổi đơn vị quản lý địa bàn">
+                                        @if (chkPhanQuyen('dsdonvi', 'modify'))
+                                            <a href={{ '/DonVi/QuanLy?madiaban=' . $ct_t->madiaban }}
+                                                class="btn btn-sm btn-clean btn-icon"
+                                                title="Thay đổi đơn vị quản lý địa bàn">
                                                 <i class="icon-lg la fa-edit text-primary"></i></a>
 
-                                            <a href="{{'/DonVi/DanhSach?madiaban='.$ct_t->madiaban}}" class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
+                                            <a href="{{ '/DonVi/DanhSach?madiaban=' . $ct_t->madiaban }}"
+                                                class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
                                                 <i class="icon-lg la la-clipboard-list text-dark"></i></a>
                                         @endif
 
                                     </td>
                                 </tr>
                                 <?php
-                                    $j = 1;
-                                    $model_h= $model->where('madiabanQL', $ct_t->madiaban);
+                                $j = 1;
+                                $model_h = $model->where('madiabanQL', $ct_t->madiaban);
                                 ?>
-                                @foreach($model_h as $ct_h)
+                                @foreach ($model_h as $ct_h)
                                     <tr class="info">
                                         <td></td>
-                                        <td style="text-align: center">{{$j++}}</td>
+                                        <td style="text-align: center">{{ $j++ }}</td>
                                         <td></td>
-                                        <td>{{$ct_h->tendiaban}}</td>
-                                        <td></td>
+                                        <td>{{ $ct_h->tendiaban }}</td>
+                                        <td>{{ $a_donvi[$ct_h->madonviQL] ?? '' }}</td>
                                         <td style="text-align: center">
-                                            @if(chkPhanQuyen('dsdonvi', 'modify'))
-                                                <a href="" class="btn btn-sm btn-clean btn-icon" title="Thay đổi đơn vị quản lý địa bàn">
+                                            @if (chkPhanQuyen('dsdonvi', 'modify'))
+                                                <a href={{ '/DonVi/QuanLy?madiaban=' . $ct_h->madiaban }}
+                                                    class="btn btn-sm btn-clean btn-icon"
+                                                    title="Thay đổi đơn vị quản lý địa bàn">
                                                     <i class="icon-lg la fa-edit text-primary"></i></a>
 
-                                                <a href="{{'/DonVi/DanhSach?madiaban='.$ct_h->madiaban}}" class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
+                                                <a href="{{ '/DonVi/DanhSach?madiaban=' . $ct_h->madiaban }}"
+                                                    class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
                                                     <i class="icon-lg la la-clipboard-list text-dark"></i></a>
                                             @endif
 
@@ -95,21 +101,20 @@
                                     </tr>
                                     <?php
                                     $k = 1;
-                                    $model_x= $model->where('madiabanQL', $ct_h->madiaban);
+                                    $model_x = $model->where('madiabanQL', $ct_h->madiaban);
                                     ?>
-                                    @foreach($model_x as $ct_x)
+                                    @foreach ($model_x as $ct_x)
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td style="text-align: center">{{$k++}}</td>
-                                            <td class="em"style="font-style: italic;">{{$ct_x->tendiaban}}</td>
+                                            <td style="text-align: center">{{ $k++ }}</td>
+                                            <td class="em" style="font-style: italic;">{{ $ct_x->tendiaban }}
+                                            </td>
                                             <td></td>
                                             <td style="text-align: center">
-                                                @if(chkPhanQuyen('dsdonvi', 'modify'))
-                                                    <a href="" class="btn btn-sm btn-clean btn-icon" title="Thay đổi đơn vị quản lý địa bàn">
-                                                        <i class="icon-lg la fa-edit text-primary"></i></a>
-
-                                                    <a href="{{'/DonVi/DanhSach?madiaban='.$ct_x->madiaban}}" class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
+                                                @if (chkPhanQuyen('dsdonvi', 'modify'))
+                                                    <a href="{{ '/DonVi/DanhSach?madiaban=' . $ct_x->madiaban }}"
+                                                        class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
                                                         <i class="icon-lg la la-clipboard-list text-dark"></i></a>
                                                 @endif
 
@@ -117,7 +122,6 @@
                                         </tr>
                                     @endforeach
                                 @endforeach
-
                             @endforeach
                         </tbody>
                     </table>

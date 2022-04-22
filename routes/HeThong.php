@@ -24,6 +24,8 @@ Route::group(['prefix'=>'DonVi'], function(){
     Route::get('Sua','HeThong\dsdonviController@edit');
     Route::post('Sua','HeThong\dsdonviController@store');
     Route::post('Xoa','HeThong\dsdonviController@destroy');
+    Route::get('QuanLy','HeThong\dsdonviController@QuanLy');
+    Route::post('QuanLy','HeThong\dsdonviController@LuuQuanLy');
 
 });
 

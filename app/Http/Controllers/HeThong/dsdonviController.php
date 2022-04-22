@@ -23,11 +23,12 @@ class dsdonviController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $model = dsdiaban::all();
+            $m_donvi = dsdonvi::all();
             return view('HeThongChung.DonVi.ThongTin')
                 ->with('model', $model)
                 ->with('inputs', $inputs)
+                ->with('a_donvi', array_column($m_donvi->toarray(), 'tendonvi', 'madonvi'))
                 ->with('pageTitle', 'Danh sách đơn vị');
-
         } else
             return view('errors.notlogin');
     }
@@ -37,13 +38,12 @@ class dsdonviController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $inputs['url'] = '/DonVi';
-            $inputs['tendiaban'] = dsdiaban::where('madiaban',$inputs['madiaban'])->first()->tendiaban ?? '';
-            $model = dsdonvi::where('madiaban',$inputs['madiaban'])->get();
+            $inputs['tendiaban'] = dsdiaban::where('madiaban', $inputs['madiaban'])->first()->tendiaban ?? '';
+            $model = dsdonvi::where('madiaban', $inputs['madiaban'])->get();
             return view('HeThongChung.DonVi.DanhSach')
                 ->with('model', $model)
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Danh sách đơn vị');
-
         } else
             return view('errors.notlogin');
     }
@@ -60,11 +60,10 @@ class dsdonviController extends Controller
             //$modeldvql = DSDonVi::where('tonghop', '1')->get();
             $model = new dsdonvi();
             $model->madonvi = null;
-            $model->madiaban = $inputs['madiaban'];            
+            $model->madiaban = $inputs['madiaban'];
             return view('HeThongChung.DonVi.Sua')
                 ->with('model', $model)
                 ->with('pageTitle', 'Tạo mới thông tin đơn vị');
-
         }
     }
 
@@ -78,16 +77,15 @@ class dsdonviController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = dsdonvi::where('madonvi',$inputs['madonvi'])->first();
-            if($model == null){
+            $model = dsdonvi::where('madonvi', $inputs['madonvi'])->first();
+            if ($model == null) {
                 $inputs['madonvi'] = (string) getdate()[0];
                 dsdonvi::create($inputs);
-            }else{
+            } else {
                 $model->update($inputs);
             }
-            
-            return redirect('/DonVi/DanhSach?madiaban='.$inputs['madiaban']);
 
+            return redirect('/DonVi/DanhSach?madiaban=' . $inputs['madiaban']);
         } else {
             return view('errors.notlogin');
         }
@@ -104,9 +102,9 @@ class dsdonviController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $model = dsdonvi::where('madonvi',$inputs['madonvi'])->first();
+            $model = dsdonvi::where('madonvi', $inputs['madonvi'])->first();
             return view('HeThongChung.DonVi.Sua')
-            ->with('model', $model)
+                ->with('model', $model)
                 ->with('pageTitle', 'Chỉnh sửa thông tin đơn vị');
         } else
             return view('errors.notlogin');
@@ -126,9 +124,31 @@ class dsdonviController extends Controller
             $model = dsdonvi::findorFail($id);
             //dd($model);
             $model->delete();
-            return redirect('/DonVi/DanhSach?madiaban='.$model->madiaban);
-
+            return redirect('/DonVi/DanhSach?madiaban=' . $model->madiaban);
         } else
             return view('errors.notlogin');
+    }
+
+    public function QuanLy(Request $request)
+    {
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            //dd($inputs);
+            $m_donvi = dsdonvi::where('madiaban', $inputs['madiaban'])->get();
+            $model = dsdiaban::where('madiaban', $inputs['madiaban'])->first();
+            return view('HeThongChung.DonVi.QuanLy')
+                ->with('model', $model)
+                ->with('a_donvi', array_column($m_donvi->toarray(), 'tendonvi', 'madonvi'))
+                ->with('pageTitle', 'Tạo mới thông tin đơn vị');
+        }
+    }
+
+    public function LuuQuanLy(Request $request)
+    {
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            dsdiaban::where('madiaban', $inputs['madiaban'])->first()->update($inputs);
+            return redirect('DonVi/ThongTin');
+        }
     }
 }

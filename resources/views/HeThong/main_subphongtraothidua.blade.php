@@ -41,7 +41,7 @@
             </li>
 
             <li class="menu-item" aria-haspopup="true">
-                <a href="{{ url('/HoSoThiDua/XetDuyet') }}" class="menu-link">
+                <a href="{{ url('/XetDuyetHoSoThiDua/ThongTin') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
@@ -49,7 +49,7 @@
                 </a>
             </li>
             <li class="menu-item" aria-haspopup="true">
-                <a href="{{ url('/HoSoThiDua/KhenThuong') }}" class="menu-link">
+                <a href="{{ url('/KhenThuongHoSoThiDua/ThongTin') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
