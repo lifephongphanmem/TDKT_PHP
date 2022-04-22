@@ -99,6 +99,7 @@ class dshosothiduaController extends Controller
                 $model->madonvi = $inputs['madonvi'];
                 $model->mahosotdkt = getdate()[0];
                 $model->maloaihinhkt = $m_phongtrao->maloaihinhkt;
+                $model->maloaihinhkt = $inputs['maphongtraotd'];
             }
 
             $model_khenthuong = dshosothiduakhenthuong_khenthuong::where('mahosotdkt', $model->mahosotdkt)->get();
@@ -106,7 +107,8 @@ class dshosothiduaController extends Controller
             
             return view('NghiepVu.ThiDuaKhenThuong.HoSoThiDua.ThayDoi')
                 ->with('model', $model)
-                ->with('model_khenthuong', $model_khenthuong)
+                ->with('model_khenthuong',$model_khenthuong->where('phanloai','CANHAN'))
+                ->with('model_tapthe',$model_khenthuong->where('phanloai','TAPTHE'))
                 ->with('model_tieuchuan', $model_tieuchuan)
                 ->with('a_danhhieu', array_column(dmdanhhieuthidua::all()->toArray(), 'tendanhhieutd', 'madanhhieutd'))
                 ->with('a_tieuchuan', array_column(dmdanhhieuthidua_tieuchuan::all()->toArray(), 'tentieuchuandhtd', 'matieuchuandhtd'))
@@ -126,15 +128,11 @@ class dshosothiduaController extends Controller
             }
             dd($request->all());
             $inputs = $request->all();
-            if (isset($inputs['totrinh'])) {
-                $filedk = $request->file('totrinh');
-                $inputs['totrinh'] = $filedk->getClientOriginalExtension();
-                $filedk->move(public_path() . '/data/totrinh/', $inputs['totrinh']);
-            }
-            if (isset($inputs['qdkt'])) {
-                $filedk = $request->file('qdkt');
-                $inputs['qdkt'] = $filedk->getClientOriginalExtension();
-                $filedk->move(public_path() . '/data/qdkt/', $inputs['qdkt']);
+            
+            if (isset($inputs['baocao'])) {
+                $filedk = $request->file('baocao');
+                $inputs['baocao'] = $filedk->getClientOriginalExtension();
+                $filedk->move(public_path() . '/data/baocao/', $inputs['baocao']);
             }
             if (isset($inputs['bienban'])) {
                 $filedk = $request->file('bienban');
@@ -147,21 +145,21 @@ class dshosothiduaController extends Controller
                 $filedk->move(public_path() . '/data/tailieukhac/', $inputs['tailieukhac']);
             }
 
-            $model = dsphongtraothidua::where('maphongtraotd', $inputs['maphongtraotd'])->first();
+            $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahosotdkt'])->first();
             if ($model == null) {
-                dsphongtraothidua::create($inputs);
+                dshosothiduakhenthuong::create($inputs);
                 $trangthai = new trangthaihoso();
                 $trangthai->trangthai = 'CC';
                 $trangthai->madonvi = $inputs['madonvi'];
-                $trangthai->phanloai = 'dsphongtraothidua';
-                $trangthai->mahoso = $inputs['maphongtraotd'];
+                $trangthai->phanloai = 'dshosothiduakhenthuong';
+                $trangthai->mahoso = $inputs['mahosotdkt'];
                 $trangthai->thoigian = date('Y-m-d H:i:s');
                 $trangthai->save();
             } else {
                 $model->update($inputs);
             }
 
-            return redirect('/PhongTraoThiDua/ThongTin?madonvi=' . $inputs['madonvi']);
+            return redirect('/HoSoThiDua/ThongTin?madonvi=' . $inputs['madonvi']);
         } else
             return view('errors.notlogin');
     }
