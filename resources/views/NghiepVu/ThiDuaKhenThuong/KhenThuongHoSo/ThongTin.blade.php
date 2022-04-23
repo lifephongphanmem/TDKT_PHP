@@ -94,16 +94,13 @@
                                 <td style="text-align: center">
                                     <a title="Thông tin phong trào" href="{{url('/PhongTraoThiDua/Sua?maphongtraotd='.$tt->maphongtraotd.'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-success"></i></a>
-                                    @if($tt->nhanhoso == 'DANGNHAN')
-                                        @if(in_array($tt->trangthai, ['CC','BTL','CXD']))
-                                            <a title="Danh sách chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=true')}}" class="btn btn-sm btn-clean btn-icon">
-                                                <i class="icon-lg la la-clipboard-list text-dark"></i></a>
-                                        @else
-                                            <a title="Danh sách chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon">
-                                                <i class="icon-lg la la-clipboard-list text-dark"></i></a>
-                                        @endif
+                                    
                                         
-                                    @endif
+                                        <a title="Hồ sơ khen thưởng" href="{{url('/KhenThuongHoSoThiDua/KetQua?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=true')}}" class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la la-clipboard-list text-dark"></i></a>
+                                        
+                                        
+                                    
 
                                 </td>
                             </tr>

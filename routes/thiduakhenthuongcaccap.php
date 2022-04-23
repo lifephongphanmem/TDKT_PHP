@@ -32,12 +32,11 @@ Route::group(['prefix'=>'HoSoThiDua'], function(){
 Route::group(['prefix'=>'XetDuyetHoSoThiDua'], function(){
     Route::get('ThongTin','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@ThongTin');
     Route::get('DanhSach','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@DanhSach');
-    Route::post('TraLai','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@TraLai'); 
-    
-    
-    Route::post('KetThuc','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuHoSo');
+    Route::post('TraLai','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@TraLai');
+    Route::post('KetThuc','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@KetThuc');
 });
 
 Route::group(['prefix'=>'KhenThuongHoSoThiDua'], function(){
     Route::get('ThongTin','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@ThongTin');
+    Route::get('KetQua','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@KetQua');
 });

@@ -48,10 +48,9 @@ class xetduyethosothiduaController extends Controller
             $m_hoso = dshosothiduakhenthuong::wherein('mahosotdkt', function ($qr) {
                 $qr->select('mahoso')->from('trangthaihoso')->wherein('trangthai', ['CD', 'DD'])->where('phanloai', 'dshosothiduakhenthuong')->get();
             })->get();
-            $m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
+            //$m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
             //dd($ngayhientai);
-            foreach ($model as $DangKy) {
-                $DangKy->trangthai = $m_trangthai_phongtrao->where('mahoso', $DangKy->maphongtraotd)->first()->trangthai ?? 'CC';
+            foreach ($model as $DangKy) {                
                 if ($DangKy->trangthai == 'CC') {
                     $DangKy->nhanhoso = 'CHUABATDAU';
                     if ($DangKy->tungay < $ngayhientai && $DangKy->denngay > $ngayhientai) {
@@ -132,6 +131,19 @@ class xetduyethosothiduaController extends Controller
             $m_hoso = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahoso'])->first();
 
             return redirect('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd=' . $m_hoso->maphongtraotd . '&madonvi=' . $inputs['madonvi']);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function KetThuc(Request $request)
+    {
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $model = dsphongtraothidua::where('maphongtraotd', $inputs['maphongtraotd'])->first();
+            $model->trangthai = 'DD';
+            $model->thoigian = date('Y-m-d H:i:s');
+            $model->save();
+            return redirect('XetDuyetHoSoThiDua/ThongTin?madonvi=' . $inputs['madonvi']);
         } else
             return view('errors.notlogin');
     }
