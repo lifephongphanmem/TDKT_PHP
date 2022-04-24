@@ -51,11 +51,12 @@
                     <table class="table table-striped table-bordered table-hover" id="sample_4">
                         <thead>
                             <tr class="text-center">
-                                <th width="10%">STT</th>
+                                <th width="5%">STT</th>
                                 <th>Tên đơn vị đăng ký</th>
                                 <th>Nội dung hồ sơ</th>
-                                <th width="15%">Ngày nộp<br>hồ sơ</th>
-                                <th width="10%">Thao tác</th>
+                                <th>Trạng thái</th>
+                                <th width="10%">Ngày nộp<br>hồ sơ</th>
+                                <th width="15%">Thao tác</th>
                             </tr>
                         </thead>
                         <?php $i = 1; ?>
@@ -64,18 +65,26 @@
                                 <td style="text-align: center">{{ $i++ }}</td>
                                 <td>{{ $a_donvi[$tt->madonvi] ?? '' }}</td>
                                 <td>{{ $tt->noidung }}</td>
-                                <td>{{ getDayVn($tt->thoigian) }}</td>
+                                <td></td>
+                                <td class="text-center">{{ getDayVn($tt->thoigian_hoso) }}</td>
                                 <td style="text-align: center">
                                     <a title="Thông tin hồ sơ"
-                                        href="{{ url('/HoSoThiDua/Sua?mahosotdkt=' . $tt->maphongtraotd . '&trangthai=false') }}"
+                                        href="{{ url('/HoSoThiDua/Xem?mahosotdkt=' . $tt->maphongtraotd . '&trangthai=false') }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
-                                        <i class="icon-lg la fa-eye text-success"></i></a>
+                                        <i class="icon-lg la fa-eye text-dark"></i></a>
 
-                                    @if (in_array($tt->trangthai, ['CD']))
+                                    @if (in_array($tt->trangthai_hoso, ['CD','CNXKT']))
                                         <button title="Trả lại hồ sơ" type="button"
                                             onclick="confirmTraLai('{{ $tt->mahosotdkt }}', '{{$inputs['madonvi']}}', '/XetDuyetHoSoThiDua/TraLai')" class="btn btn-sm btn-clean btn-icon"
                                             data-target="#modal-tralai" data-toggle="modal">
-                                            <i class="icon-lg la fa-backward text-danger"></i></button>
+                                            <i class="icon-lg la la-reply text-danger"></i></button>
+                                            @if ($tt->chuyentiephoso)
+                                            <button title="Chuyển hồ sơ đăng ký" type="button" onclick="confirmChuyen('{{$tt->mahosotdkt}}','/XetDuyetHoSoThiDua/ChuyenHoSo')" class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm" data-toggle="modal">
+                                                <i class="icon-lg la fa-share-square text-success"></i></button>
+                                                @else
+                                                <button title="Nhận hồ sơ đăng ký" type="button" onclick="confirmNhan('{{$tt->mahosotdkt}}','/XetDuyetHoSoThiDua/NhanHoSo','{{$inputs['madonvi']}}')" class="btn btn-sm btn-clean btn-icon" data-target="#nhan-modal-confirm" data-toggle="modal">
+                                                    <i class="icon-lg la fa-share-square text-success"></i></button>
+                                                @endif
                                     @endif
                                 </td>
                             </tr>
@@ -88,4 +97,6 @@
     <!--end::Card-->
     @include('includes.modal.modal-delete')
     @include('includes.modal.modal_unapprove_hs')
+    @include('includes.modal.modal_approve_hs')
+    @include('includes.modal.modal_accept_hs')
 @stop

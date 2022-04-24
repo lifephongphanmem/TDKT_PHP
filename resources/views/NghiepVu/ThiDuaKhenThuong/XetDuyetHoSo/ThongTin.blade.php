@@ -122,14 +122,15 @@
             <div class="modal-content">
                 {!! Form::open(['url'=>'/XetDuyetHoSoThiDua/KetThuc','method'=>'post' , 'files'=>true,'id' => 'frm_KetThuc','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!}
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h4 class="modal-title">Đồng ý kết thúc phong trào và chuyển đối tượng?</h4>
+                    
+                    <h4 class="modal-title">Đồng ý kết thúc phong trào và xét khen thưởng?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 </div>
                 <input type="hidden" name="maphongtraotd" id="maphongtraotd">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            Bạn đồng ý kết thúc phong trào thi đua để chuyển sang quá  trình xét duyệt khen thưởng.
+                            Bạn đồng ý kết thúc phong trào thi đua để chuyển sang quá trình xét duyệt khen thưởng.
                         </div>
                     </div>
                 </div>

@@ -80,42 +80,13 @@ class khenthuonghosothiduaController extends Controller
         } else
             return view('errors.notlogin');
     }
+ 
 
-    public function DanhSach(Request $request)
+    public function KhenThuong(Request $request)
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-            $m_dangky = dsphongtraothidua::where('maphongtraotd', $inputs['maphongtraotd'])->first();
-
-            // $model = dshosothiduakhenthuong::where('maphongtraotd',$inputs['maphongtraotd'])
-            // ->wherein('mahosotdkt',function($qr){
-            //     $qr->select('mahoso')->from('trangthaihoso')->wherein('trangthai',['CD','DD'])->where('phanloai','dshosothiduakhenthuong')->get();
-            // })->get();
-            $m_trangthai = trangthaihoso::wherein('trangthai', ['CD', 'DD'])->where('phanloai', 'dshosothiduakhenthuong')->orderby('thoigian', 'desc')->get();
-            $model = dshosothiduakhenthuong::where('maphongtraotd', $inputs['maphongtraotd'])
-                ->wherein('mahosotdkt', array_column($m_trangthai->toarray(), 'mahoso'))->get();
-            foreach ($model as $chitiet) {
-                $trangthai = $m_trangthai->where('mahoso', $chitiet->mahosotdkt)->where('madonvi', $chitiet->madonvi)->first();
-                $chitiet->trangthai = $trangthai->trangthai;
-                $chitiet->thoigian = $trangthai->thoigian;
-            }
-            //dd($model);
-            $m_donvi = getDonVi(session('admin')->capdo);
-
-            return view('NghiepVu.ThiDuaKhenThuong.XetDuyetHoSo.DanhSach')
-                ->with('inputs', $inputs)
-                ->with('model', $model)
-                ->with('m_dangky', $m_dangky)
-                ->with('a_donvi', array_column($m_donvi->toArray(), 'tendonvi', 'madonvi'))
-                ->with('pageTitle', 'Danh sách hồ sơ đăng ký thi đua');
-        } else
-            return view('errors.notlogin');
-    }
-
-    public function TraLai(Request $request)
-    {
-        if (Session::has('admin')) {
-            $inputs = $request->all();
+            dd($inputs);
             //Xóa trạng thái chuyển (mỗi đơn vị chỉ để 1 bản ghi trên bảng trạng thái)
             $m_trangthai = trangthaihoso::where('mahoso', $inputs['mahoso'])
                 ->where('madonvi_nhan', $inputs['madonvi'])

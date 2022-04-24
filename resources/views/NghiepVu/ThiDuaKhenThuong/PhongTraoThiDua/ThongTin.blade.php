@@ -114,6 +114,7 @@
                                                 href="{{ url('/PhongTraoThiDua/Sua?maphongtraotd=' . $tt->maphongtraotd) }}"
                                                 class="btn btn-sm btn-clean btn-icon"><i
                                                     class="icon-lg la fa-edit text-success"></i></a>
+                                                    
                                             <button title="Xóa hồ sơ" type="button" onclick="confirmDelete('{{ $tt->id }}','/PhongTraoThiDua/Xoa')"
                                                 class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal"
                                                 data-toggle="modal">

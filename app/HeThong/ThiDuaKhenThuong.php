@@ -134,6 +134,20 @@ function getDonViQuanLyDiaBan($madiaban, $kieudulieu = 'ARRAY')
     }
 }
 
+function getDonViQuanLyTinh($kieudulieu = 'ARRAY')
+{
+    $m_diaban = \App\Model\DanhMuc\dsdiaban::where('capdo', 'T')->first();
+    $model = \App\Model\DanhMuc\dsdonvi::where('madonvi', $m_diaban->madonviQL)->get();
+    switch($kieudulieu){
+        case 'MODEL': {
+            return $model;
+            break;
+        }
+        default: 
+            return array_column($model->toarray(), 'tendonvi', 'madonvi');
+    }
+}
+
 //lây các đơn vị có chức năng quản lý địa bàn
 function getDonViXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
 {
@@ -169,4 +183,186 @@ function chkPhanQuyen()
 function getDonVi($capdo, $chucnang = null, $tenquyen = null)
 {
     return App\Model\View\viewdiabandonvi::all();
+}
+
+function setChuyenHoSo($capdo, $hoso, $a_hoanthanh)
+{
+    if ($capdo == 'H') {
+        $hoso->trangthai_h = $a_hoanthanh['trangthai'] ?? 'CD';
+        $hoso->thoigian_h = $a_hoanthanh['thoigian'] ?? null;
+        $hoso->madonvi_h = $a_hoanthanh['madonvi'] ?? null;
+    }
+
+    if ($capdo == 'T') {
+        $hoso->trangthai_t = $a_hoanthanh['trangthai'] ?? 'CD';
+        $hoso->thoigian_t = $a_hoanthanh['thoigian'] ?? null;
+        $hoso->madonvi_t = $a_hoanthanh['madonvi'] ?? null;
+    }
+
+    if ($capdo == 'TW') {
+        $hoso->trangthai_tw = $a_hoanthanh['trangthai'] ?? 'CD';
+        $hoso->thoigian_tw = $a_hoanthanh['thoigian'] ?? null;
+        $hoso->madonvi_tw = $a_hoanthanh['madonvi'] ?? null;
+    }
+}
+
+function setNhanHoSo($madonvi_nhan, $hoso, $a_hoanthanh)
+{
+    if ($madonvi_nhan == $hoso->madonvi_nhan) {
+        $hoso->trangthai = $a_hoanthanh['trangthai'] ?? 'CD';
+        $hoso->lydo = $a_hoanthanh['lydo'] ?? null;
+        $hoso->thoigian = $a_hoanthanh['thoigian'] ?? null;
+    }
+
+    if ($madonvi_nhan == $hoso->madonvi_nhan_h) {
+        $hoso->trangthai_h = $a_hoanthanh['trangthai'] ?? 'CD';
+        $hoso->lydo_h = $a_hoanthanh['lydo'] ?? null;
+        $hoso->thoigian_h = $a_hoanthanh['thoigian'] ?? null;
+    }
+
+    if ($madonvi_nhan == $hoso->madonvi_nhan_t) {
+        $hoso->trangthai_t = $a_hoanthanh['trangthai'] ?? 'CD';
+        $hoso->lydo_t = $a_hoanthanh['lydo'] ?? null;
+        $hoso->thoigian_t = $a_hoanthanh['thoigian'] ?? null;
+    }
+
+    if ($madonvi_nhan == $hoso->madonvi_nhan_tw) {
+        $hoso->trangthai_ad = $a_hoanthanh['trangthai'] ?? 'CD';
+        $hoso->lydo_ad = $a_hoanthanh['lydo'] ?? null;
+        $hoso->thoigian_ad = $a_hoanthanh['thoigian'] ?? null;
+    }
+}
+
+function getDonViChuyen($madonvi_nhan, $hoso){
+    //dd($macqcq);
+    if($madonvi_nhan == $hoso->madonvi){
+        $hoso->madonvi_hoso = $hoso->madonvi;
+        $hoso->trangthai_hoso = $hoso->trangthai;
+        $hoso->thoigian_hoso = $hoso->thoigian;
+        $hoso->lydo_hoso = $hoso->lydo;
+        $hoso->madonvi_nhan_hoso = $hoso->madonvi_nhan;
+    }
+    if($madonvi_nhan == $hoso->madonvi_h){
+        $hoso->madonvi_hoso = $hoso->madonvi_h;
+        $hoso->trangthai_hoso = $hoso->trangthai_h;
+        $hoso->thoigian_hoso = $hoso->thoigian_h;
+        $hoso->lydo_hoso = $hoso->lydo_h;
+        $hoso->madonvi_nhan_hoso = $hoso->madonvi_nhan_h;
+    }
+    if($madonvi_nhan == $hoso->madonvi_t){
+        $hoso->madonvi_hoso = $hoso->madonvi_t;
+        $hoso->trangthai_hoso = $hoso->trangthai_t;
+        $hoso->thoigian_hoso = $hoso->thoigian_t;
+        $hoso->lydo_hoso = $hoso->lydo_t;
+        $hoso->madonvi_nhan_hoso = $hoso->madonvi_nhan_t;
+    }
+    if($madonvi_nhan == $hoso->madonvi_tw){
+        $hoso->madonvi_hoso = $hoso->madonvi_tw;
+        $hoso->trangthai_hoso = $hoso->trangthai_tw;
+        $hoso->thoigian_hoso = $hoso->thoigian_tw;
+        $hoso->lydo_hoso = $hoso->lydo_tw;
+        $hoso->madonvi_nhan_hoso = $hoso->madonvi_nhan_tw;
+    }
+}
+
+//chưa dùng
+function setHoanThanhCQ($level, $hoso, $a_hoanthanh)
+{
+    if ($level == 'T') {
+        $hoso->madonvi_t = $a_hoanthanh['madonvi'] ?? null;
+        $hoso->thoigian_t = $a_hoanthanh['thoigian'] ?? null;
+        $hoso->trangthai_t = $a_hoanthanh['trangthai'] ?? 'CHT';
+    }
+
+    if ($level == 'TW') {
+        $hoso->madonvi_ad = $a_hoanthanh['madonvi'] ?? null;
+        $hoso->thoidiem_ad = $a_hoanthanh['thoidiem'] ?? null;
+        $hoso->trangthai_ad = $a_hoanthanh['trangthai'] ?? 'CHT';
+    }
+
+    if ($level == 'H') {
+        $hoso->madonvi_h = $a_hoanthanh['madonvi'] ?? null;
+        $hoso->thoidiem_h = $a_hoanthanh['thoidiem'] ?? null;
+        $hoso->trangthai_h = $a_hoanthanh['trangthai'] ?? 'CHT';
+    }
+}
+//chưa dùng
+function setHoanThanhDV($madonvi, $hoso, $a_hoanthanh)
+{
+    if ($madonvi == $hoso->madonvi) {
+        $hoso->macqcq = $a_hoanthanh['macqcq'] ?? null;
+        $hoso->trangthai = $a_hoanthanh['trangthai'] ?? 'CHT';
+        $hoso->lydo = $a_hoanthanh['lydo'] ?? null;
+    }
+
+    if ($madonvi == $hoso->madonvi_h) {
+        $hoso->macqcq_h = $a_hoanthanh['macqcq'] ?? null;
+        $hoso->trangthai_h = $a_hoanthanh['trangthai'] ?? 'CHT';
+        $hoso->lydo_h = $a_hoanthanh['lydo'] ?? null;
+    }
+
+    if ($madonvi == $hoso->madonvi_t) {
+        $hoso->macqcq_t = $a_hoanthanh['macqcq'] ?? null;
+        $hoso->trangthai_t = $a_hoanthanh['trangthai'] ?? 'CHT';
+        $hoso->lydo_t = $a_hoanthanh['lydo'] ?? null;
+    }
+
+    if ($madonvi == $hoso->madonvi_ad) {
+        $hoso->macqcq_ad = $a_hoanthanh['macqcq'] ?? null;
+        $hoso->trangthai_ad = $a_hoanthanh['trangthai'] ?? 'CHT';
+        $hoso->lydo_ad = $a_hoanthanh['lydo'] ?? null;
+    }
+}
+
+//chưa dùng
+
+
+//chưa dùng
+function setTraLai($macqcq, $hoso, $a_tralai)
+{
+    //Gán trạng thái của đơn vị chuyển hồ sơ
+    if ($macqcq == $hoso->macqcq) {
+        $hoso->macqcq = null;
+        $hoso->trangthai = $a_tralai['trangthai'] ?? 'CHT';
+        $hoso->lydo = $a_tralai['lydo'] ?? null;
+    }
+    if ($macqcq == $hoso->macqcq_h) {
+        $hoso->macqcq_h = null;
+        $hoso->trangthai_h = $a_tralai['trangthai'] ?? 'CHT';
+        $hoso->lydo_h = $a_tralai['lydo'] ?? null;
+    }
+    if ($macqcq == $hoso->macqcq_t) {
+        $hoso->macqcq_t = null;
+        $hoso->trangthai_t = $a_tralai['trangthai'] ?? 'CHT';
+        $hoso->lydo_t = $a_tralai['lydo'] ?? null;
+    }
+    if ($macqcq == $hoso->macqcq_ad) {
+        $hoso->macqcq_ad = null;
+        $hoso->trangthai_ad = $a_tralai['trangthai'] ?? 'CHT';
+        $hoso->lydo_ad = $a_tralai['lydo'] ?? null;
+    }
+    //Gán trạng thái của đơn vị tiếp nhận hồ sơ
+    if ($macqcq == $hoso->madonvi_h) {
+        $hoso->macqcq_h = null;
+        $hoso->trangthai_h = null;
+        $hoso->lydo_h = null;
+        $hoso->thoidiem_h = null;
+        $hoso->madonvi_h = null;
+    }
+
+    if ($macqcq == $hoso->madonvi_t) {
+        $hoso->macqcq_t = null;
+        $hoso->trangthai_t = null;
+        $hoso->lydo_t = null;
+        $hoso->thoidiem_t = null;
+        $hoso->madonvi_t = null;
+    }
+
+    if ($macqcq == $hoso->madonvi_ad) {
+        $hoso->macqcq_ad = null;
+        $hoso->trangthai_ad = null;
+        $hoso->lydo_ad = null;
+        $hoso->thoidiem_ad = null;
+        $hoso->madonvi_ad = null;
+    }
 }

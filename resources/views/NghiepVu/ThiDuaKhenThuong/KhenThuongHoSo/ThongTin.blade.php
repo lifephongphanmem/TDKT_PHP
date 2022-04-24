@@ -32,7 +32,7 @@
     <div class="card card-custom wave wave-animate-slow wave-info" style="min-height: 600px">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
-                <h3 class="card-label text-uppercase">Danh sách phong trào thi đua trên địa bàn</h3>
+                <h3 class="card-label text-uppercase">Danh sách phong trào thi đua chờ xét khen thưởng trên địa bàn</h3>
             </div>
             <div class="card-toolbar">                
             </div>
@@ -93,17 +93,13 @@
 
                                 <td style="text-align: center">
                                     <a title="Thông tin phong trào" href="{{url('/PhongTraoThiDua/Sua?maphongtraotd='.$tt->maphongtraotd.'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon" target="_blank">
-                                        <i class="icon-lg la fa-eye text-success"></i></a>
-                                    @if($tt->nhanhoso == 'DANGNHAN')
-                                        @if(in_array($tt->trangthai, ['CC','BTL','CXD']))
-                                            <a title="Danh sách chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=true')}}" class="btn btn-sm btn-clean btn-icon">
-                                                <i class="icon-lg la la-clipboard-list text-dark"></i></a>
-                                        @else
-                                            <a title="Danh sách chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon">
-                                                <i class="icon-lg la la-clipboard-list text-dark"></i></a>
-                                        @endif
-                                        
-                                    @endif
+                                        <i class="icon-lg la fa-eye text-dark"></i></a>
+
+                                    <a title="Danh sách hồ sơ chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon">
+                                        <i class="icon-lg la la-clipboard-list text-dark"></i></a>
+
+                                        <button title="Tạo hồ sơ khen thưởng" type="button" onclick="confirmKhenThuong('{{$tt->maphongtraotd}}','{{$inputs['madonvi']}}')" class="btn btn-sm btn-clean btn-icon" data-target="#khenthuong-modal" data-toggle="modal">
+                                            <i class="icon-lg la fa-list text-success"></i></button>
 
                                 </td>
                             </tr>
@@ -114,5 +110,45 @@
         </div>
     </div>
     <!--end::Card-->
-    @include('includes.modal.modal-delete')
+    <!--Modal Nhận hồ sơ-->
+<div id="khenthuong-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+    {!! Form::open(['url'=>'/KhenThuongHoSoThiDua/KhenThuong','id' => 'frm_khenthuong'])!!}
+    <input type="hidden" name="maphongtraotd" />
+    <input type="hidden" name="madonvi" />
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-primary">                
+                <h4 id="modal-header-primary-label" class="modal-title">Đồng ý tạo hồ sơ khen thưởng?</h4>
+                <button type="button" data-dismiss="modal" aria-hidden="true"
+                class="close">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                ĐƠn vị khen thưởng
+                Cấp khen thưởng
+                Nagày tháng
+                Người ký
+                Chức vụ
+                <p style="color: #0000FF">Hồ sơ đã tiếp nhận và chờ xét duyệt khen thưởng. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickKhenThuong()">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+    {!! Form::close() !!}
+</div>
+
+<script>
+    function clickKhenThuong(){
+        $('#frm_khenthuong').submit();
+    }
+
+    function confirmKhenThuong(maphongtraotd,madonvi) {
+        $('#frm_khenthuong').find("[name='maphongtraotd']").val(maphongtraotd);
+        $('#frm_khenthuong').find("[name='madonvi']").val(madonvi);
+    }
+</script>
 @stop

@@ -19,6 +19,7 @@ use App\Model\NghiepVu\ThiDuaKhenThuong\dshosothiduakhenthuong_tieuchuan;
 use App\Model\NghiepVu\ThiDuaKhenThuong\dsphongtraothidua;
 use App\Model\NghiepVu\ThiDuaKhenThuong\dsphongtraothidua_khenthuong;
 use App\Model\NghiepVu\ThiDuaKhenThuong\dsphongtraothidua_tieuchuan;
+use App\Model\View\viewdiabandonvi;
 use App\Model\View\viewdonvi_dsphongtrao;
 use Illuminate\Support\Facades\Session;
 
@@ -43,10 +44,8 @@ class dshosothiduaController extends Controller
             })->orderby('tungay')->get();
 
             $ngayhientai = date('Y-m-d');
-            $m_hoso = dshosothiduakhenthuong::wherein('mahosotdkt',function($qr){
-                $qr->select('mahoso')->from('trangthaihoso')->wherein('trangthai',['CD','DD'])->where('phanloai','dshosothiduakhenthuong')->get();
-            })->get();
-            $m_trangthai_hoso = trangthaihoso::where('phanloai', 'dshosothiduakhenthuong')->wherein('trangthai',['CD','DD'])->orderby('thoigian', 'desc')->get();
+            $m_hoso = dshosothiduakhenthuong::wherein('maphongtraotd',array_column($model->toarray(),'maphongtraotd'))->get();
+            //$m_trangthai_hoso = trangthaihoso::where('phanloai', 'dshosothiduakhenthuong')->wherein('trangthai',['CD','DD'])->orderby('thoigian', 'desc')->get();
             $m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
             //dd($ngayhientai);
             foreach ($model as $DangKy) {
@@ -66,15 +65,15 @@ class dshosothiduaController extends Controller
                 $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd);
                 $DangKy->sohoso = $HoSo == null ? 0 : $HoSo->count();
                 $HoSodv = $HoSo->where('madonvi', $inputs['madonvi'])->first();
-                $trangthai = $m_trangthai_hoso->where('mahoso', $HoSodv->mahosotdkt ?? '')->where('madonvi', $inputs['madonvi'])->first();
+                //$trangthai = $m_trangthai_hoso->where('mahoso', $HoSodv->mahosotdkt ?? '')->where('madonvi', $inputs['madonvi'])->first();
 
-                $DangKy->trangthai = $trangthai->trangthai ?? 'CXD';
-                $DangKy->ngaychuyen = $trangthai->thoigian ?? '';
+                $DangKy->trangthai = $HoSodv->trangthai ?? 'CXD';
+                $DangKy->ngaychuyen = $HoSodv->thoigian ?? '';
                 $DangKy->hosodonvi = $HoSodv == null ? 0 : 1;
                 $DangKy->id = $HoSodv == null ? -1 : $HoSodv->id;
                 $DangKy->mahosotdkt = $HoSodv == null ? -1 : $HoSodv->mahosotdkt;
             }
-            //dd($donvi->madiaban);
+            //dd($model);
 
             return view('NghiepVu.ThiDuaKhenThuong.HoSoThiDua.ThongTin')
                 ->with('inputs', $inputs)
@@ -162,9 +161,10 @@ class dshosothiduaController extends Controller
 
             $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahosotdkt'])->first();
             if ($model == null) {
+                $inputs['trangthai']='CC';
                 dshosothiduakhenthuong::create($inputs);
                 $trangthai = new trangthaihoso();
-                $trangthai->trangthai = 'CC';
+                $trangthai->trangthai = $inputs['trangthai'];
                 $trangthai->madonvi = $inputs['madonvi'];
                 $trangthai->phanloai = 'dshosothiduakhenthuong';
                 $trangthai->mahoso = $inputs['mahosotdkt'];
@@ -198,14 +198,22 @@ class dshosothiduaController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahoso'])->first();
+            $m_donvi = viewdiabandonvi::where('madonvi',$inputs['madonvi_nhan'])->first();
             //dd($model);
+            $model->trangthai = 'CD';
+            $model->madonvi_nhan = $inputs['madonvi_nhan'];
+            $model->thoigian = date('Y-m-d H:i:s');
+            setChuyenHoSo($m_donvi->capdo,$model,['madonvi'=>$inputs['madonvi_nhan'],'thoigian'=>$model->thoigian,'trangthai'=>'CD']);
+            //dd($model);
+            $model->save();
+            
             $trangthai = new trangthaihoso();
             $trangthai->trangthai = 'CD';
             $trangthai->madonvi = $model->madonvi;
             $trangthai->madonvi_nhan = $inputs['madonvi_nhan'];
             $trangthai->phanloai = 'dshosothiduakhenthuong';
             $trangthai->mahoso = $model->mahosotdkt;
-            $trangthai->thoigian = date('Y-m-d H:i:s');
+            $trangthai->thoigian = $model->thoigian;
             $trangthai->save();
 
             return redirect('HoSoThiDua/ThongTin?madonvi=' . $model->madonvi);
