@@ -37,8 +37,7 @@
             <div class="card-toolbar">
                 <!--begin::Button-->
                 @if (chkPhanQuyen('dshosothidua', 'modify'))
-                    <a href="{{ url('/HoSoThiDua/Them?madonvi=' . $inputs['madonvi']) }}"
-                        class="btn btn-success btn-xs">
+                    <a href="{{ url('/HoSoThiDua/Them?madonvi=' . $inputs['madonvi']) }}" class="btn btn-success btn-xs">
                         <i class="fa fa-plus"></i> Thêm mới</a>
                 @endif
                 <!--end::Button-->
@@ -90,49 +89,69 @@
                                 <th style="text-align: center" width="8%">Số lượng</th>
                             </tr>
                         </thead>
-                        @foreach($model as $key => $tt)
-                            <tr class="{{$tt->nhanhoso == 'DANGNHAN' ? 'text-success' : ''}}">
-                                <td style="text-align: center">{{$key+1}}</td>
-                                <td>{{$tt->tendonvi}}</td>
-                                <td>{{$tt->noidung}}</td>
-                                <td>{{getDayVn($tt->tungay)}}</td>
-                                <td>{{getDayVn($tt->denngay)}}</td>
-                                <td style="text-align: center">{{$a_trangthaihoso[$tt->nhanhoso]}}</td>
-                                <td style="text-align: center">{{chkDbl($tt->sohoso)}}</td>
+                        @foreach ($model as $key => $tt)
+                            <tr class="{{ $tt->nhanhoso == 'DANGNHAN' ? 'text-success' : '' }}">
+                                <td style="text-align: center">{{ $key + 1 }}</td>
+                                <td>{{ $tt->tendonvi }}</td>
+                                <td>{{ $tt->noidung }}</td>
+                                <td>{{ getDayVn($tt->tungay) }}</td>
+                                <td>{{ getDayVn($tt->denngay) }}</td>
+                                <td style="text-align: center">{{ $a_trangthaihoso[$tt->nhanhoso] }}</td>
+                                <td style="text-align: center">{{ chkDbl($tt->sohoso) }}</td>
                                 @include('includes.td.td_trangthai_hoso')
-                                <td style="text-align: center">{{chkDbl($tt->hosodonvi)}}</td>
+                                <td style="text-align: center">{{ chkDbl($tt->hosodonvi) }}</td>
 
                                 <td style="text-align: center">
-                                    <a title="Thông tin phong trào" href="{{url('/dangkytd/'.$tt->id)}}" class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                    <a title="Thông tin phong trào"
+                                        href="{{ url('PhongTraoThiDua/Sua?maphongtraotd=' . $tt->maphongtraotd . '&trangthai=false') }}"
+                                        class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-success"></i></a>
-                                    @if($tt->nhanhoso == 'DANGNHAN')
-                                        @if(in_array($tt->trangthai, ['CC','BTL','CXD']))
-                                            <a title="Hồ sơ đăng ký phong trào" href="{{url('/HoSoThiDua/Them?mahosotdkt='.$tt->mahosotdkt.'&madonvi='.$inputs['madonvi'].'&maphongtraotd='.$tt->maphongtraotd.'&trangthai=true')}}" class="btn btn-sm btn-clean btn-icon">
+                                    @if ($tt->nhanhoso == 'DANGNHAN')
+                                        @if (in_array($tt->trangthai, ['CC', 'BTL', 'CXD']))
+                                            <a title="Hồ sơ đăng ký phong trào"
+                                                href="{{ url('/HoSoThiDua/Them?mahosotdkt=' .$tt->mahosotdkt .'&madonvi=' .$inputs['madonvi'] .'&maphongtraotd=' .$tt->maphongtraotd .'&trangthai=true') }}"
+                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-lg la fa-check-square text-primary"></i></a>
                                         @else
-                                            <a title="Hồ sơ đăng ký phong trào" href="{{url('/HoSoThiDua/Them?mahosotdkt='.$tt->mahosotdkt.'&madonvi='.$inputs['madonvi'].'&maphongtraotd='.$tt->maphongtraotd.'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon">
+                                            <a title="Hồ sơ đăng ký phong trào"
+                                                href="{{ url('/HoSoThiDua/Them?mahosotdkt=' .$tt->mahosotdkt .'&madonvi=' .$inputs['madonvi'] .'&maphongtraotd=' .$tt->maphongtraotd .'&trangthai=false') }}"
+                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-lg la fa-check-square text-primary"></i></a>
                                         @endif
-                                        @if($tt->hosodonvi > 0 && in_array($tt->trangthai, ['CC','BTL']))
-                                        <button title="Trình hồ sơ đăng ký" type="button" onclick="confirmChuyen('{{$tt->mahosotdkt}}','/HoSoThiDua/ChuyenHoSo')" class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm" data-toggle="modal">
-                                            <i class="icon-lg la fa-share-square text-dark"></i></button>
+                                        @if ($tt->hosodonvi > 0 && in_array($tt->trangthai, ['CC', 'BTL']))
+                                            <button title="Trình hồ sơ đăng ký" type="button"
+                                                onclick="confirmChuyen('{{ $tt->mahosotdkt }}','/HoSoThiDua/ChuyenHoSo')"
+                                                class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm"
+                                                data-toggle="modal">
+                                                <i class="icon-lg la fa-share-square text-dark"></i></button>
                                         @endif
+                                    @else
+                                        <a title="Hồ sơ đăng ký phong trào"
+                                            href="{{ url('/HoSoThiDua/Them?mahosotdkt=' .$tt->mahosotdkt .'&madonvi=' .$inputs['madonvi'] .'&maphongtraotd=' .$tt->maphongtraotd .'&trangthai=false') }}"
+                                            class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la fa-check-square text-primary"></i></a>
                                     @endif
 
-                                    @if($tt->trangthai == 'BTL')
-                                        <button title="Lý do hồ sơ bị trả lại" type="button" onclick="viewLiDo('{{$tt->mahosotdkt}}','{{$inputs['madonvi']}}')" class="btn btn-sm btn-clean btn-icon" data-target="#lydo-show" data-toggle="modal">
+                                    @if ($tt->trangthai == 'BTL')
+                                        <button title="Lý do hồ sơ bị trả lại" type="button"
+                                            onclick="viewLiDo('{{ $tt->mahosotdkt }}','{{ $inputs['madonvi'] }}')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#lydo-show"
+                                            data-toggle="modal">
                                             <i class="icon-lg la fa-archive text-info"></i></button>
                                     @endif
 
-                                    @if(in_array($tt->trangthai, ['CC','BTL','CXD']) && $tt->hosodonvi > 0)
-                                        <button type="button" onclick="confirmDelete('{{$tt->id}}','/HoSoThiDua/Xoa')" class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal" data-toggle="modal">
+                                    @if (in_array($tt->trangthai, ['CC', 'BTL', 'CXD']) && $tt->hosodonvi > 0)
+                                        <button type="button"
+                                            onclick="confirmDelete('{{ $tt->id }}','/HoSoThiDua/Xoa')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal"
+                                            data-toggle="modal">
                                             <i class="icon-lg la fa-trash text-danger"></i></button>
                                     @endif
 
                                 </td>
                             </tr>
                         @endforeach
-                    </table>                    
+                    </table>
                 </div>
             </div>
         </div>

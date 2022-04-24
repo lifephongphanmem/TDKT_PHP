@@ -34,7 +34,7 @@
             <div class="card-title">
                 <h3 class="card-label text-uppercase">Danh sách hồ sơ thi đua từ đơn vị cấp dưới</h3>
             </div>
-            <div class="card-toolbar">                
+            <div class="card-toolbar">
             </div>
         </div>
         <div class="card-body">
@@ -80,53 +80,68 @@
                                 <th width="15%">Pham vị phát động</th>
                             </tr>
                         </thead>
-                        @foreach($model as $key => $tt)
-                            <tr class="{{$tt->nhanhoso == 'DANGNHAN' ? 'text-success' : ''}}">
-                                <td style="text-align: center">{{$key+1}}</td>
-                                <td>{{$tt->tendonvi}}</td>
-                                <td>{{$tt->noidung}}</td>
-                                <td>{{getDayVn($tt->tungay)}}</td>
-                                <td>{{getDayVn($tt->denngay)}}</td>
-                                <td style="text-align: center">{{$a_trangthaihoso[$tt->nhanhoso]}}</td>
-                                <td style="text-align: center">{{chkDbl($tt->sohoso)}}</td>
-                                <td>{{$a_phamvi[$tt->phamviapdung] ?? ''}}</td>
+                        @foreach ($model as $key => $tt)
+                            <tr class="{{ $tt->nhanhoso == 'DANGNHAN' ? 'text-success' : '' }}">
+                                <td style="text-align: center">{{ $key + 1 }}</td>
+                                <td>{{ $tt->tendonvi }}</td>
+                                <td>{{ $tt->noidung }}</td>
+                                <td>{{ getDayVn($tt->tungay) }}</td>
+                                <td>{{ getDayVn($tt->denngay) }}</td>
+                                <td style="text-align: center">{{ $a_trangthaihoso[$tt->nhanhoso] }}</td>
+                                <td style="text-align: center">{{ chkDbl($tt->sohoso) }}</td>
+                                <td>{{ $a_phamvi[$tt->phamviapdung] ?? '' }}</td>
 
                                 <td style="text-align: center">
-                                    <a title="Thông tin phong trào" href="{{url('/PhongTraoThiDua/Sua?maphongtraotd='.$tt->maphongtraotd.'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                    <a title="Thông tin phong trào"
+                                        href="{{ url('/PhongTraoThiDua/Sua?maphongtraotd=' . $tt->maphongtraotd . '&trangthai=false') }}"
+                                        class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-success"></i></a>
-                                    @if($tt->nhanhoso == 'DANGNHAN')
-                                        @if(in_array($tt->trangthai, ['CC','BTL','CXD']))
-                                            <a title="Danh sách chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=true')}}" class="btn btn-sm btn-clean btn-icon">
+                                    @if ($tt->nhanhoso == 'DANGNHAN')
+                                        @if (in_array($tt->trangthai, ['CC', 'BTL', 'CXD']))
+                                            <a title="Danh sách chi tiết"
+                                                href="{{ url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd=' .$tt->maphongtraotd .'&madonvi=' .$inputs['madonvi'] .'&trangthai=true') }}"
+                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-lg la la-clipboard-list text-dark"></i></a>
 
-                                                <button title="Kết thúc phong trào" type="button" onclick="setKetQua('{{$tt->maphongtraotd}}')" class="btn btn-sm btn-clean btn-icon" data-target="#modal-KetThuc" data-toggle="modal">
-                                                    <i class="icon-lg la fa-check text-warning"></i></button>
+                                            <button title="Kết thúc phong trào" type="button"
+                                                onclick="setKetQua('{{ $tt->maphongtraotd }}')"
+                                                class="btn btn-sm btn-clean btn-icon" data-target="#modal-KetThuc"
+                                                data-toggle="modal">
+                                                <i class="icon-lg la fa-check text-warning"></i></button>
                                         @else
-                                            <a title="Danh sách chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon">
+                                            <a title="Danh sách chi tiết"
+                                                href="{{ url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd=' .$tt->maphongtraotd .'&madonvi=' .$inputs['madonvi'] .'&trangthai=false') }}"
+                                                class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-lg la la-clipboard-list text-dark"></i></a>
                                         @endif
-                                        
+                                    @else
+                                        <a title="Danh sách chi tiết"
+                                            href="{{ url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd=' .$tt->maphongtraotd .'&madonvi=' .$inputs['madonvi'] .'&trangthai=true') }}"
+                                            class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la la-clipboard-list text-dark"></i></a>
                                     @endif
 
                                 </td>
                             </tr>
                         @endforeach
-                    </table>                    
+                    </table>
                 </div>
             </div>
         </div>
     </div>
     <!--end::Card-->
-    <div class="modal fade" id="modal-KetThuc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-KetThuc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                {!! Form::open(['url'=>'/XetDuyetHoSoThiDua/KetThuc','method'=>'post' , 'files'=>true,'id' => 'frm_KetThuc','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!}
+                {!! Form::open(['url' => '/XetDuyetHoSoThiDua/KetThuc', 'method' => 'post', 'files' => true, 'id' => 'frm_KetThuc', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
                 <div class="modal-header">
                     
                     <h4 class="modal-title">Đồng ý kết thúc phong trào và xét khen thưởng?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 </div>
                 <input type="hidden" name="maphongtraotd" id="maphongtraotd">
+                <input type="hidden" name="madonvi" value="{{ $inputs['madonvi'] }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -145,7 +160,7 @@
         <!-- /.modal-dialog -->
     </div>
     <script>
-        function setKetQua(maphongtraotd){
+        function setKetQua(maphongtraotd) {
             $('#frm_KetThuc').find("[name='maphongtraotd']").val(maphongtraotd);
         }
     </script>

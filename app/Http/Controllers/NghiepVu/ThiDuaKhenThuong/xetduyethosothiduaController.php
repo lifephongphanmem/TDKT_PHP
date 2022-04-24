@@ -48,10 +48,9 @@ class xetduyethosothiduaController extends Controller
             $m_hoso = dshosothiduakhenthuong::wherein('mahosotdkt', function ($qr) {
                 $qr->select('mahoso')->from('trangthaihoso')->wherein('trangthai', ['CD', 'DD'])->where('phanloai', 'dshosothiduakhenthuong')->get();
             })->get();
-            $m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
+            //$m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
             //dd($ngayhientai);
-            foreach ($model as $DangKy) {
-                $DangKy->trangthai = $m_trangthai_phongtrao->where('mahoso', $DangKy->maphongtraotd)->first()->trangthai ?? 'CC';
+            foreach ($model as $DangKy) {                
                 if ($DangKy->trangthai == 'CC') {
                     $DangKy->nhanhoso = 'CHUABATDAU';
                     if ($DangKy->tungay < $ngayhientai && $DangKy->denngay > $ngayhientai) {

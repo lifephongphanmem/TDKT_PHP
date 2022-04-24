@@ -49,7 +49,7 @@ class dshosothiduaController extends Controller
             $m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
             //dd($ngayhientai);
             foreach ($model as $DangKy) {
-                $DangKy->trangthai = $m_trangthai_phongtrao->where('mahoso', $DangKy->maphongtraotd)->first()->trangthai ?? 'CC';
+                
                 if ($DangKy->trangthai == 'CC') {
                     $DangKy->nhanhoso = 'CHUABATDAU';
                     if ($DangKy->tungay < $ngayhientai && $DangKy->denngay > $ngayhientai) {
@@ -62,7 +62,7 @@ class dshosothiduaController extends Controller
                     $DangKy->nhanhoso = 'KETTHUC';
                 }
 
-                $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd);
+                $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->wherein('trangthai',['CD','DD']);
                 $DangKy->sohoso = $HoSo == null ? 0 : $HoSo->count();
                 $HoSodv = $HoSo->where('madonvi', $inputs['madonvi'])->first();
                 //$trangthai = $m_trangthai_hoso->where('mahoso', $HoSodv->mahosotdkt ?? '')->where('madonvi', $inputs['madonvi'])->first();
