@@ -198,6 +198,21 @@ function getDonViXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieud
             return array_column($model->toarray(), 'tendonvi', 'madonvi');
     }
 }
+
+function getDonViXetDuyetHoSoCumKhoi($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
+{
+    $model = \App\Model\View\viewdiabandonvi::wherein('madonvi', function($qr){
+        $qr->select('madonviql')->from('dscumkhoi')->get();
+    })->get();
+    switch($kieudulieu){
+        case 'MODEL': {
+            return $model;
+            break;
+        }
+        default: 
+            return array_column($model->toarray(), 'tendonvi', 'madonvi');
+    }
+} 
 function getDiaBanXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
 {
     $model = \App\Model\DanhMuc\dsdiaban::wherein('capdo', ['T', 'H'])->get();
