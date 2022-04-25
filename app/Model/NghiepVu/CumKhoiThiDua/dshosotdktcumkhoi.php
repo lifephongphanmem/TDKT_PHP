@@ -1,29 +1,28 @@
 <?php
 
-namespace App\Model\NghiepVu\ThiDuaKhenThuong;
+namespace App\Model\NghiepVu\CumKhoiThiDua;
 
 use Illuminate\Database\Eloquent\Model;
 
-class dshosokhenthuong extends Model
+class dshosotdktcumkhoi extends Model
 {
-    protected $table = 'dshosokhenthuong';
+    protected $table = 'dshosotdktcumkhoi';
     protected $fillable = [
         'id',
-        'mahosokt',
+        'mahosotdkt',
         'ngayhoso',
         'noidung',
+        'phanloai', //hồ sơ thi đua; hồ sơ khen thưởng (để sau thống kê)
         'maloaihinhkt', //lấy từ phong trào nếu là hồ sơ thi đua
         'maphongtraotd', //tùy theo phân loại
-        'donvikhenthuong',
-        'capkhenthuong',
-        'chucvunguoiky',
-        'hotennguoiky',
+        'macumkhoi',
         'ghichu',
         //File đính kèm
-        'totrinh', // Tờ trình
-        'qdkt', // Quyết định
+        'baocao', //báo cáo thành tích
         'bienban', //biên bản cuộc họp
         'tailieukhac', //tài liệu khác
+        //Kết quả khen thưởng
+        'mahosokt',
         //Trạng thái đơn vị
         'madonvi',
         'madonvi_nhan',

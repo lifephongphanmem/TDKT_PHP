@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\DanhMuc\dmdanhhieuthidua;
 use App\Model\DanhMuc\dmdanhhieuthidua_tieuchuan;
+use App\Model\DanhMuc\dmhinhthuckhenthuong;
 use App\Model\DanhMuc\dmloaihinhkhenthuong;
 use App\Model\DanhMuc\dsdiaban;
 use App\Model\HeThong\trangthaihoso;
@@ -34,12 +35,12 @@ class dsphongtraothiduaController extends Controller
                 $model = dsphongtraothidua::where('madonvi', $inputs['madonvi'])->whereYear('ngayqd', $inputs['nam'])->orderby('ngayqd')->get();
             else
                 $model = dsphongtraothidua::where('madonvi', $inputs['madonvi'])->orderby('ngayqd')->get();
-            $m_trangthai = trangthaihoso::where('madonvi',$inputs['madonvi'])->where('phanloai','dsphongtraothidua')->get();
+            $m_trangthai = trangthaihoso::where('madonvi', $inputs['madonvi'])->where('phanloai', 'dsphongtraothidua')->get();
             foreach ($model as $chitiet) {
-                $trangthai = $m_trangthai->where('mahoso',$chitiet->maphongtraotd)->first();
-                if($trangthai != null){
-                    $chitiet->trangthai = $trangthai->trangthai; 
-                }else{
+                $trangthai = $m_trangthai->where('mahoso', $chitiet->maphongtraotd)->first();
+                if ($trangthai != null) {
+                    $chitiet->trangthai = $trangthai->trangthai;
+                } else {
                     $chitiet->trangthai = 'CXD';
                 }
             }
@@ -85,6 +86,7 @@ class dsphongtraothiduaController extends Controller
                 ->with('a_danhhieu', array_column(dmdanhhieuthidua::all()->toArray(), 'tendanhhieutd', 'madanhhieutd'))
                 ->with('a_tieuchuan', array_column(dmdanhhieuthidua_tieuchuan::all()->toArray(), 'tentieuchuandhtd', 'matieuchuandhtd'))
                 ->with('a_loaihinhkt', array_column(dmloaihinhkhenthuong::all()->toArray(), 'tenloaihinhkt', 'maloaihinhkt'))
+                ->with('a_hinhthuckt', array_column(dmhinhthuckhenthuong::all()->toArray(), 'tenhinhthuckt', 'mahinhthuckt'))
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Danh sách phong trào thi đua');
         } else
@@ -176,6 +178,7 @@ class dsphongtraothiduaController extends Controller
         if ($model == null) {
             $model = new dsphongtraothidua_khenthuong();
             $model->madanhhieutd = $m_danhhieu->madanhhieutd;
+            $model->mahinhthuckt = $inputs['mahinhthuckt'];
             $model->maphongtraotd = $inputs['maphongtraotd'];
             $model->soluong = $inputs['soluong'];
             $model->tendanhhieutd = $m_danhhieu->tendanhhieutd;
@@ -194,12 +197,14 @@ class dsphongtraothiduaController extends Controller
             }
         } else {
             $model->soluong = $inputs['soluong'];
+            $model->mahinhthuckt = $inputs['mahinhthuckt'];
             $model->tendanhhieutd = $m_danhhieu->tendanhhieutd;
             $model->phanloai = $m_danhhieu->phanloai;
             $model->save();
         }
 
         $modelct = dsphongtraothidua_khenthuong::where('maphongtraotd', $inputs['maphongtraotd'])->get();
+        $a_hinhthuckt = array_column(dmhinhthuckhenthuong::all()->toArray(), 'tenhinhthuckt', 'mahinhthuckt');
         if (isset($modelct)) {
 
             $result['message'] = '<div class="row" id="dskhenthuong">';
@@ -211,6 +216,7 @@ class dsphongtraothiduaController extends Controller
             $result['message'] .= '<th width="2%" style="text-align: center">STT</th>';
             $result['message'] .= '<th style="text-align: center" width="25%">Phân loại</th>';
             $result['message'] .= '<th style="text-align: center">Danh hiệu thi đua</th>';
+            $result['message'] .= '<th style="text-align: center">Hình thức khen thưởng</th>';
             $result['message'] .= '<th style="text-align: center" width="8%">Số lượng</th>';
             $result['message'] .= '<th style="text-align: center" width="10%">Thao tác</th>';
             $result['message'] .= '</tr>';
@@ -224,11 +230,12 @@ class dsphongtraothiduaController extends Controller
                 $result['message'] .= '<td style="text-align: center">' . $key++ . '</td>';
                 $result['message'] .= '<td>' . $ct->phanloai . '</td>';
                 $result['message'] .= '<td class="active">' . $ct->tendanhhieutd . '</td>';
+                $result['message'] .= '<td>' . ($a_hinhthuckt[$ct->mahinhthuckt] ?? '') . '</td>';
                 $result['message'] .= '<td style="text-align: center">' . $ct->soluong . '</td>';
                 $result['message'] .= '<td>' .
-                    '<button type="button" data-target="#modal-delete" data-toggle="modal" class="btn btn-sm btn-clean btn-icon" onclick="getId(' . $ct->id . ')" ><i class="fa fa-trash-o"></i></button>' .
-                    '<button type="button" data-target="#modal-edit" data-toggle="modal" class="btn btn-sm btn-clean btn-icon" onclick="editDanhHieu(' . $ct->id . ')"><i class="fa fa-edit"></i></button>'
-                    . '</td>';
+                    '<button title="Tiêu chuẩn" type="button" onclick="getTieuChuan(' . $ct->madanhhieutd . ')" class="btn btn-sm btn-clean btn-icon" data-target="#modal-tieuchuan" data-toggle="modal"> <i class="icon-lg la fa-list text-dark"></i></button>' .
+                    '<button title="Xóa" type="button" onclick="getId(' . $ct->id . ')"  class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal" data-toggle="modal">  <i class="icon-lg la fa-trash-alt text-danger"></i></button>' .
+                    '</td>';
 
                 $result['message'] .= '</tr>';
             }

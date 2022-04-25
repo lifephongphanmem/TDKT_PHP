@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDshosokhenthuongTable extends Migration
+class CreateDshosotdktcumkhoiTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,22 @@ class CreateDshosokhenthuongTable extends Migration
      */
     public function up()
     {
-        Schema::create('dshosokhenthuong', function (Blueprint $table) {
+        Schema::create('dshosotdktcumkhoi', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('mahosokt')->unique();    
+            $table->string('mahosotdkt')->unique();    
             $table->date('ngayhoso')->nullable();   
-            $table->string('noidung')->nullable();
+            $table->string('noidung')->nullable();            
+            $table->string('phanloai')->nullable();//hồ sơ thi đua; hồ sơ khen thưởng (để sau thống kê)
             $table->string('maloaihinhkt')->nullable();//lấy từ phong trào nếu là hồ sơ thi đua
             $table->string('maphongtraotd')->nullable();//tùy theo phân loại
-            $table->string('donvikhenthuong')->nullable();
-            $table->string('capkhenthuong')->nullable();
-            $table->string('chucvunguoiky')->nullable();
-            $table->string('hotennguoiky')->nullable();
+            $table->string('macumkhoi')->nullable();
             $table->string('ghichu')->nullable();
             //File đính kèm
-            $table->string('totrinh')->nullable(); // Tờ trình
-            $table->string('qdkt')->nullable(); // Quyết định
+            $table->string('baocao')->nullable();//báo cáo thành tích
             $table->string('bienban')->nullable();//biên bản cuộc họp
             $table->string('tailieukhac')->nullable();//tài liệu khác
+            //Kết quả khen thưởng
+            $table->string('mahosokt')->nullable();
             //Trạng thái đơn vị
             $table->string('madonvi')->nullable(50);
             $table->string('madonvi_nhan')->nullable(50);
@@ -69,6 +68,6 @@ class CreateDshosokhenthuongTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dshosokhenthuong');
+        Schema::dropIfExists('dshosotdktcumkhoi');
     }
 }

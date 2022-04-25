@@ -43,4 +43,9 @@ Route::group(['prefix'=>'XetDuyetHoSoThiDua'], function(){
 Route::group(['prefix'=>'KhenThuongHoSoThiDua'], function(){
     Route::get('ThongTin','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@ThongTin');
     Route::post('KhenThuong','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@KhenThuong');
+    Route::get('DanhSach','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@DanhSach');
+
+    Route::post('HoSo','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@HoSo');
+    Route::post('CaNhan','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@CaNhan');
+    Route::post('TapThe','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@TapThe');
 });

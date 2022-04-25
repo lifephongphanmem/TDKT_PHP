@@ -44,12 +44,12 @@ class dshosothiduaController extends Controller
             })->orderby('tungay')->get();
 
             $ngayhientai = date('Y-m-d');
-            $m_hoso = dshosothiduakhenthuong::wherein('maphongtraotd',array_column($model->toarray(),'maphongtraotd'))->get();
+            $m_hoso = dshosothiduakhenthuong::wherein('maphongtraotd', array_column($model->toarray(), 'maphongtraotd'))->get();
             //$m_trangthai_hoso = trangthaihoso::where('phanloai', 'dshosothiduakhenthuong')->wherein('trangthai',['CD','DD'])->orderby('thoigian', 'desc')->get();
             $m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
             //dd($ngayhientai);
             foreach ($model as $DangKy) {
-                
+
                 if ($DangKy->trangthai == 'CC') {
                     $DangKy->nhanhoso = 'CHUABATDAU';
                     if ($DangKy->tungay < $ngayhientai && $DangKy->denngay > $ngayhientai) {
@@ -62,7 +62,7 @@ class dshosothiduaController extends Controller
                     $DangKy->nhanhoso = 'KETTHUC';
                 }
 
-                $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->wherein('trangthai',['CD','DD']);
+                $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->wherein('trangthai', ['CD', 'DD']);
                 $DangKy->sohoso = $HoSo == null ? 0 : $HoSo->count();
                 $HoSodv = $HoSo->where('madonvi', $inputs['madonvi'])->first();
                 //$trangthai = $m_trangthai_hoso->where('mahoso', $HoSodv->mahosotdkt ?? '')->where('madonvi', $inputs['madonvi'])->first();
@@ -161,7 +161,7 @@ class dshosothiduaController extends Controller
 
             $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahosotdkt'])->first();
             if ($model == null) {
-                $inputs['trangthai']='CC';
+                $inputs['trangthai'] = 'CC';
                 dshosothiduakhenthuong::create($inputs);
                 $trangthai = new trangthaihoso();
                 $trangthai->trangthai = $inputs['trangthai'];
@@ -198,15 +198,15 @@ class dshosothiduaController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahoso'])->first();
-            $m_donvi = viewdiabandonvi::where('madonvi',$inputs['madonvi_nhan'])->first();
+            $m_donvi = viewdiabandonvi::where('madonvi', $inputs['madonvi_nhan'])->first();
             //dd($model);
             $model->trangthai = 'CD';
             $model->madonvi_nhan = $inputs['madonvi_nhan'];
             $model->thoigian = date('Y-m-d H:i:s');
-            setChuyenHoSo($m_donvi->capdo,$model,['madonvi'=>$inputs['madonvi_nhan'],'thoigian'=>$model->thoigian,'trangthai'=>'CD']);
+            setChuyenHoSo($m_donvi->capdo, $model, ['madonvi' => $inputs['madonvi_nhan'], 'thoigian' => $model->thoigian, 'trangthai' => 'CD']);
             //dd($model);
             $model->save();
-            
+
             $trangthai = new trangthaihoso();
             $trangthai->trangthai = 'CD';
             $trangthai->madonvi = $model->madonvi;
@@ -238,6 +238,8 @@ class dshosothiduaController extends Controller
         $inputs = $request->all();
         //$m_danhhieu = dmdanhhieuthidua::where('madanhhieutd', $inputs['madanhhieutd'])->first();
         //Chưa tối ưu và tìm kiếm trùng đối tượng
+        $m_phongtrao = dsphongtraothidua_khenthuong::where('madanhhieutd', $inputs['madanhhieutd'])
+            ->where('maphongtraotd', $inputs['maphongtraotd'])->first();
         $model = dshosothiduakhenthuong_khenthuong::where('madoituong', $inputs['madoituong'])
             ->where('madanhhieutd', $inputs['madanhhieutd'])
             ->where('mahosotdkt', $inputs['mahosotdkt'])->first();
@@ -248,6 +250,7 @@ class dshosothiduaController extends Controller
             $model->phanloai = 'CANHAN';
             $model->madonvi = $inputs['madonvi'];
             $model->madanhhieutd = $inputs['madanhhieutd'];
+            $model->mahinhthuckt = $m_phongtrao->mahinhthuckt ?? '';
             $model->ngaysinh = $inputs['ngaysinh'];
             $model->gioitinh = $inputs['gioitinh'];
             $model->chucvu = $inputs['chucvu'];
@@ -336,6 +339,8 @@ class dshosothiduaController extends Controller
         $inputs = $request->all();
         $m_donvi = DSDonVi::where('madonvi', $inputs['matapthe'])->first();
         //Chưa tối ưu và tìm kiếm trùng đối tượng
+        $m_phongtrao = dsphongtraothidua_khenthuong::where('madanhhieutd', $inputs['madanhhieutd'])
+        ->where('maphongtraotd', $inputs['maphongtraotd'])->first();
         $model = dshosothiduakhenthuong_khenthuong::where('matapthe', $inputs['matapthe'])
             ->where('madanhhieutd', $inputs['madanhhieutd'])
             ->where('mahosotdkt', $inputs['mahosotdkt'])->first();
@@ -343,6 +348,7 @@ class dshosothiduaController extends Controller
             $model = new dshosothiduakhenthuong_khenthuong();
             $model->matapthe = $inputs['matapthe'];
             $model->mahosotdkt = $inputs['mahosotdkt'];
+            $model->mahinhthuckt = $m_phongtrao->mahinhthuckt ?? '';
             $model->tentapthe = $m_donvi->tendonvi ?? '';
             $model->phanloai = 'TAPTHE';
             $model->madonvi = $inputs['madonvi'];

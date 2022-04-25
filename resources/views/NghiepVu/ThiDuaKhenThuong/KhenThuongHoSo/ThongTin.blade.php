@@ -34,7 +34,7 @@
             <div class="card-title">
                 <h3 class="card-label text-uppercase">Danh sách phong trào thi đua chờ xét khen thưởng trên địa bàn</h3>
             </div>
-            <div class="card-toolbar">                
+            <div class="card-toolbar">
             </div>
         </div>
         <div class="card-body">
@@ -80,75 +80,120 @@
                                 <th width="15%">Pham vị phát động</th>
                             </tr>
                         </thead>
-                        @foreach($model as $key => $tt)
-                            <tr class="{{$tt->nhanhoso == 'DANGNHAN' ? 'text-success' : ''}}">
-                                <td style="text-align: center">{{$key+1}}</td>
-                                <td>{{$tt->tendonvi}}</td>
-                                <td>{{$tt->noidung}}</td>
-                                <td>{{getDayVn($tt->tungay)}}</td>
-                                <td>{{getDayVn($tt->denngay)}}</td>
-                                <td style="text-align: center">{{$a_trangthaihoso[$tt->nhanhoso]}}</td>
-                                <td style="text-align: center">{{chkDbl($tt->sohoso)}}</td>
-                                <td>{{$a_phamvi[$tt->phamviapdung] ?? ''}}</td>
+                        @foreach ($model as $key => $tt)
+                            <tr class="{{ $tt->nhanhoso == 'DANGNHAN' ? 'text-success' : '' }}">
+                                <td style="text-align: center">{{ $key + 1 }}</td>
+                                <td>{{ $tt->tendonvi }}</td>
+                                <td>{{ $tt->noidung }}</td>
+                                <td>{{ getDayVn($tt->tungay) }}</td>
+                                <td>{{ getDayVn($tt->denngay) }}</td>
+                                <td style="text-align: center">{{ $a_trangthaihoso[$tt->nhanhoso] }}</td>
+                                <td style="text-align: center">{{ chkDbl($tt->sohoso) }}</td>
+                                <td>{{ $a_phamvi[$tt->phamviapdung] ?? '' }}</td>
 
                                 <td style="text-align: center">
-                                    <a title="Thông tin phong trào" href="{{url('/PhongTraoThiDua/Sua?maphongtraotd='.$tt->maphongtraotd.'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                    <a title="Thông tin phong trào"
+                                        href="{{ url('/PhongTraoThiDua/Sua?maphongtraotd=' . $tt->maphongtraotd . '&trangthai=false') }}"
+                                        class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-dark"></i></a>
 
-                                    <a title="Danh sách hồ sơ chi tiết" href="{{url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd='.$tt->maphongtraotd.'&madonvi='.$inputs['madonvi'].'&trangthai=false')}}" class="btn btn-sm btn-clean btn-icon">
+                                    <a title="Danh sách hồ sơ chi tiết"
+                                        href="{{ url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd=' .$tt->maphongtraotd .'&madonvi=' .$inputs['madonvi'] .'&trangthai=false') }}"
+                                        class="btn btn-sm btn-clean btn-icon">
                                         <i class="icon-lg la la-clipboard-list text-dark"></i></a>
+                                    @if ($tt->mahosokt == '-1')
+                                        <button title="Tạo hồ sơ khen thưởng" type="button"
+                                            onclick="confirmKhenThuong('{{ $tt->maphongtraotd }}','{{ $inputs['madonvi'] }}')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#khenthuong-modal"
+                                            data-toggle="modal">
+                                            <i class="icon-lg la fa-user-check text-success"></i></button>
+                                    @else
+                                        <a title="Thông tin hồ sơ khen thưởng"
+                                            href="{{ url('/KhenThuongHoSoThiDua/DanhSach?mahosokt=' . $tt->mahosokt) }}"
+                                            class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                            <i class="icon-lg la fa-user-check text-dark"></i></a>
+                                    @endif
 
-                                        <button title="Tạo hồ sơ khen thưởng" type="button" onclick="confirmKhenThuong('{{$tt->maphongtraotd}}','{{$inputs['madonvi']}}')" class="btn btn-sm btn-clean btn-icon" data-target="#khenthuong-modal" data-toggle="modal">
-                                            <i class="icon-lg la fa-list text-success"></i></button>
 
                                 </td>
                             </tr>
                         @endforeach
-                    </table>                    
+                    </table>
                 </div>
             </div>
         </div>
     </div>
     <!--end::Card-->
     <!--Modal Nhận hồ sơ-->
-<div id="khenthuong-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
-    {!! Form::open(['url'=>'/KhenThuongHoSoThiDua/KhenThuong','id' => 'frm_khenthuong'])!!}
-    <input type="hidden" name="maphongtraotd" />
-    <input type="hidden" name="madonvi" />
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header modal-header-primary">                
-                <h4 id="modal-header-primary-label" class="modal-title">Đồng ý tạo hồ sơ khen thưởng?</h4>
-                <button type="button" data-dismiss="modal" aria-hidden="true"
-                class="close">&times;</button>
+    <div id="khenthuong-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
+        {!! Form::open(['url' => '/KhenThuongHoSoThiDua/KhenThuong', 'id' => 'frm_khenthuong']) !!}
+        <input type="hidden" name="maphongtraotd" />
+        <input type="hidden" name="madonvi" />
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                    <h4 id="modal-header-primary-label" class="modal-title">Đồng ý tạo hồ sơ khen thưởng?</h4>
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&times;</button>
 
-            </div>
-            <div class="modal-body">
-                ĐƠn vị khen thưởng
-                Cấp khen thưởng
-                Nagày tháng
-                Người ký
-                Chức vụ
-                <p style="color: #0000FF">Hồ sơ đã tiếp nhận và chờ xét duyệt khen thưởng. Bạn cần liên hệ đơn vị tiếp nhận để chỉnh sửa hồ sơ nếu cần!</p>
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickKhenThuong()">Đồng ý</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>Tên đơn vị quyết định khen thưởng</label>
+                            {!! Form::text('donvikhenthuong', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>Cấp độ khen thưởng</label>
+                            {!! Form::select('capkhenthuong', getPhamViApDung(), 'T', ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>Ngày ra quyết định</label>
+                            {!! Form::input('date', 'ngayhoso', date('Y-m-d'), ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>Nội dung khen thưởng</label>
+                            {!! Form::textarea('noidung', null, ['class' => 'form-control', 'rows' => '3']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label>Chức vụ người ký</label>
+                            {!! Form::text('chucvunguoiky', null, ['class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Họ tên người ký</label>
+                            {!! Form::text('hotennguoiky', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
+                    <button type="submit" data-dismiss="modal" class="btn btn-primary" onclick="clickKhenThuong()">Đồng
+                        ý</button>
+                </div>
             </div>
         </div>
+        {!! Form::close() !!}
     </div>
-    {!! Form::close() !!}
-</div>
 
-<script>
-    function clickKhenThuong(){
-        $('#frm_khenthuong').submit();
-    }
+    <script>
+        function clickKhenThuong() {
+            $('#frm_khenthuong').submit();
+        }
 
-    function confirmKhenThuong(maphongtraotd,madonvi) {
-        $('#frm_khenthuong').find("[name='maphongtraotd']").val(maphongtraotd);
-        $('#frm_khenthuong').find("[name='madonvi']").val(madonvi);
-    }
-</script>
+        function confirmKhenThuong(maphongtraotd, madonvi) {
+            $('#frm_khenthuong').find("[name='maphongtraotd']").val(maphongtraotd);
+            $('#frm_khenthuong').find("[name='madonvi']").val(madonvi);
+        }
+    </script>
 @stop

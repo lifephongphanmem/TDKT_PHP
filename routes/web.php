@@ -10,3 +10,4 @@ Route::get('thongtinhotro',function(){
 include('hethong.php');
 include('danhmuc.php');
 include('thiduakhenthuongcaccap.php');
+include('cumkhoi.php');

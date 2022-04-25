@@ -27,6 +27,7 @@
                     _token: CSRF_TOKEN,
                     soluong: $('#soluong').val(),
                     madanhhieutd: $('#madanhhieutd').val(),
+                    mahinhthuckt: $('#mahinhthuckt').val(),
                     maphongtraotd: $('#frm_ThayDoi').find("[name='maphongtraotd']").val()
                 },
                 dataType: 'JSON',
@@ -248,6 +249,7 @@
                                 <th style="text-align: center" width="5%">STT</th>
                                 <th style="text-align: center" width="25%">Phân loại</th>
                                 <th style="text-align: center">Tên danh hiệu</th>
+                                <th style="text-align: center">Hình thức khen thưởng</th>
                                 <th style="text-align: center" width="8%">Số lượng</th>
                                 <th style="text-align: center" width="10%">Thao tác</th>
                             </tr>
@@ -259,6 +261,7 @@
                                     <td style="text-align: center">{{ $i++ }}</td>
                                     <td>{{ $tt->phanloai }}</td>
                                     <td>{{ $tt->tendanhhieutd }}</td>
+                                    <td>{{ ($a_hinhthuckt[$tt->mahinhthuckt] ?? '') }}</td>
                                     <td style="text-align: center">{{ $tt->soluong }}</td>
                                     <td>
                                         <button title="Tiêu chuẩn" type="button"
@@ -313,6 +316,14 @@
                                 {!!Form::text('soluong',null, array('id' => 'soluong','class' => 'form-control'))!!}
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Hình thức khen thưởng</label>
+                                {!!Form::select('mahinhthuckt', $a_hinhthuckt ,null, array('id' => 'mahinhthuckt','class' => 'form-control'))!!}
+                            </div>
+                        </div>                        
                     </div>
                 </div>
                 <div class="modal-footer">

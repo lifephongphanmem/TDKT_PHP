@@ -1,0 +1,4 @@
+Ngày 25/04/2022
+1.In bằng khen 
+2.Khi kết thúc phong trào, khen thưởng phong trào thì các menu "Tạo hồ sơ",'Danh sách phong trào' chưa chuyển trạng thái tương ứng
+3.Chưa cập nhật lại mahoskt về DS hồ sơ

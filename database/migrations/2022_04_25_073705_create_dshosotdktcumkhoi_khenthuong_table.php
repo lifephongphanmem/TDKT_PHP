@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDshosokhenthuongKhenthuongTable extends Migration
+class CreateDshosotdktcumkhoiKhenthuongTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateDshosokhenthuongKhenthuongTable extends Migration
      */
     public function up()
     {
-        Schema::create('dshosokhenthuong_khenthuong', function (Blueprint $table) {
+        Schema::create('dshosotdktcumkhoi_khenthuong', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('stt')->default(1);
-            $table->string('mahosokt')->nullable();
-            $table->string('mahosotdkt')->nullable();//lưu trữ sau cần dùng
+            $table->string('mahosotdkt')->nullable();
             $table->string('madanhhieutd')->nullable();
-            $table->string('noidungkhenthuong')->nullable();//cá nhân, tập thể           
-            $table->string('phanloai')->nullable();//cá nhân, tập thể
+            $table->string('phanloai')->nullable();//cá nhân, tập thể           
             //Thông tin cá nhân 
             $table->string('madoituong')->nullable();
             $table->string('maccvc')->nullable();
@@ -49,6 +47,6 @@ class CreateDshosokhenthuongKhenthuongTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dshosokhenthuong_khenthuong');
+        Schema::dropIfExists('dshosotdktcumkhoi_khenthuong');
     }
 }

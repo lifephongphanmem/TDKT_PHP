@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Model\NghiepVu\ThiDuaKhenThuong;
+namespace App\Model\NghiepVu\CumKhoiThiDua;
 
 use Illuminate\Database\Eloquent\Model;
 
-class dshosokhenthuong_khenthuong extends Model
+class dshosotdktcumkhoi_khenthuong extends Model
 {
-    protected $table = 'dshosokhenthuong_khenthuong';
+    protected $table = 'dshosotdktcumkhoi_khenthuong';
     protected $fillable = [
         'id',
         'stt',
-        'mahosokt',
-        'mahosotdkt', //lưu trữ sau cần dùng
+        'mahosotdkt',
         'madanhhieutd',
-        'noidungkhenthuong',
         'phanloai', //cá nhân, tập thể           
         //Thông tin cá nhân 
         'madoituong',
