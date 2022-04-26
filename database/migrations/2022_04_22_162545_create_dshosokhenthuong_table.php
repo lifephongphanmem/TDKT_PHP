@@ -15,16 +15,19 @@ class CreateDshosokhenthuongTable extends Migration
     {
         Schema::create('dshosokhenthuong', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('mahosokt')->unique();    
-            $table->date('ngayhoso')->nullable();   
+            $table->string('mahosokt')->unique();
+            $table->date('ngayhoso')->nullable();
             $table->string('noidung')->nullable();
             $table->string('maloaihinhkt')->nullable();//lấy từ phong trào nếu là hồ sơ thi đua
             $table->string('maphongtraotd')->nullable();//tùy theo phân loại
+            $table->string('mahosotdkt')->nullable();//tùy theo phân loại
             $table->string('donvikhenthuong')->nullable();
             $table->string('capkhenthuong')->nullable();
             $table->string('chucvunguoiky')->nullable();
             $table->string('hotennguoiky')->nullable();
             $table->string('ghichu')->nullable();
+            $table->string('phanloai')->nullable();//Cụm khối, phong trào
+            $table->string('macumkhoi')->nullable();//tùy theo phân loại
             //File đính kèm
             $table->string('totrinh')->nullable(); // Tờ trình
             $table->string('qdkt')->nullable(); // Quyết định

@@ -78919,7 +78919,7 @@ code {
   border-radius: 0.42rem;
 }
 .dataTables_wrapper .dataTable th, .dataTables_wrapper .dataTable td {
-  font-weight: 400;
+  font-weight: 450;
   font-size: 1rem;
   vertical-align: middle;
   color: #3F4254;
@@ -83297,7 +83297,7 @@ body {
   width: 100px;
 }
 .aside .aside-primary {
-  width: 100px;
+  width: 75px;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }

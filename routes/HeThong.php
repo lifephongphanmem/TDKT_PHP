@@ -3,7 +3,7 @@
 Route::get('DangNhap','HeThong\hethongchungController@DangNhap');
 Route::post('DangNhap','HeThong\hethongchungController@XacNhanDangNhap');
 Route::post('QuenMatKhau','HeThong\hethongchungController@QuenMatKhau');
-Route::post('DangXuat','HeThong\hethongchungController@DangXuat');
+Route::get('DangXuat','HeThong\hethongchungController@DangXuat');
 
 Route::group(['prefix'=>'HeThongChung'], function(){
     Route::get('ThongTin','GeneralConfigsController@index');

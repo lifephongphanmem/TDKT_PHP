@@ -68,7 +68,7 @@
 							<!--begin::Nav-->
 							<ul class="nav flex-column" role="tablist">								
 								<!--begin::Item-->
-								<li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Metronic Features">
+								<li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Trình đơn">
 									<a href="#" class="nav-link btn btn-icon btn-clean btn-lg active" data-toggle="tab" data-target="#kt_aside_tab_2" role="tab">
 										<span class="svg-icon svg-icon-xl">
 											<!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg-->
@@ -91,12 +91,12 @@
 						<!--begin::Footer-->
 						<div class="aside-footer d-flex flex-column align-items-center flex-column-auto py-4 py-lg-10">
 							<!--begin::Aside Toggle-->
-							<span class="aside-toggle btn btn-icon btn-primary btn-hover-primary shadow-sm" id="kt_aside_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Toggle Aside">
+							<span class="aside-toggle btn btn-icon btn-primary btn-hover-primary shadow-sm" id="kt_aside_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Ẩn hiện">
 								<i class="ki ki-bold-arrow-back icon-sm"></i>
 							</span>
 							<!--end::Aside Toggle-->
 							<!--begin::Quick Actions-->
-							<a href="#" class="btn btn-icon btn-clean btn-lg mb-1" id="kt_quick_actions_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Quick Actions">
+							<a href="#" class="btn btn-icon btn-clean btn-lg mb-1" id="kt_quick_actions_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Thông tin hỗ trợ">
 								<span class="svg-icon svg-icon-xl">
 									<!--begin::Svg Icon | path:assets/media/svg/icons/Media/Equalizer.svg-->
 									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -114,7 +114,7 @@
 							<!--end::Quick Actions-->
 							
 							<!--begin::User-->
-							<a href="#" class="btn btn-icon btn-clean btn-lg w-40px h-40px" id="kt_quick_user_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="User Profile">
+							<a href="#" class="btn btn-icon btn-clean btn-lg w-40px h-40px" id="kt_quick_user_toggle" data-toggle="tooltip" data-placement="right" data-container="body" data-boundary="window" title="Thông tin người dùng">
 								<span class="symbol symbol-30 symbol-lg-40">
 									<span class="svg-icon svg-icon-xl">
 										<!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
@@ -159,16 +159,7 @@
 												<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 													<a href="javascript:;" class="menu-link menu-toggle">
 														<span class="svg-icon menu-icon">
-															<!--begin::Svg Icon | path:assets/media/svg/icons/Files/Upload.svg-->
-															<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-																<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-																	<rect x="0" y="0" width="24" height="24" />
-																	<path d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
-																	<rect fill="#000000" opacity="0.3" x="11" y="2" width="2" height="14" rx="1" />
-																	<path d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z" fill="#000000" fill-rule="nonzero" />
-																</g>
-															</svg>
-															<!--end::Svg Icon-->
+															<i class="fas fa-folder"></i>
 														</span>
 														<span class="menu-text font-weight-bold">Khen thưởng theo công trạng</span>
 														<i class="menu-arrow"></i>
@@ -199,16 +190,7 @@
 												<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 													<a href="javascript:;" class="menu-link menu-toggle">
 														<span class="svg-icon menu-icon">
-															<!--begin::Svg Icon | path:assets/media/svg/icons/Files/Upload.svg-->
-															<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-																<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-																	<rect x="0" y="0" width="24" height="24" />
-																	<path d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
-																	<rect fill="#000000" opacity="0.3" x="11" y="2" width="2" height="14" rx="1" />
-																	<path d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z" fill="#000000" fill-rule="nonzero" />
-																</g>
-															</svg>
-															<!--end::Svg Icon-->
+															<i class="fas fa-folder"></i>
 														</span>
 														<span class="menu-text font-weight-bold">Khen thưởng đột xuất</span>
 														<i class="menu-arrow"></i>
@@ -244,87 +226,10 @@
 												@include("HeThong.main_subcumkhoithidua")
 												
 												<li class="menu-section">
-													<h4 class="menu-text">Hiệp y khen thưởng</h4>
+													<h4 class="menu-text">Khen thưởng khác</h4>
 													<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 												</li>
-
-												<li class="menu-section">
-													<h4 class="menu-text">Khen thưởng thời kỳ kháng chiến</h4>
-													<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-												</li>
-
-												<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-													<a href="javascript:;" class="menu-link menu-toggle">
-														<span class="svg-icon menu-icon">
-															<!--begin::Svg Icon | path:assets/media/svg/icons/Files/Upload.svg-->
-															<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-																<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-																	<rect x="0" y="0" width="24" height="24" />
-																	<path d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
-																	<rect fill="#000000" opacity="0.3" x="11" y="2" width="2" height="14" rx="1" />
-																	<path d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z" fill="#000000" fill-rule="nonzero" />
-																</g>
-															</svg>
-															<!--end::Svg Icon-->
-														</span>
-														<span class="menu-text font-weight-bold">Khen thưởng thời kỳ kháng chiến</span>
-														<i class="menu-arrow"></i>
-													</a>
-													<div class="menu-submenu">
-														<i class="menu-arrow"></i>
-														<ul class="menu-subnav">															
-															<li class="menu-item" aria-haspopup="true">
-																<a href="{{url('/KhenThuongKhangChien/ChongPhap/CaNhan')}}" class="menu-link">
-																	<i class="menu-bullet menu-bullet-dot">
-																		<span></span>
-																	</i>
-																	<span class="menu-text font-weight-bold">Khen thưởng kháng chiến chống Pháp (cá nhân)</span>
-																</a>
-															</li>
-															<li class="menu-item" aria-haspopup="true">
-																<a href="{{url('/KhenThuongKhangChien/ChongMy/CaNhan')}}" class="menu-link">
-																	<i class="menu-bullet menu-bullet-dot">
-																		<span></span>
-																	</i>
-																	<span class="menu-text font-weight-bold">Khen thưởng kháng chiến chống Mỹ (cá nhân)</span>
-																</a>
-															</li>
-															<li class="menu-item" aria-haspopup="true">
-																<a href="{{url('/KhenThuongKhangChien/ChongMy/GiaDinh')}}" class="menu-link">
-																	<i class="menu-bullet menu-bullet-dot">
-																		<span></span>
-																	</i>
-																	<span class="menu-text font-weight-bold">Khen thưởng gia đình chống Mỹ</span>
-																</a>
-															</li>
-
-															<li class="menu-item" aria-haspopup="true">
-																<a href="{{url('/KhenThuongKhangChien/BangKhen/ThuThuong')}}" class="menu-link">
-																	<i class="menu-bullet menu-bullet-dot">
-																		<span></span>
-																	</i>
-																	<span class="menu-text font-weight-bold">Bằng khen thủ tướng</span>
-																</a>
-															</li>
-															<li class="menu-item" aria-haspopup="true">
-																<a href="{{url('/KhenThuongKhangChien/BangKhen/Tinh')}}" class="menu-link">
-																	<i class="menu-bullet menu-bullet-dot">
-																		<span></span>
-																	</i>
-																	<span class="menu-text font-weight-bold">Bằng khen chủ tịch UBND tỉnh</span>
-																</a>
-															</li>
-															<li class="menu-item" aria-haspopup="true">
-																<a href="{{url('/KhenThuongKhangChien/KyNiemChuong')}}" class="menu-link">
-																	<i class="menu-bullet menu-bullet-dot">
-																		<span></span>
-																	</i>
-																	<span class="menu-text font-weight-bold">Kỷ niệm chương</span>
-																</a>
-															</li>
-														</ul>
-													</div>
-												</li>
+												@include("HeThong.main_subkhenthuongkhac")	
 
 												<li class="menu-section">
 													<h4 class="menu-text">Quản lý Văn bản pháp lý, tài liệu</h4>
@@ -392,7 +297,7 @@
 		<div id="kt_quick_actions" class="offcanvas offcanvas-left p-10">
 			<!--begin::Header-->
 			<div class="offcanvas-header d-flex align-items-center justify-content-between pb-10">
-				<h3 class="font-weight-bold m-0">Quick Actions
+				<h3 class="font-weight-bold m-0">Thông tin
 				<small class="text-muted font-size-sm ml-2">finance &amp; reports</small></h3>
 				<a href="#" class="btn btn-xs btn-icon btn-light btn-hover-primary" id="kt_quick_actions_close">
 					<i class="ki ki-close icon-xs text-muted"></i>

@@ -88,15 +88,15 @@
                             <tr>
                                 <td class="text-center">{{ $key + 1 }}</td>
                                 <td>{{ $tt->noidung }}</td>
-                                <td>{{ $tt->maloaihinhkt }}</td>
+                                <td>{{ $a_loaihinhkt[$tt->maloaihinhkt] ?? '' }}</td>
                                 <td class="text-center">{{ getDayVn($tt->ngayhoso) }}</td>
                                 @include('includes.td.td_trangthai_hoso')
-                                <td>{{ $tt->madonvi_nhan }}</td>
+                                <td>{{ $a_donvi[$tt->madonvi_nhan] ?? '' }}</td>
 
                                 <td style="text-align: center">
                                     @if (in_array($tt->trangthai, ['CC', 'BTL', 'CXD']))
                                         <a title="Hồ sơ đăng ký phong trào"
-                                            href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Sua?mahosotdkt=' .$tt->mahosotdkt .'&trangthai=true') }}"
+                                            href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Sua?mahosotdkt=' . $tt->mahosotdkt . '&trangthai=true') }}"
                                             class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la fa-check-square text-primary"></i></a>
 
@@ -104,7 +104,7 @@
                                             onclick="confirmChuyen('{{ $tt->mahosotdkt }}','/CumKhoiThiDua/HoSoKhenThuong/ChuyenHoSo')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm"
                                             data-toggle="modal">
-                                            <i class="icon-lg la fa-share-square text-dark"></i></button>
+                                            <i class="icon-lg la fa-share text-dark"></i></button>
 
                                         <button type="button"
                                             onclick="confirmDelete('{{ $tt->id }}','/CumKhoiThiDua/HoSoKhenThuong/Xoa')"
@@ -113,9 +113,9 @@
                                             <i class="icon-lg la fa-trash text-danger"></i></button>
                                     @else
                                         <a title="Hồ sơ đăng ký phong trào"
-                                            href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Sua?mahosotdkt=' .$tt->mahosotdkt .'&trangthai=false') }}"
+                                            href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Sua?mahosotdkt=' . $tt->mahosotdkt . '&trangthai=false') }}"
                                             class="btn btn-sm btn-clean btn-icon">
-                                            <i class="icon-lg la fa-check-square text-primary"></i></a>
+                                            <i class="icon-lg la fa-eye text-primary"></i></a>
                                     @endif
 
                                     @if ($tt->trangthai == 'BTL')

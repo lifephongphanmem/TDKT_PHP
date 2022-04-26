@@ -133,26 +133,26 @@ function getDonViQuanLyDiaBan($madiaban, $kieudulieu = 'ARRAY')
 {
     $m_diaban = \App\Model\DanhMuc\dsdiaban::where('madiaban', $madiaban)->first();
     $model = \App\Model\DanhMuc\dsdonvi::where('madonvi', $m_diaban->madonviQL)->get();
-    switch($kieudulieu){
+    switch ($kieudulieu) {
         case 'MODEL': {
-            return $model;
-            break;
-        }
-        default: 
+                return $model;
+                break;
+            }
+        default:
             return array_column($model->toarray(), 'tendonvi', 'madonvi');
     }
 }
 
 function getDonViCumKhoi($macumkhoi, $kieudulieu = 'ARRAY')
 {
-    $donvi = \App\Model\DanhMuc\dscumkhoi_chitiet::where('macumkhoi', $macumkhoi)->get();    
-    $model = \App\Model\DanhMuc\dsdonvi::wherein('madonvi', array_column($donvi->toarray(),'madonvi'))->get();    
-    switch($kieudulieu){
-        case 'MODEL': {            
-            return $model;
-            break;
-        }
-        default: 
+    $donvi = \App\Model\DanhMuc\dscumkhoi_chitiet::where('macumkhoi', $macumkhoi)->get();
+    $model = \App\Model\DanhMuc\dsdonvi::wherein('madonvi', array_column($donvi->toarray(), 'madonvi'))->get();
+    switch ($kieudulieu) {
+        case 'MODEL': {
+                return $model;
+                break;
+            }
+        default:
             return array_column($model->toarray(), 'tendonvi', 'madonvi');
     }
 }
@@ -161,12 +161,12 @@ function getDonViQuanLyCumKhoi($macumkhoi, $kieudulieu = 'ARRAY')
 {
     $m_cum = \App\Model\DanhMuc\dscumkhoi::where('macumkhoi', $macumkhoi)->first();
     $model = \App\Model\DanhMuc\dsdonvi::where('madonvi', $m_cum->madonviql)->get();
-    switch($kieudulieu){
+    switch ($kieudulieu) {
         case 'MODEL': {
-            return $model;
-            break;
-        }
-        default: 
+                return $model;
+                break;
+            }
+        default:
             return array_column($model->toarray(), 'tendonvi', 'madonvi');
     }
 }
@@ -175,12 +175,12 @@ function getDonViQuanLyTinh($kieudulieu = 'ARRAY')
 {
     $m_diaban = \App\Model\DanhMuc\dsdiaban::where('capdo', 'T')->first();
     $model = \App\Model\DanhMuc\dsdonvi::where('madonvi', $m_diaban->madonviQL)->get();
-    switch($kieudulieu){
+    switch ($kieudulieu) {
         case 'MODEL': {
-            return $model;
-            break;
-        }
-        default: 
+                return $model;
+                break;
+            }
+        default:
             return array_column($model->toarray(), 'tendonvi', 'madonvi');
     }
 }
@@ -189,39 +189,39 @@ function getDonViQuanLyTinh($kieudulieu = 'ARRAY')
 function getDonViXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
 {
     $model = \App\Model\View\viewdiabandonvi::wherein('capdo', ['T', 'H'])->get();
-    switch($kieudulieu){
+    switch ($kieudulieu) {
         case 'MODEL': {
-            return $model;
-            break;
-        }
-        default: 
+                return $model;
+                break;
+            }
+        default:
             return array_column($model->toarray(), 'tendonvi', 'madonvi');
     }
 }
 
 function getDonViXetDuyetHoSoCumKhoi($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
 {
-    $model = \App\Model\View\viewdiabandonvi::wherein('madonvi', function($qr){
+    $model = \App\Model\View\viewdiabandonvi::wherein('madonvi', function ($qr) {
         $qr->select('madonviql')->from('dscumkhoi')->get();
     })->get();
-    switch($kieudulieu){
+    switch ($kieudulieu) {
         case 'MODEL': {
-            return $model;
-            break;
-        }
-        default: 
+                return $model;
+                break;
+            }
+        default:
             return array_column($model->toarray(), 'tendonvi', 'madonvi');
     }
-} 
+}
 function getDiaBanXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
 {
     $model = \App\Model\DanhMuc\dsdiaban::wherein('capdo', ['T', 'H'])->get();
-    switch($kieudulieu){
+    switch ($kieudulieu) {
         case 'MODEL': {
-            return $model;
-            break;
-        }
-        default: 
+                return $model;
+                break;
+            }
+        default:
             return array_column($model->toarray(), 'tendiaban', 'madiaban');
     }
 }
@@ -263,52 +263,92 @@ function setNhanHoSo($madonvi_nhan, $hoso, $a_hoanthanh)
     if ($madonvi_nhan == $hoso->madonvi_nhan) {
         $hoso->trangthai = $a_hoanthanh['trangthai'] ?? 'CD';
         $hoso->lydo = $a_hoanthanh['lydo'] ?? null;
-        $hoso->thoigian = $a_hoanthanh['thoigian'] ?? null;
+        //$hoso->thoigian = $a_hoanthanh['thoigian'] ?? null;
     }
 
     if ($madonvi_nhan == $hoso->madonvi_nhan_h) {
         $hoso->trangthai_h = $a_hoanthanh['trangthai'] ?? 'CD';
         $hoso->lydo_h = $a_hoanthanh['lydo'] ?? null;
-        $hoso->thoigian_h = $a_hoanthanh['thoigian'] ?? null;
+        //$hoso->thoigian_h = $a_hoanthanh['thoigian'] ?? null;
     }
 
     if ($madonvi_nhan == $hoso->madonvi_nhan_t) {
         $hoso->trangthai_t = $a_hoanthanh['trangthai'] ?? 'CD';
         $hoso->lydo_t = $a_hoanthanh['lydo'] ?? null;
-        $hoso->thoigian_t = $a_hoanthanh['thoigian'] ?? null;
+        //$hoso->thoigian_t = $a_hoanthanh['thoigian'] ?? null;
     }
 
     if ($madonvi_nhan == $hoso->madonvi_nhan_tw) {
         $hoso->trangthai_ad = $a_hoanthanh['trangthai'] ?? 'CD';
         $hoso->lydo_ad = $a_hoanthanh['lydo'] ?? null;
-        $hoso->thoigian_ad = $a_hoanthanh['thoigian'] ?? null;
+        //$hoso->thoigian_ad = $a_hoanthanh['thoigian'] ?? null;
     }
 }
 
-function getDonViChuyen($madonvi_nhan, $hoso){
+function setTrangThaiHoSo($madonvi, $hoso, $a_hoanthanh)
+{
+    if ($madonvi == $hoso->madonvi) {
+        if (isset($a_hoanthanh['trangthai']))
+            $hoso->trangthai = $a_hoanthanh['trangthai'];
+        if (isset($a_hoanthanh['lydo']))
+            $hoso->lydo = $a_hoanthanh['lydo'];
+        if (isset($a_hoanthanh['thoigian']))
+            $hoso->thoigian = $a_hoanthanh['thoigian'];
+    }
+
+    if ($madonvi == $hoso->madonvi_h) {
+        if (isset($a_hoanthanh['trangthai']))
+            $hoso->trangthai_h = $a_hoanthanh['trangthai'];
+        if (isset($a_hoanthanh['lydo']))
+            $hoso->lydo_h = $a_hoanthanh['lydo'];
+        if (isset($a_hoanthanh['thoigian']))
+            $hoso->thoigian_h = $a_hoanthanh['thoigian'];
+    }
+
+    if ($madonvi == $hoso->madonvi_t) {
+        if (isset($a_hoanthanh['trangthai']))
+            $hoso->trangthai_t = $a_hoanthanh['trangthai'];
+        if (isset($a_hoanthanh['lydo']))
+            $hoso->lydo_t = $a_hoanthanh['lydo'];
+        if (isset($a_hoanthanh['thoigian']))
+            $hoso->thoigian_t = $a_hoanthanh['thoigian'];
+    }
+
+    if ($madonvi == $hoso->madonvi_tw) {
+        if (isset($a_hoanthanh['trangthai']))
+            $hoso->trangthai_tw = $a_hoanthanh['trangthai'];
+        if (isset($a_hoanthanh['lydo']))
+            $hoso->lydo_tw = $a_hoanthanh['lydo'];
+        if (isset($a_hoanthanh['thoigian']))
+            $hoso->thoigian_tw = $a_hoanthanh['thoigian'];
+    }    
+}
+
+function getDonViChuyen($madonvi_nhan, $hoso)
+{
     //dd($macqcq);
-    if($madonvi_nhan == $hoso->madonvi){
+    if ($madonvi_nhan == $hoso->madonvi) {
         $hoso->madonvi_hoso = $hoso->madonvi;
         $hoso->trangthai_hoso = $hoso->trangthai;
         $hoso->thoigian_hoso = $hoso->thoigian;
         $hoso->lydo_hoso = $hoso->lydo;
         $hoso->madonvi_nhan_hoso = $hoso->madonvi_nhan;
     }
-    if($madonvi_nhan == $hoso->madonvi_h){
+    if ($madonvi_nhan == $hoso->madonvi_h) {
         $hoso->madonvi_hoso = $hoso->madonvi_h;
         $hoso->trangthai_hoso = $hoso->trangthai_h;
         $hoso->thoigian_hoso = $hoso->thoigian_h;
         $hoso->lydo_hoso = $hoso->lydo_h;
         $hoso->madonvi_nhan_hoso = $hoso->madonvi_nhan_h;
     }
-    if($madonvi_nhan == $hoso->madonvi_t){
+    if ($madonvi_nhan == $hoso->madonvi_t) {
         $hoso->madonvi_hoso = $hoso->madonvi_t;
         $hoso->trangthai_hoso = $hoso->trangthai_t;
         $hoso->thoigian_hoso = $hoso->thoigian_t;
         $hoso->lydo_hoso = $hoso->lydo_t;
         $hoso->madonvi_nhan_hoso = $hoso->madonvi_nhan_t;
     }
-    if($madonvi_nhan == $hoso->madonvi_tw){
+    if ($madonvi_nhan == $hoso->madonvi_tw) {
         $hoso->madonvi_hoso = $hoso->madonvi_tw;
         $hoso->trangthai_hoso = $hoso->trangthai_tw;
         $hoso->thoigian_hoso = $hoso->thoigian_tw;

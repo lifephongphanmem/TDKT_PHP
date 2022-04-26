@@ -80,7 +80,7 @@ class dscumkhoiController extends Controller
             } else {
                 $model->update($inputs);
             }
-            return redirect('/CumKhoiThiDua/DanhSach/ThongTin');
+            return redirect('/CumKhoiThiDua/CumKhoi/ThongTin');
         } else
             return view('errors.notlogin');
     }
@@ -95,7 +95,7 @@ class dscumkhoiController extends Controller
             }
             $inputs = $request->all();
             dscumkhoi::findorfail($inputs['iddelete'])->delete();
-            return redirect('/CumKhoiThiDua/DanhSach/ThongTin');
+            return redirect('/CumKhoiThiDua/CumKhoi/ThongTin');
         } else
             return view('errors.notlogin');
     }
@@ -139,7 +139,7 @@ class dscumkhoiController extends Controller
                 $model->update($inputs);
             }
             
-            return redirect('/CumKhoiThiDua/DanhSach/DanhSach?macumkhoi=' . $inputs['macumkhoi']);
+            return redirect('/CumKhoiThiDua/CumKhoi/DanhSach?macumkhoi=' . $inputs['macumkhoi']);
         } else
             return view('errors.notlogin');
     }
@@ -154,7 +154,7 @@ class dscumkhoiController extends Controller
             $inputs = $request->all();
             $model = dscumkhoi_chitiet::findorfail($inputs['id']);
             $model->delete();
-            return redirect('/CumKhoiThiDua/DanhSach/DanhSach?macumkhoi=' . $model->macumkhoi);
+            return redirect('/CumKhoiThiDua/CumKhoi/DanhSach?macumkhoi=' . $model->macumkhoi);
         } else
             return view('errors.notlogin');
     }

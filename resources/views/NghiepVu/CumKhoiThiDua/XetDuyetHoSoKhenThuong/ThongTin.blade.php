@@ -94,26 +94,26 @@
                         @foreach ($model as $key => $tt)
                             <tr>
                                 <td class="text-center">{{ $key + 1 }}</td>
-                                <td>{{ $tt->madonvi }}</td>
+                                <td>{{ $a_donvi[$tt->madonvi] ?? ''}}</td>
                                 <td>{{ $tt->noidung }}</td>
-                                <td>{{ $tt->maloaihinhkt }}</td>
+                                <td>{{ $a_loaihinhkt[$tt->maloaihinhkt] ?? ''}}</td>
                                 <td class="text-center">{{ getDayVn($tt->ngayhoso) }}</td>
                                 @include('includes.td.td_trangthai_hoso')
-                                <td>{{ $tt->madonvi_nhan }}</td>
+                                <td>{{ $a_donvi[$tt->madonvi_nhan] ?? ''}}</td>
 
                                 <td style="text-align: center">
                                     <a title="Thông tin hồ sơ"
-                                        href="{{ url('/HoSoThiDua/Xem?mahosotdkt=' . $tt->maphongtraotd . '&trangthai=false') }}"
+                                        href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Sua?mahosotdkt=' . $tt->mahosotdkt . '&trangthai=false') }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-dark"></i></a>
 
                                     @if (in_array($tt->trangthai_hoso, ['CD']))
                                         <button title="Trả lại hồ sơ" type="button"
-                                            onclick="confirmTraLai('{{ $tt->mahosotdkt }}', '{{$inputs['madonvi']}}', '/XetDuyetHoSoThiDua/TraLai')" class="btn btn-sm btn-clean btn-icon"
+                                            onclick="confirmTraLai('{{ $tt->mahosotdkt }}', '{{$inputs['madonvi']}}', '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/TraLai')" class="btn btn-sm btn-clean btn-icon"
                                             data-target="#modal-tralai" data-toggle="modal">
                                             <i class="icon-lg la la-reply text-danger"></i></button>
 
-                                            <button title="Nhận hồ sơ đăng ký" type="button" onclick="confirmNhan('{{$tt->mahosotdkt}}','/XetDuyetHoSoThiDua/NhanHoSo','{{$inputs['madonvi']}}')" class="btn btn-sm btn-clean btn-icon" data-target="#nhan-modal-confirm" data-toggle="modal">
+                                            <button title="Nhận hồ sơ đăng ký" type="button" onclick="confirmNhan('{{$tt->mahosotdkt}}','/CumKhoiThiDua/XetDuyetHoSoKhenThuong/NhanHoSo','{{$inputs['madonvi']}}')" class="btn btn-sm btn-clean btn-icon" data-target="#nhan-modal-confirm" data-toggle="modal">
                                                 <i class="icon-lg la fa-share-square text-success"></i></button>
                                            
                                     @endif

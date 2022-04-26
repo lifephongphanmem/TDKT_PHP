@@ -14,6 +14,9 @@ class dshosokhenthuong extends Model
         'noidung',
         'maloaihinhkt', //lấy từ phong trào nếu là hồ sơ thi đua
         'maphongtraotd', //tùy theo phân loại
+        'mahosotdkt',
+        'macumkhoi',
+        'phanloai',//Cụm khối; TDKT
         'donvikhenthuong',
         'capkhenthuong',
         'chucvunguoiky',

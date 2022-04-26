@@ -12,7 +12,7 @@
 
 @section('content')
     <!--begin::Card-->
-    {!! Form::model($model, ['method' => 'POST', '/CumKhoiThiDua/DanhSach/Them', 'class' => 'horizontal-form', 'id' => 'update_dmdonvi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::model($model, ['method' => 'POST', '/CumKhoiThiDua/CumKhoi/Them', 'class' => 'horizontal-form', 'id' => 'update_dmdonvi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
     {{-- {{ Form::hidden('id', null) }} --}}
     {{ Form::hidden('macumkhoi', null) }}
     <div class="card card-custom wave wave-animate-slow wave-primary" style="min-height: 600px">
@@ -53,7 +53,7 @@
         <div class="card-footer">
             <div class="row text-center">
                 <div class="col-lg-12">
-                    <a href="{{ url('/CumKhoiThiDua/DanhSach/ThongTin') }}" class="btn btn-danger mr-5"><i
+                    <a href="{{ url('/CumKhoiThiDua/CumKhoi/ThongTin') }}" class="btn btn-danger mr-5"><i
                             class="fa fa-reply"></i>&nbsp;Quay lại</a>
                     <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
                 </div>

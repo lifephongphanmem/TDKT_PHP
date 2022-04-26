@@ -1,6 +1,6 @@
 <?php
 
-Route::get('','HeThong\HeThongChungController@index');
+Route::get('','HeThong\hethongchungController@index');
 
 Route::get('thongtinhotro',function(){
     return view('thongtinhotro')

@@ -16,7 +16,7 @@ class CreateDshosokhenthuongChitietTable extends Migration
         Schema::create('dshosokhenthuong_chitiet', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('mahosokt')->nullable();
-            $table->string('mahosotdkt')->nullable();//lưu trữ sau cần dùng            
+            $table->string('mahosotdkt')->nullable();//lưu trữ sau cần dùng
             $table->boolean('ketqua')->default(0);//
             $table->string('lydo')->nullable();
             $table->string('madonvi')->nullable();//phục vụ lấy dữ liệu

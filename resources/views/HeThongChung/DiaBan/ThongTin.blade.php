@@ -83,15 +83,15 @@
                                     <td style="text-align: center">{{$i++}}</td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{$ct_t->tendiaban}}</td>
+                                    <td class="text-dark"><b>{{$ct_t->tendiaban}}</b></td>
                                     <td></td>
                                     <td style="text-align: center">
                                         @if(chkPhanQuyen('dsdonvi', 'modify'))
                                             <a href="" class="btn btn-sm btn-clean btn-icon" title="Thay đổi đơn vị quản lý địa bàn">
-                                                <i class="icon-lg fa fa-edit text-primary"></i></a>
+                                                <i class="icon-lg la fa-edit text-dark"></i></a>
 
                                             <a href="{{'/DonVi/DanhSach?madiaban='.$ct_t->madiaban}}" class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
-                                                <i class="icon-lg fa fa-list-ol text-info"></i></a>
+                                                <i class="icon-lg la fa-list-ol text-info"></i></a>
                                         @endif
 
                                     </td>
@@ -105,15 +105,15 @@
                                         <td></td>
                                         <td style="text-align: center">{{$j++}}</td>
                                         <td></td>
-                                        <td>{{$ct_h->tendiaban}}</td>
+                                        <td class="text-info"><b>{{$ct_h->tendiaban}}</b></td>
                                         <td></td>
                                         <td style="text-align: center">
                                             @if(chkPhanQuyen('dsdonvi', 'modify'))
-                                                <a href="" class="btn btn-info btn-xs mbs" title="Thay đổi đơn vị quản lý địa bàn">
-                                                    <i class="fa fa-edit"></i></a>
+                                                <a href="" class="btn btn-sm btn-clean btn-icon" title="Thay đổi đơn vị quản lý địa bàn">
+                                                    <i class="icon-lg la fa-edit text-dark"></i></a>
 
-                                                <a href="{{'/DonVi/DanhSach?madiaban='.$ct_h->madiaban}}" class="btn btn-info btn-xs mbs" title="Danh sách đơn vị">
-                                                    <i class="fa fa-list-ol"></i></a>
+                                                <a href="{{'/DonVi/DanhSach?madiaban='.$ct_h->madiaban}}" class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
+                                                    <i class="icon-lg la fa-list-ol text-info"></i></a>
                                             @endif
 
                                         </td>
@@ -131,11 +131,11 @@
                                             <td></td>
                                             <td style="text-align: center">
                                                 @if(chkPhanQuyen('dsdonvi', 'modify'))
-                                                    <a href="" class="btn btn-info btn-xs mbs" title="Thay đổi đơn vị quản lý địa bàn">
-                                                        <i class="fa fa-edit"></i></a>
+                                                    <a href="" class="btn btn-sm btn-clean btn-icon" title="Thay đổi đơn vị quản lý địa bàn">
+                                                        <i class="icon-lg la fa-edit text-dark"></i></a>
 
-                                                    <a href="{{'/DonVi/DanhSach?madiaban='.$ct_x->madiaban}}" class="btn btn-info btn-xs mbs" title="Danh sách đơn vị">
-                                                        <i class="fa fa-list-ol"></i></a>
+                                                    <a href="{{'/DonVi/DanhSach?madiaban='.$ct_x->madiaban}}" class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
+                                                        <i class="icon-lg la fa-list-ol text-info"></i></a>
                                                 @endif
 
                                             </td>

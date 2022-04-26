@@ -3,18 +3,18 @@
         <span class="svg-icon menu-icon">
             <i class="fas fa-folder"></i>
         </span>
-        <span class="menu-text font-weight-bold">Cụm, khối thi đua</span>
+        <span class="menu-text font-weight-bold">Khen thưởng khác</span>
         <i class="menu-arrow"></i>
     </a>
     <div class="menu-submenu">
         <i class="menu-arrow"></i>
         <ul class="menu-subnav">
             <li class="menu-item" aria-haspopup="true">
-                <a href="{{ url('/CumKhoiThiDua/CumKhoi/ThongTin') }}" class="menu-link">
+                <a href="{{ url('/CumKhoiThiDua/DanhSach/ThongTin') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
-                    <span class="menu-text font-weight-bold">Danh sách cụm khối</span>
+                    <span class="menu-text font-weight-bold">Hiệp y khen thưởng</span>
                 </a>
             </li>
             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -22,42 +22,59 @@
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
-                    <span class="menu-text">Phong trào thi đua</span>
+                    <span class="menu-text">Khen thưởng thời kỳ kháng chiến</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="menu-submenu">
                     <i class="menu-arrow"></i>
-                    <ul class="menu-subnav">
+                    <ul class="menu-subnav">															
                         <li class="menu-item" aria-haspopup="true">
-                            <a href="features/charts/amcharts/charts.html" class="menu-link">
+                            <a href="{{url('/KhenThuongKhangChien/ChongPhap/CaNhan')}}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Danh sách phong trào</span>
+                                <span class="menu-text font-weight-bold">Khen thưởng kháng chiến chống Pháp (cá nhân)</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true">
-                            <a href="features/charts/amcharts/stock-charts.html" class="menu-link">
+                            <a href="{{url('/KhenThuongKhangChien/ChongMy/CaNhan')}}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Tạo hồ sơ đăng ký thi đua</span>
+                                <span class="menu-text font-weight-bold">Khen thưởng kháng chiến chống Mỹ (cá nhân)</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true">
-                            <a href="features/charts/amcharts/maps.html" class="menu-link">
+                            <a href="{{url('/KhenThuongKhangChien/ChongMy/GiaDinh')}}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Duyệt hồ sơ đăng ký thi đua</span>
+                                <span class="menu-text font-weight-bold">Khen thưởng gia đình chống Mỹ</span>
+                            </a>
+                        </li>
+
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="{{url('/KhenThuongKhangChien/BangKhen/ThuThuong')}}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text font-weight-bold">Bằng khen thủ tướng</span>
                             </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true">
-                            <a href="{{ url('/CumKhoiThiDua/KhenThuong') }}" class="menu-link">
+                            <a href="{{url('/KhenThuongKhangChien/BangKhen/Tinh')}}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text font-weight-bold">Khen thưởng phong trào thi đua</span>
+                                <span class="menu-text font-weight-bold">Bằng khen chủ tịch UBND tỉnh</span>
+                            </a>
+                        </li>
+                        <li class="menu-item" aria-haspopup="true">
+                            <a href="{{url('/KhenThuongKhangChien/KyNiemChuong')}}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text font-weight-bold">Kỷ niệm chương</span>
                             </a>
                         </li>
                     </ul>
@@ -69,7 +86,7 @@
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
-                    <span class="menu-text">Khen thưởng</span>
+                    <span class="menu-text">Khen cao</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="menu-submenu">

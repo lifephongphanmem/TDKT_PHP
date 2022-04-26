@@ -70,7 +70,7 @@
                                         <i class="icon-lg la fa-edit text-dark"></i>
                                     </button>
                                     <button title="Xóa cụm khối" type="button"
-                                        onclick="confirmDelete('{{ $tt->id }}','/CumKhoiThiDua/DanhSach/XoaDonVi')"
+                                        onclick="confirmDelete('{{ $tt->id }}','/CumKhoiThiDua/CumKhoi/XoaDonVi')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal"
                                         data-toggle="modal">
                                         <i class="icon-lg la fa-trash-alt text-danger"></i></button>
@@ -84,7 +84,7 @@
         <div class="card-footer">
             <div class="row text-center">
                 <div class="col-lg-12">
-                    <a href="{{ url('/CumKhoiThiDua/DanhSach/ThongTin') }}" class="btn btn-danger mr-5"><i
+                    <a href="{{ url('/CumKhoiThiDua/CumKhoi/ThongTin') }}" class="btn btn-danger mr-5"><i
                             class="fa fa-reply"></i>&nbsp;Quay lại</a>
                 </div>
             </div>
@@ -92,7 +92,7 @@
     </div>
     <!--end::Card-->
 
-    {!! Form::open(['url' => 'CumKhoiThiDua/DanhSach/ThemDonVi', 'id' => 'frm_modify']) !!}
+    {!! Form::open(['url' => 'CumKhoiThiDua/CumKhoi/ThemDonVi', 'id' => 'frm_modify']) !!}
     {{ Form::hidden('macumkhoi', $inputs['macumkhoi'], ['id' => 'macumkhoi']) }}
     <div id="modify-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         <div class="modal-dialog">

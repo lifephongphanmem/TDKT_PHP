@@ -68,17 +68,17 @@
                                 <td class=" text-center">
                                     @if (chkPhanQuyen('dscumkhoi', 'modify'))
                                         <a title="Chỉnh sửa"
-                                            href="{{ url('/CumKhoiThiDua/DanhSach/Sua?macumkhoi=' . $tt->macumkhoi) }}"
+                                            href="{{ url('/CumKhoiThiDua/CumKhoi/Sua?macumkhoi=' . $tt->macumkhoi) }}"
                                             class="btn btn-sm btn-clean btn-icon"><i
                                                 class="icon-lg la fa-edit text-success"></i></a>
 
                                         <a title="Danh sách đơn vị"
-                                            href="{{ url('/CumKhoiThiDua/DanhSach/DanhSach/?macumkhoi=' . $tt->macumkhoi) }}"
+                                            href="{{ url('/CumKhoiThiDua/CumKhoi/DanhSach/?macumkhoi=' . $tt->macumkhoi) }}"
                                             class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la la-clipboard-list text-dark"></i></a>
 
                                         <button title="Xóa cụm khối" type="button"
-                                            onclick="confirmDelete('{{ $tt->id }}','/CumKhoiThiDua/DanhSach/Xoa')"
+                                            onclick="confirmDelete('{{ $tt->id }}','/CumKhoiThiDua/CumKhoi/Xoa')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-trash-alt text-danger"></i></button>

@@ -16,8 +16,9 @@ class hethongchungController extends Controller
             return view('HeThong.main')
                 ->with('model',getHeThongChung())
                 ->with('pageTitle', 'Thông tin hỗ trợ');
-        } else {            
-            return view('HeThong.welcome');
+        } else {     
+            return redirect('/DangNhap');       
+            //return view('HeThong.welcome');
         }
     }
 
@@ -136,11 +137,11 @@ class hethongchungController extends Controller
                 $maildn = $model->email;
                 $tendn = $model->name;
 
-                Mail::send('mail.successnewpassword', $data, function ($message) use ($maildn, $tendn) {
-                    $message->to($maildn, $tendn)
-                        ->subject('Thông báo thay đổi mật khẩu tài khoản');
-                    $message->from('qlgiakhanhhoa@gmail.com', 'Phần mềm CSDL giá');
-                });
+                // Mail::send('mail.successnewpassword', $data, function ($message) use ($maildn, $tendn) {
+                //     $message->to($maildn, $tendn)
+                //         ->subject('Thông báo thay đổi mật khẩu tài khoản');
+                //     $message->from('qlgiakhanhhoa@gmail.com', 'Phần mềm CSDL giá');
+                // });
                 return view('errors.forgotpass-success');
             } else
                 return view('errors.forgotpass-errors');
@@ -148,4 +149,13 @@ class hethongchungController extends Controller
             return view('errors.forgotpass-errors');
     }
 
+    public function DangXuat()
+    {
+        if (Session::has('admin')) {
+            Session::flush();
+            return redirect('/DangNhap');
+        } else {
+            return redirect('');
+        }
+    }
 }

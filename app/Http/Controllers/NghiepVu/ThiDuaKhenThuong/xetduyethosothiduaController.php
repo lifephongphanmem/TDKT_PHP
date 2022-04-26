@@ -50,7 +50,7 @@ class xetduyethosothiduaController extends Controller
             })->get();
             //$m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
             //dd($ngayhientai);
-            foreach ($model as $DangKy) {                
+            foreach ($model as $DangKy) {
                 if ($DangKy->trangthai == 'CC') {
                     $DangKy->nhanhoso = 'CHUABATDAU';
                     if ($DangKy->tungay < $ngayhientai && $DangKy->denngay > $ngayhientai) {
@@ -85,24 +85,24 @@ class xetduyethosothiduaController extends Controller
         if (Session::has('admin')) {
             $inputs = $request->all();
             $m_dangky = dsphongtraothidua::where('maphongtraotd', $inputs['maphongtraotd'])->first();
-            $donvi = viewdiabandonvi::where('madonvi',$inputs['madonvi'])->first();
+            $donvi = viewdiabandonvi::where('madonvi', $inputs['madonvi'])->first();
             // $model = dshosothiduakhenthuong::where('maphongtraotd',$inputs['maphongtraotd'])
             // ->wherein('mahosotdkt',function($qr){
             //     $qr->select('mahoso')->from('trangthaihoso')->wherein('trangthai',['CD','DD'])->where('phanloai','dshosothiduakhenthuong')->get();
             // })->get();
             //$m_trangthai = trangthaihoso::wherein('trangthai', ['CD', 'DD'])->where('phanloai', 'dshosothiduakhenthuong')->orderby('thoigian', 'desc')->get();
             $model = dshosothiduakhenthuong::where('maphongtraotd', $inputs['maphongtraotd'])
-                ->wherein('mahosotdkt', function($qr) use($inputs){
+                ->wherein('mahosotdkt', function ($qr) use ($inputs) {
                     $qr->select('mahosotdkt')->from('dshosothiduakhenthuong')
-                    ->where('madonvi_nhan',$inputs['madonvi'])
-                    ->orwhere('madonvi_nhan_h',$inputs['madonvi'])
-                    ->orwhere('madonvi_nhan_t',$inputs['madonvi'])->get();
-                } )->get();
-            foreach($model as $chitiet){
+                        ->where('madonvi_nhan', $inputs['madonvi'])
+                        ->orwhere('madonvi_nhan_h', $inputs['madonvi'])
+                        ->orwhere('madonvi_nhan_t', $inputs['madonvi'])->get();
+                })->get();
+            foreach ($model as $chitiet) {
                 $chitiet->chuyentiephoso = false;
-                if($m_dangky->phamviapdung == 'TOANTINH' && $donvi->capdo == 'H')
-                $chitiet->chuyentiephoso = true;
-                getDonViChuyen($inputs['madonvi'],$chitiet);
+                if ($m_dangky->phamviapdung == 'TOANTINH' && $donvi->capdo == 'H')
+                    $chitiet->chuyentiephoso = true;
+                getDonViChuyen($inputs['madonvi'], $chitiet);
                 //$chitiet->trangthai = $donvi->capdo == 'H' ? $chitiet->trangthai_h : $chitiet->trangthai_t;
             }
             //dd($model);
@@ -113,7 +113,7 @@ class xetduyethosothiduaController extends Controller
                 ->with('model', $model)
                 ->with('m_dangky', $m_dangky)
                 ->with('a_donvi', array_column($m_donvi->toArray(), 'tendonvi', 'madonvi'))
-                ->with('a_donviql', getDonViQuanLyTinh())//chưa lọc hết (chỉ chuyển lên cấp Tỉnh)
+                ->with('a_donviql', getDonViQuanLyTinh()) //chưa lọc hết (chỉ chuyển lên cấp Tỉnh)
                 ->with('pageTitle', 'Danh sách hồ sơ đăng ký thi đua');
         } else
             return view('errors.notlogin');
@@ -147,14 +147,14 @@ class xetduyethosothiduaController extends Controller
     {
         if (Session::has('admin')) {
             $inputs = $request->all();
-           
+
             $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahoso'])->first();
-            $m_donvi = viewdiabandonvi::where('madonvi',$inputs['madonvi_nhan'])->first();
+            $m_donvi = viewdiabandonvi::where('madonvi', $inputs['madonvi_nhan'])->first();
             $model->trangthai_h = 'DD';
             $model->madonvi_nhan_h = $inputs['madonvi_nhan'];
             $model->thoigian_h = date('Y-m-d H:i:s');
 
-            setChuyenHoSo($m_donvi->capdo,$model,['madonvi'=>$inputs['madonvi_nhan'],'thoigian'=>$model->thoigian,'trangthai'=>'CNXKT']);
+            setChuyenHoSo($m_donvi->capdo, $model, ['madonvi' => $inputs['madonvi_nhan'], 'thoigian' => $model->thoigian, 'trangthai' => 'CNXKT']);
             //dd($model);
             $model->save();
 
@@ -163,22 +163,22 @@ class xetduyethosothiduaController extends Controller
             return view('errors.notlogin');
     }
 
-        //Chưa hoàn thiện
-        public function NhanHoSo(Request $request)
-        {
-            if (Session::has('admin')) {
-                $inputs = $request->all();
-                $thoigian = date('Y-m-d H:i:s');
-                $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahoso'])->first();
-                $m_donvi = viewdiabandonvi::where('madonvi',$inputs['madonvi_nhan'])->first();              
-               
-                //setNhanHoSo($inputs['madonvi_nhan'],$model,['madonvi'=>$inputs['madonvi_nhan'],'thoigian'=>$thoigian,'trangthai'=>'CXKT']);
-                setChuyenHoSo($m_donvi->capdo,$model,['madonvi'=>$inputs['madonvi_nhan'],'thoigian'=>$thoigian,'trangthai'=>'CXKT']);
-                //dd($model);
-                $model->save();
-    
-                return redirect('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd=' . $model->maphongtraotd . '&madonvi=' . $inputs['madonvi_nhan']);
-            } else
-                return view('errors.notlogin');
-        }
+    //Chưa hoàn thiện
+    public function NhanHoSo(Request $request)
+    {
+        if (Session::has('admin')) {
+            $inputs = $request->all();
+            $thoigian = date('Y-m-d H:i:s');
+            $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahoso'])->first();
+            $m_donvi = viewdiabandonvi::where('madonvi', $inputs['madonvi_nhan'])->first();
+
+            //setNhanHoSo($inputs['madonvi_nhan'],$model,['madonvi'=>$inputs['madonvi_nhan'],'thoigian'=>$thoigian,'trangthai'=>'CXKT']);
+            setChuyenHoSo($m_donvi->capdo, $model, ['madonvi' => $inputs['madonvi_nhan'], 'thoigian' => $thoigian, 'trangthai' => 'CXKT']);
+            //dd($model);
+            $model->save();
+
+            return redirect('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd=' . $model->maphongtraotd . '&madonvi=' . $inputs['madonvi_nhan']);
+        } else
+            return view('errors.notlogin');
+    }
 }

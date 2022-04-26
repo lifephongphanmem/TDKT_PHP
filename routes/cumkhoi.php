@@ -1,6 +1,6 @@
 <?php
 Route::group(['prefix'=>'CumKhoiThiDua'], function(){
-    Route::group(['prefix'=>'DanhSach'], function(){
+    Route::group(['prefix'=>'CumKhoi'], function(){
         Route::get('ThongTin','NghiepVu\CumKhoiThiDua\dscumkhoiController@ThongTin');
         Route::get('Them','NghiepVu\CumKhoiThiDua\dscumkhoiController@ThayDoi');
         Route::post('Them','NghiepVu\CumKhoiThiDua\dscumkhoiController@LuuCumKhoi');
@@ -34,16 +34,19 @@ Route::group(['prefix'=>'CumKhoiThiDua'], function(){
     });
 
     Route::group(['prefix'=>'XetDuyetHoSoKhenThuong'], function(){
-        Route::get('ThongTin','NghiepVu\CumKhoiThiDua\xetduyethosokhenthuongcumkhoiController@ThongTin');
-        
-        
-        
-        Route::get('DanhSach','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@DanhSach');
-        Route::post('TraLai','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@TraLai'); 
-        
-        Route::post('ChuyenHoSo','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@ChuyenHoSo'); 
-        Route::post('NhanHoSo','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@NhanHoSo');
-        
-        Route::post('KetThuc','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuHoSo');
+        Route::get('ThongTin','NghiepVu\CumKhoiThiDua\xetduyethosokhenthuongcumkhoiController@ThongTin');        
+        Route::post('NhanHoSo','NghiepVu\CumKhoiThiDua\xetduyethosokhenthuongcumkhoiController@NhanHoSo');
+        //
+        // Route::get('DanhSach','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@DanhSach');
+        // Route::post('TraLai','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@TraLai'); 
+        // Route::post('ChuyenHoSo','NghiepVu\ThiDuaKhenThuong\xetduyethosothiduaController@ChuyenHoSo');
+        // Route::post('KetThuc','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuHoSo');
+    });
+    Route::group(['prefix'=>'KhenThuongHoSoKhenThuong'], function(){
+        Route::get('ThongTin','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@ThongTin');        
+        Route::post('KhenThuong','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@KhenThuong');
+        Route::get('DanhSach','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@DanhSach');
+        Route::post('HoSo','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@HoSo');
+        Route::post('KetQua','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@KetQua');
     });
 });

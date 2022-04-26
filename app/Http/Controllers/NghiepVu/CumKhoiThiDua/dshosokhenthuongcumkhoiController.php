@@ -66,6 +66,8 @@ class dshosokhenthuongcumkhoiController extends Controller
                 ->with('m_diaban', $m_diaban)
                 ->with('m_diaban', $m_diaban)
                 ->with('a_donviql', getDonViQuanLyCumKhoi($inputs['macumkhoi']))
+                ->with('a_donvi', array_column(dsdonvi::all()->toArray(),'tendonvi','madonvi'))
+                ->with('a_loaihinhkt', array_column(dmloaihinhkhenthuong::all()->toArray(),'tenloaihinhkt','maloaihinhkt'))
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Danh sách phong trào thi đua');
         } else
@@ -112,7 +114,7 @@ class dshosokhenthuongcumkhoiController extends Controller
                 ->with('m_donvi', $m_donvi)
                 ->with('m_diaban', $m_diaban)
                 ->with('m_danhhieu', $m_danhhieu)
-                ->with('pageTitle', 'Hồ sơ thi đua');
+                ->with('pageTitle', 'Hồ sơ khen thưởng');
         } else
             return view('errors.notlogin');
     }
