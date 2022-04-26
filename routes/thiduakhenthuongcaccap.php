@@ -1,5 +1,5 @@
 <?php
-
+//Phong trào thi đua
 Route::group(['prefix'=>'PhongTraoThiDua'], function(){
     Route::get('ThongTin','NghiepVu\ThiDuaKhenThuong\dsphongtraothiduaController@ThongTin');
     Route::get('Them','NghiepVu\ThiDuaKhenThuong\dsphongtraothiduaController@ThayDoi');
@@ -50,3 +50,33 @@ Route::group(['prefix'=>'KhenThuongHoSoThiDua'], function(){
 
     Route::get('InKetQua','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@InKetQua');
 });
+//
+
+//Khen thưởng theo công trạng
+Route::group(['prefix'=>'KhenThuongCongTrang'], function(){
+    Route::group(['prefix'=>'HoSoKhenThuong'], function(){
+        Route::get('ThongTin','NghiepVu\KhenThuongCongTrang\dshosokhenthuongcongtrangController@ThongTin');
+
+
+        // Route::get('DanhSach','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@DanhSach');
+
+        // Route::get('Them','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@ThayDoi');
+        // Route::post('Them','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LuuHoSo');
+        // Route::get('Sua','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@Sua');
+        // Route::post('Sua','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LuuHoSo');
+
+        // Route::get('ThemDoiTuong','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@ThemDoiTuong');
+        // Route::get('ThemDoiTuongTapThe','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@ThemDoiTuongTapThe');
+        // Route::get('LayTieuChuan','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LayTieuChuan');
+        // Route::get('LuuTieuChuan','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LuuTieuChuan');
+        
+        // Route::get('LayLyDo','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LayLyDo');
+        // Route::get('XoaDoiTuong','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@XoaDoiTuong');
+
+        // Route::post('Xoa','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@XoaHoSo');
+        // Route::post('ChuyenHoSo','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@ChuyenHoSo');
+    });
+});
+
+
+//
