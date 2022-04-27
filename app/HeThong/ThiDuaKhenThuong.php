@@ -5,6 +5,21 @@ function getHeThongChung()
     return  \App\Model\HeThong\hethongchung::all()->first() ?? new \App\Model\HeThong\hethongchung();
 }
 
+function getPhanLoaiPhongTraoThiDua($all = false)
+{
+    $a_kq = array(
+        'CHUYENDE' => 'Phong trào thi đua thường xuyên',
+        'DOT' => 'Phong trào thi đua theo đợt',
+        'HANGNAM' => 'Phong trào thi đua hàng năm',
+        'NAMNAM' => 'Phong trào thi đua 05 năm',
+        'KHAC' => 'Phong trào thi đua khác',
+    );
+    if ($all == true) {
+        return array_merge(['ALL' => 'Tất cả'], $a_kq);
+    }
+    return $a_kq;
+}
+
 function getPhanLoaiDonVi_DiaBan()
 {
     return array(
@@ -213,6 +228,7 @@ function getDonViXetDuyetHoSoCumKhoi($capdo, $madiaban = null, $chucnang = null,
             return array_column($model->toarray(), 'tendonvi', 'madonvi');
     }
 }
+
 function getDiaBanXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieudulieu = 'ARRAY')
 {
     $model = \App\Model\DanhMuc\dsdiaban::wherein('capdo', ['T', 'H'])->get();
@@ -224,6 +240,12 @@ function getDiaBanXetDuyetHoSo($capdo, $madiaban = null, $chucnang = null, $kieu
         default:
             return array_column($model->toarray(), 'tendiaban', 'madiaban');
     }
+}
+
+function getThongTinDonVi($madonvi, $tentruong)
+{
+    $model = \App\Model\View\viewdiabandonvi::where('madonvi', $madonvi)->first();
+    return $model->$tentruong ?? '';
 }
 
 //chưa làm 
@@ -321,7 +343,7 @@ function setTrangThaiHoSo($madonvi, $hoso, $a_hoanthanh)
             $hoso->lydo_tw = $a_hoanthanh['lydo'];
         if (isset($a_hoanthanh['thoigian']))
             $hoso->thoigian_tw = $a_hoanthanh['thoigian'];
-    }    
+    }
 }
 
 function getDonViChuyen($madonvi_nhan, $hoso)

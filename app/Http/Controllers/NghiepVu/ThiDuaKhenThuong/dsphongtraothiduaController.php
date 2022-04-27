@@ -31,27 +31,20 @@ class dsphongtraothiduaController extends Controller
             $m_diaban = dsdiaban::all();
             $inputs['nam'] = $inputs['nam'] ?? 'ALL';
             $inputs['madonvi'] = $inputs['madonvi'] ?? $m_donvi->first()->madonvi;
+            $inputs['phanloai'] = $inputs['phanloai'] ?? 'ALL';
+            $model = dsphongtraothidua::where('madonvi', $inputs['madonvi']);
             if ($inputs['nam'] != 'ALL')
-                $model = dsphongtraothidua::where('madonvi', $inputs['madonvi'])->whereYear('ngayqd', $inputs['nam'])->orderby('ngayqd')->get();
-            else
-                $model = dsphongtraothidua::where('madonvi', $inputs['madonvi'])->orderby('ngayqd')->get();
-            $m_trangthai = trangthaihoso::where('madonvi', $inputs['madonvi'])->where('phanloai', 'dsphongtraothidua')->get();
-            foreach ($model as $chitiet) {
-                $trangthai = $m_trangthai->where('mahoso', $chitiet->maphongtraotd)->first();
-                if ($trangthai != null) {
-                    $chitiet->trangthai = $trangthai->trangthai;
-                } else {
-                    $chitiet->trangthai = 'CXD';
-                }
-            }
-            //dd($model);
+                $model = $model->whereYear('ngayqd', $inputs['nam']);
+            if ($inputs['phanloai'] != 'ALL')
+                $model = $model->where('phanloai', $inputs['phanloai']);
 
             return view('NghiepVu.ThiDuaKhenThuong.PhongTraoThiDua.ThongTin')
-                ->with('model', $model)
+                ->with('model', $model->orderby('ngayqd')->get())
                 ->with('m_donvi', $m_donvi)
                 ->with('m_diaban', $m_diaban)
                 ->with('a_loaihinhkt', array_column(dmloaihinhkhenthuong::all()->toArray(), 'tenloaihinhkt', 'maloaihinhkt'))
                 ->with('a_phamvi', getPhamViPhongTrao())
+                ->with('a_phanloai', getPhanLoaiPhongTraoThiDua(true))
                 ->with('inputs', $inputs)
                 ->with('pageTitle', 'Danh sách phong trào thi đua');
         } else
@@ -74,12 +67,42 @@ class dsphongtraothiduaController extends Controller
                 $model = new dsphongtraothidua();
                 $model->madonvi = $inputs['madonvi'];
                 $model->maphongtraotd = getdate()[0];
+                $model->trangthai = 'CC';
                 $model->maloaihinhkt = '1650358255'; //chưa làm mặc định
             }
+            $model->tendonvi = getThongTinDonVi($model->madonvi, 'tendonvi');
             $model_khenthuong = dsphongtraothidua_khenthuong::where('maphongtraotd', $model->maphongtraotd)->get();
             $model_tieuchuan = dsphongtraothidua_tieuchuan::where('maphongtraotd', $model->maphongtraotd)->get();
 
             return view('NghiepVu.ThiDuaKhenThuong.PhongTraoThiDua.ThayDoi')
+                ->with('model', $model)
+                ->with('model_khenthuong', $model_khenthuong)
+                ->with('model_tieuchuan', $model_tieuchuan)
+                ->with('a_danhhieu', array_column(dmdanhhieuthidua::all()->toArray(), 'tendanhhieutd', 'madanhhieutd'))
+                ->with('a_tieuchuan', array_column(dmdanhhieuthidua_tieuchuan::all()->toArray(), 'tentieuchuandhtd', 'matieuchuandhtd'))
+                ->with('a_loaihinhkt', array_column(dmloaihinhkhenthuong::all()->toArray(), 'tenloaihinhkt', 'maloaihinhkt'))
+                ->with('a_hinhthuckt', array_column(dmhinhthuckhenthuong::all()->toArray(), 'tenhinhthuckt', 'mahinhthuckt'))
+                ->with('inputs', $inputs)
+                ->with('pageTitle', 'Danh sách phong trào thi đua');
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function XemThongTin(Request $request)
+    {
+        if (Session::has('admin')) {
+            //tài khoản SSA; tài khoản quản trị + có phân quyền
+            if (!chkPhanQuyen()) {
+                return view('errors.noperm');
+            }
+
+            $inputs = $request->all();
+            $model = dsphongtraothidua::where('maphongtraotd', $inputs['maphongtraotd'])->first();            
+            $model->tendonvi = getThongTinDonVi($model->madonvi, 'tendonvi');
+            $model_khenthuong = dsphongtraothidua_khenthuong::where('maphongtraotd', $model->maphongtraotd)->get();
+            $model_tieuchuan = dsphongtraothidua_tieuchuan::where('maphongtraotd', $model->maphongtraotd)->get();
+
+            return view('NghiepVu.ThiDuaKhenThuong.PhongTraoThiDua.Xem')
                 ->with('model', $model)
                 ->with('model_khenthuong', $model_khenthuong)
                 ->with('model_tieuchuan', $model_tieuchuan)
@@ -125,7 +148,9 @@ class dsphongtraothiduaController extends Controller
 
             $model = dsphongtraothidua::where('maphongtraotd', $inputs['maphongtraotd'])->first();
             if ($model == null) {
+                $inputs['trangthai'] = 'CC';
                 dsphongtraothidua::create($inputs);
+                
                 $trangthai = new trangthaihoso();
                 $trangthai->trangthai = 'CC';
                 $trangthai->madonvi = $inputs['madonvi'];

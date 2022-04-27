@@ -11,9 +11,11 @@ class dsphongtraothidua extends Model
         'id',
         'maphongtraotd',
         'maloaihinhkt',
+        'phanloai',
         'soqd', // Số quyết định
         'ngayqd', // Ngày quyết định
         'noidung',
+        'khauhieu',
         'tungay', // Ngày bắt đầu nhận hồ sơ
         'denngay', // Ngày kết thúc nhận hồ sơ
         'ghichu',

@@ -45,11 +45,8 @@ class dshosothiduaController extends Controller
 
             $ngayhientai = date('Y-m-d');
             $m_hoso = dshosothiduakhenthuong::wherein('maphongtraotd', array_column($model->toarray(), 'maphongtraotd'))->get();
-            //$m_trangthai_hoso = trangthaihoso::where('phanloai', 'dshosothiduakhenthuong')->wherein('trangthai',['CD','DD'])->orderby('thoigian', 'desc')->get();
-            $m_trangthai_phongtrao = trangthaihoso::where('phanloai', 'dsphongtraothidua')->orderby('thoigian', 'desc')->get();
             //dd($ngayhientai);
             foreach ($model as $DangKy) {
-
                 if ($DangKy->trangthai == 'CC') {
                     $DangKy->nhanhoso = 'CHUABATDAU';
                     if ($DangKy->tungay < $ngayhientai && $DangKy->denngay > $ngayhientai) {
@@ -81,6 +78,7 @@ class dshosothiduaController extends Controller
                 ->with('m_donvi', $m_donvi)
                 ->with('m_diaban', $m_diaban)
                 ->with('a_donviql', getDonViQuanLyDiaBan($donvi->madiaban))
+                ->with('a_phamvi', getPhamViPhongTrao())
                 ->with('a_trangthaihoso', getTrangThaiTDKT())
                 ->with('pageTitle', 'Danh sách hồ sơ thi đua');
         } else

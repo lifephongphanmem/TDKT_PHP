@@ -17,9 +17,11 @@ class CreateDsphongtraothiduaTable extends Migration
             $table->bigIncrements('id');
             $table->string('maphongtraotd')->unique();
             $table->string('maloaihinhkt')->nullable();
+            $table->string('phanloai')->nullable();
             $table->string('soqd')->nullable(); // Số quyết định
             $table->date('ngayqd')->nullable(); // Ngày quyết định
             $table->string('noidung')->nullable();
+            $table->string('khauhieu')->nullable();
             $table->string('phamviapdung')->nullable();
             $table->date('tungay')->nullable(); // Ngày bắt đầu nhận hồ sơ
             $table->date('denngay')->nullable(); // Ngày kết thúc nhận hồ sơ

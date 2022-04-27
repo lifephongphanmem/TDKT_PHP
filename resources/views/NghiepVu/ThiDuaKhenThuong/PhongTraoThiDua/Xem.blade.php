@@ -15,116 +15,7 @@
     <script>
         jQuery(document).ready(function() {
             TableManaged3.init();
-        });
-
-        function ThemKhenThuong(){
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-            $.ajax({
-                url: '/PhongTraoThiDua/ThemKhenThuong',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN,
-                    soluong: $('#soluong').val(),
-                    madanhhieutd: $('#madanhhieutd').val(),
-                    mahinhthuckt: $('#mahinhthuckt').val(),
-                    maphongtraotd: $('#frm_ThayDoi').find("[name='maphongtraotd']").val()
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if(data.status == 'success') {
-                        toastr.success("Bổ xung thông tin thành công!");
-                        $('#dskhenthuong').replaceWith(data.message);
-                        jQuery(document).ready(function() {
-                            TableManaged3.init();
-                        });
-                        $('#modal-create').modal("hide");
-
-                    }
-                }
-            })
-        }
-
-        function ThemTieuChuan(){
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            var batbuoc = 0;
-            if($('#batbuoc').checked)
-                batbuoc = 1;
-            $.ajax({
-                url: '/PhongTraoThiDua/ThemTieuChuan',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN,
-                    batbuoc: batbuoc,
-                    madanhhieutd: $('#madanhhieutd').val(),
-                    matieuchuandhtd: $('#matieuchuandhtd').val(),
-                    maphongtraotd: $('#frm_ThayDoi').find("[name='maphongtraotd']").val()
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if(data.status == 'success') {
-                        toastr.success("Bổ xung thông tin thành công!");
-                        $('#dstieuchuan').replaceWith(data.message);
-                        jQuery(document).ready(function() {
-                            TableManaged4.init();
-                        });
-                        $('#modal-TieuChuan').modal("hide");
-
-                    }
-                }
-            })
-        }
-
-        function getTieuChuan(madanhhieutd){
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $('#madanhhieutd_tc').val(madanhhieutd).trigger('change');
-
-            $.ajax({
-                url: '/PhongTraoThiDua/LayTieuChuan',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN,
-                    madanhhieutd: madanhhieutd,
-                    maphongtraotd: $('#frm_ThayDoi').find("[name='maphongtraotd']").val()
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    if(data.status == 'success') {
-                        $('#dstieuchuan').replaceWith(data.message);
-                    }
-                }
-            })
-        }
-
-        function getId(id){
-            document.getElementById("iddelete").value=id;
-        }
-        function deleteRow() {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
-                url: '/dangkytddf/delete',
-                type: 'GET',
-                data: {
-                    _token: CSRF_TOKEN,
-                    id: $('#iddelete').val(),
-                    maphongtraotd: $('#frm_ThayDoi').find("[name='maphongtraotd']").val()
-                },
-                dataType: 'JSON',
-                success: function (data) {
-                    //if(data.status == 'success') {
-                    toastr.success("Bạn đã xóa thông tin đối tượng thành công!", "Thành công!");
-                    $('#dsdt').replaceWith(data.message);
-                    jQuery(document).ready(function() {
-                        TableManaged.init();
-                    });
-
-                    $('#modal-delete').modal("hide");
-
-                    //}
-                }
-            })
-
-        }
+        });        
     </script>
 @stop
 
@@ -142,9 +33,7 @@
             </div>
         </div>
 
-        {!! Form::model($model, ['method' => 'POST', '/PhongTraoThiDua/Them', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
-        {{ Form::hidden('madonvi', null) }}
-        {{ Form::hidden('maphongtraotd', null) }}
+        {!! Form::model($model, ['method' => 'POST', '', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}        
         <div class="card-body">
             <div class="form-group row">
                 <div class="col-lg-12">
@@ -206,8 +95,7 @@
 
             <div class="form-group row">
                 <div class="col-lg-6">
-                    <label>Tờ trình: </label>
-                    {!! Form::file('totrinh', null, ['id' => 'totrinh', 'class' => 'form-control']) !!}
+                    <label>Tờ trình: </label>                    
                     @if ($model->totrinh != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/totrinh/' . $model->totrinh) }}"
@@ -216,8 +104,7 @@
                     @endif
                 </div>
                 <div class="col-lg-6">
-                    <label>Quyết định khen thưởng: </label>
-                    {!! Form::file('qdkt', null, ['id' => 'qdkt', 'class' => 'form-control']) !!}
+                    <label>Quyết định khen thưởng: </label>                    
                     @if ($model->qdkt != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/qdkt/' . $model->qdkt) }}" target="_blank">{{ $model->qdkt }}</a>
@@ -229,7 +116,6 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label>Biên bản: </label>
-                    {!! Form::file('bienban', null, ['id' => 'bienban', 'class' => 'form-control']) !!}
                     @if ($model->bienban != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/bienban/' . $model->bienban) }}"
@@ -239,7 +125,6 @@
                 </div>
                 <div class="col-lg-6">
                     <label>Tài liệu khác: </label>
-                    {!! Form::file('tailieukhac', null, ['id' => 'tailieukhac', 'class' => 'form-control']) !!}
                     @if ($model->tailieukhac != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/tailieukhac/' . $model->tailieukhac) }}"
@@ -251,13 +136,7 @@
             <div class="separator separator-dashed my-5"></div>
             <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng</h4>
 
-            <div class="form-group row">
-                <div class="col-lg-12">
-                    <button type="button" data-target="#modal-create" data-toggle="modal" class="btn btn-success btn-xs">
-                        <i class="fa fa-plus"></i>&nbsp;Thêm</button>
-                </div>
-            </div>
-
+          
             <div class="form-group row" id="dskhenthuong">
                 <div class="col-lg-12">
                     <table id="sample_3" class="table table-striped table-bordered table-hover">
@@ -280,17 +159,7 @@
                                     <td>{{ $tt->tendanhhieutd }}</td>
                                     <td>{{ ($a_hinhthuckt[$tt->mahinhthuckt] ?? '') }}</td>
                                     <td style="text-align: center">{{ $tt->soluong }}</td>
-                                    <td>
-                                        <button title="Tiêu chuẩn" type="button"
-                                            onclick="getTieuChuan('{{ $tt->madanhhieutd }}')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#modal-tieuchuan"
-                                            data-toggle="modal">
-                                            <i class="icon-lg la fa-list text-dark"></i></button>
-                                        <button title="Xóa" type="button" onclick="getId('{{ $tt->id }}')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#delete-modal"
-                                            data-toggle="modal">
-                                            <i class="icon-lg la fa-trash-alt text-danger"></i></button>
-                                    </td>
+                                    <td></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -301,9 +170,7 @@
         <div class="card-footer">
             <div class="row text-center">
                 <div class="col-lg-12">
-                    <a href="{{ url('/PhongTraoThiDua/ThongTin?madonvi=' . $model->madonvi) }}"
-                        class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
+                    
                 </div>
             </div>
         </div>

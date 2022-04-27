@@ -2,6 +2,7 @@
 //Phong trào thi đua
 Route::group(['prefix'=>'PhongTraoThiDua'], function(){
     Route::get('ThongTin','NghiepVu\ThiDuaKhenThuong\dsphongtraothiduaController@ThongTin');
+    Route::get('Xem','NghiepVu\ThiDuaKhenThuong\dsphongtraothiduaController@XemThongTin');
     Route::get('Them','NghiepVu\ThiDuaKhenThuong\dsphongtraothiduaController@ThayDoi');
     Route::post('Them','NghiepVu\ThiDuaKhenThuong\dsphongtraothiduaController@LuuPhongTrao');
     Route::get('Sua','NghiepVu\ThiDuaKhenThuong\dsphongtraothiduaController@ThayDoi');
@@ -16,8 +17,12 @@ Route::group(['prefix'=>'PhongTraoThiDua'], function(){
 
 Route::group(['prefix'=>'HoSoThiDua'], function(){
     Route::get('ThongTin','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThongTin');
-    Route::get('Them','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThayDoi');
+    Route::get('Them','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThemHoSo');
+    
     Route::post('Them','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuHoSo');    
+    Route::get('Sua','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThayDoi');
+    Route::post('Sua','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuHoSo');
+    Route::get('Xem','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@XemHoSo');
 
     Route::get('ThemDoiTuong','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThemDoiTuong');
     Route::get('ThemDoiTuongTapThe','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThemDoiTuongTapThe');

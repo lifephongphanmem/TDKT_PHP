@@ -17,11 +17,15 @@
             TableManaged3.init();
             $('#madonvi').change(function() {
                 window.location.href = '/PhongTraoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
+                '&nam=' + $('#nam').val() +'&phanloai=' + $('#phanloai').val();
             });
             $('#nam').change(function() {
                 window.location.href = '/PhongTraoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
+                '&nam=' + $('#nam').val() +'&phanloai=' + $('#phanloai').val();
+            });
+            $('#phanloai').change(function() {
+                window.location.href = '/PhongTraoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
+                    '&nam=' + $('#nam').val() +'&phanloai=' + $('#phanloai').val();
             });
         });
     </script>
@@ -46,7 +50,7 @@
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label style="font-weight: bold">Đơn vị</label>
                     <select class="form-control select2basic" id="madonvi">
                         @foreach ($m_diaban as $diaban)
@@ -60,7 +64,11 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-5">
+                    <label style="font-weight: bold">Hình thức tổ chức</label>
+                    {!! Form::select('phanloai', $a_phanloai, $inputs['phanloai'], ['id' => 'phanloai', 'class' => 'form-control select2basic']) !!}
+                </div>
+                <div class="col-md-2">
                     <label style="font-weight: bold">Năm</label>
                     {!! Form::select('nam', getNam(true), $inputs['nam'], ['id' => 'nam', 'class' => 'form-control select2basic']) !!}
                 </div>
@@ -68,7 +76,6 @@
 
             <div class="form-group row">
                 <div class="col-md-12">
-
                     <table class="table table-striped table-bordered table-hover" id="sample_3">
                         <thead>
                             <tr class="text-center">
@@ -90,9 +97,9 @@
                                 <td class="text-center">{{$a_phamvi[$tt->phamviapdung] }}</td>
                                 @include('includes.td.td_trangthai_phongtrao')
                                 <td class=" text-center">
-                                    <a title="Xem chi tiết" href="{{ url('dangkytd/' . $tt->id) }}"
+                                    <a title="Xem chi tiết" href="{{ url('/PhongTraoThiDua/Xem?maphongtraotd=' . $tt->maphongtraotd) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
-                                        <i class="icon-lg la fa-eye text-primary"></i></a>
+                                        <i class="icon-lg la fa-eye text-dark"></i></a>
                                     @if (chkPhanQuyen('dsphongtraothidua', 'modify'))
                                         {{-- @if ($tt->trangthai == 'CC' || $tt->trangthai == 'BTL')
                                             <a title="Chỉnh sửa" href="{{ url('/PhongTraoThiDua/Sua?maphongtraotd=' . $tt->maphongtraotd) }}"
