@@ -81,7 +81,7 @@
                             </tr>
                         </thead>
                         @foreach ($model as $key => $tt)
-                            <tr class="{{ $tt->nhanhoso == 'DANGNHAN' ? 'text-success' : '' }}">
+                            <tr>
                                 <td style="text-align: center">{{ $key + 1 }}</td>
                                 <td>{{ $tt->tendonvi }}</td>
                                 <td>{{ $tt->noidung }}</td>
@@ -93,7 +93,7 @@
 
                                 <td style="text-align: center">
                                     <a title="Thông tin phong trào"
-                                        href="{{ url('/PhongTraoThiDua/Sua?maphongtraotd=' . $tt->maphongtraotd . '&trangthai=false') }}"
+                                        href="{{ url('/PhongTraoThiDua/Xem?maphongtraotd=' . $tt->maphongtraotd ) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-success"></i></a>
                                     @if ($tt->nhanhoso == 'DANGNHAN')

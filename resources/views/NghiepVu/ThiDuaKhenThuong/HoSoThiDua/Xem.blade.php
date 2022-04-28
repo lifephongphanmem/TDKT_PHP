@@ -18,84 +18,7 @@
             TableManaged4.init();
         });
 
-        function ThemDoiTuong() {
-            //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            var form = $('#frm_ThemCaNhan');
-            // var file = new FormData();
-            // file.append('_token', $('meta[name="csrf-token"]').attr('content'));
-            // file.append('madoituong', form.find("[name='madoituong']").val());
-            // file.append('tendoituong', form.find("[name='tendoituong']").val());
-            // file.append('ngaysinh', form.find("[name='ngaysinh']").val());
-            // file.append('gioitinh', form.find("[name='gioitinh']").val());
-            // file.append('chucvu', form.find("[name='chucvu']").val());
-            // file.append('maccvc', form.find("[name='maccvc']").val());
-            // file.append('lanhdao', form.find("[name='lanhdao']").val());                    
-            // file.append('madanhhieutd', form.find("[name='madanhhieutd']").val());
-            // file.append('tensangkien', form.find("[name='tensangkien']").val());
-            // file.append('donvicongnhan', form.find("[name='donvicongnhan']").val());
-            // file.append('thoigiancongnhan', form.find("[name='thoigiancongnhan']").val());
-            // file.append('thanhtichdatduoc', form.find("[name='thanhtichdatduoc']").val());
-            // //file.append('filedk', $("#filedk")[0].files[0]);
-            // file.append('madonvi', $('#frm_ThayDoi').find("[name='madonvi']").val());
-            // file.append('maphongtraotd', $('#frm_ThayDoi').find("[name='maphongtraotd']").val());
-            // file.append('mahosotdkt', $('#frm_ThayDoi').find("[name='mahosotdkt']").val());
-
-            // $.ajax({
-            //     url: '/HoSoThiDua/ThemDoiTuong',
-            //     type: 'GET',
-            //     data: file,
-            //     processData: false,
-            //     contentType: false,
-            //     success: function (data) {
-            //         if (data.status == 'success') {
-            //             toastr.success("Bổ xung thông tin thành công!");
-            //             $('#dskhenthuong').replaceWith(data.message);
-            //             jQuery(document).ready(function() {
-            //                 TableManaged3.init();
-            //             });
-            //             $('#modal-create').modal("hide");
-
-            //         }
-            //     }
-            // })
-
-
-            $.ajax({
-                url: '/HoSoThiDua/ThemDoiTuong',
-                type: 'GET',
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    madoituong: form.find("[name='madoituong']").val(),
-                    tendoituong: form.find("[name='tendoituong']").val(),
-                    ngaysinh: form.find("[name='ngaysinh']").val(),
-                    gioitinh: form.find("[name='gioitinh']").val(),
-                    chucvu: form.find("[name='chucvu']").val(),
-                    maccvc: form.find("[name='maccvc']").val(),
-                    lanhdao: form.find("[name='lanhdao']").val(),
-                    madanhhieutd: form.find("[name='madanhhieutd']").val(),
-                    tensangkien: form.find("[name='tensangkien']").val(),
-                    donvicongnhan: form.find("[name='donvicongnhan']").val(),
-                    thoigiancongnhan: form.find("[name='thoigiancongnhan']").val(),
-                    thanhtichdatduoc: form.find("[name='thanhtichdatduoc']").val(),
-                    //filedk: form.find("[name='filedk']").val(),
-                    madonvi: $('#frm_ThayDoi').find("[name='madonvi']").val(),
-                    maphongtraotd: $('#frm_ThayDoi').find("[name='maphongtraotd']").val(),
-                    mahosotdkt: $('#frm_ThayDoi').find("[name='mahosotdkt']").val()
-                },
-                dataType: 'JSON',
-                success: function(data) {
-                    if (data.status == 'success') {
-                        toastr.success("Bổ xung thông tin thành công!");
-                        $('#dskhenthuong').replaceWith(data.message);
-                        jQuery(document).ready(function() {
-                            TableManaged3.init();
-                        });
-                        $('#modal-create').modal("hide");
-
-                    }
-                }
-            })
-        }
+        
 
         function ThemDoiTuongTapThe() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -294,7 +217,7 @@
             </div>
         </div>
 
-        {!! Form::model($model, ['method' => 'POST', '/HoSoThiDua/Them', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::model($model, ['method' => 'POST', '', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
         {{ Form::hidden('madonvi', null, ['id' => 'madonvi']) }}
         {{ Form::hidden('mahosotdkt', null, ['id' => 'mahosotdkt']) }}
         {{ Form::hidden('maphongtraotd', null, ['id' => 'maphongtraotd']) }}
@@ -362,12 +285,7 @@
 
             <div class="separator separator-dashed my-5"></div>
             <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng cá nhân</h4>
-            <div class="form-group row">
-                <div class="col-lg-12">
-                    <button type="button" data-target="#modal-create" data-toggle="modal" class="btn btn-success btn-xs">
-                        <i class="fa fa-plus"></i>&nbsp;Thêm</button>
-                </div>
-            </div>
+            
             <div class="row" id="dskhenthuong">
                 <div class="col-md-12">
                     <table id="sample_3" class="table table-striped table-bordered table-hover">
@@ -397,18 +315,13 @@
                                             onclick="getTieuChuan('{{ $tt->madoituong }}','{{ $tt->madanhhieutd }}','{{ $tt->tendoituong }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#modal-tieuchuan"
                                             data-toggle="modal">
-                                            <i class="icon-lg la fa-list text-primary"></i></button>
+                                            <i class="icon-lg la fa-list text-dark"></i></button>
 
                                         <button title="Sửa thông tin" type="button"
                                             onclick="getCaNhan('{{ $tt->id }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#modal-create"
                                             data-toggle="modal">
-                                            <i class="icon-lg la fa-edit text-primary"></i></button>
-                                        <button title="Xóa" type="button"
-                                            onclick="delKhenThuong('{{ $tt->id }}','CANHAN')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#modal-delete-khenthuong"
-                                            data-toggle="modal">
-                                            <i class="icon-lg la fa-trash text-danger"></i></button>
+                                            <i class="icon-lg la fa-edit text-dark"></i></button>                                      
 
                                     </td>
                                 </tr>
@@ -420,15 +333,7 @@
             <div class="separator separator-dashed my-5"></div>
             <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng tập thể</h4>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <button type="button" data-target="#modal-create-tapthe" data-toggle="modal"
-                            class="btn btn-success btn-xs">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm</button>
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="row" id="dskhenthuongtapthe">
                 <div class="col-md-12">
@@ -453,19 +358,13 @@
                                             onclick="getTieuChuan('{{ $tt->matapthe }}','{{ $tt->madanhhieutd }}','{{ $tt->tentapthe }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#modal-tieuchuan"
                                             data-toggle="modal">
-                                            <i class="icon-lg la fa-list text-primary"></i></button>
+                                            <i class="icon-lg la fa-list text-dark"></i></button>
 
                                         <button title="Sửa thông tin" type="button"
                                             onclick="getTapThe('{{ $tt->id }}')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#modal-create-tapthe"
                                             data-toggle="modal">
-                                            <i class="icon-lg la fa-edit text-primary"></i></button>
-                                        <button title="Xóa" type="button"
-                                            onclick="delKhenThuong('{{ $tt->id }}', 'TAPTHE')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#modal-delete-khenthuong"
-                                            data-toggle="modal">
-                                            <i class="icon-lg la fa-trash text-danger"></i></button>
-
+                                            <i class="icon-lg la fa-edit text-dark"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -479,9 +378,6 @@
                 <div class="col-lg-12">
                     <a href="{{ url('/HoSoThiDua/ThongTin?madonvi=' . $model->madonvi) }}" class="btn btn-danger mr-5"><i
                             class="fa fa-reply"></i>&nbsp;Quay lại</a>
-
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-check"></i>Hoàn thành</button>
                 </div>
             </div>
         </div>
@@ -589,7 +485,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
-                        <button type="button" class="btn btn-primary" onclick="ThemDoiTuong()">Cập nhật</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -678,7 +573,6 @@
 
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
-                        <button type="button" class="btn btn-primary" onclick="ThemDoiTuongTapThe()">Cập nhật</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -761,7 +655,7 @@
 
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-offset-4 col-md-3">
+                            <div class="col-md-12">
                                 <div class="md-checkbox">
                                     <input type="checkbox" id="dieukien_ltc" name="dieukien_ltc" class="md-check">
                                     <label for="dieukien_ltc">
@@ -774,32 +668,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="button" class="btn btn-primary" onclick="LuuTieuChuan()">Cập nhật</button>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Xóa khen thưởng ca nhân --}}
-    <div class="modal fade" id="modal-delete-khenthuong" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Đồng ý xóa thông tin đối tượng?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                </div>
-                <input type="hidden" id="iddelete" name="iddelete">
-                <input type="hidden" id="phanloaixoa" name="phanloaixoa">
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
-                    <button type="button" class="btn btn-primary" onclick="deleteRow()">Đồng ý</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
+    
 
     <script>
         function adddvt() {

@@ -36,6 +36,12 @@ class CreateDshosothiduaKhenthuongTable extends Migration
             $table->string('mahinhthuckt')->nullable();
             $table->string('lydo')->nullable();
             $table->string('madonvi')->nullable();//phục vụ lấy dữ liệu
+             //Đề tài, sáng kiến
+             $table->string('tensangkien')->nullable();//tên đề tài, sáng kiến
+             $table->string('donvicongnhan')->nullable();
+             $table->date('thoigiancongnhan')->nullable();
+             $table->string('thanhtichdatduoc')->nullable();
+             $table->string('filedk')->nullable();
             $table->timestamps();
         });
     }

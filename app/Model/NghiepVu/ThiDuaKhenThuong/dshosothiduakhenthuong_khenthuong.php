@@ -30,5 +30,11 @@ class dshosothiduakhenthuong_khenthuong extends Model
         'mahinhthuckt',
         'lydo',
         'madonvi', //phục vụ lấy dữ liệu
+        //Đề tài, sáng kiến
+        'tensangkien', //tên đề tài, sáng kiến
+        'donvicongnhan',
+        'thoigiancongnhan',
+        'thanhtichdatduoc',
+        'filedk',
     ];
 }

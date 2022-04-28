@@ -1,8 +1,11 @@
 @if ($tt->trangthai == 'CC')
-    <td align="center"><span class="badge badge-warning">Chờ chuyển</span></td>
+    <td align="center">
+        <span class="badge badge-warning">Chờ chuyển</span>
+    </td>
 @elseif($tt->trangthai == 'CD')
-    <td align="center"><span class="badge badge-blue">Chờ duyệt</span>
-        <br>Thời gian:<br><b>{{ getDayVn($tt->thoigian) }}</b>
+    <td align="center">
+        <span class="badge badge-info">Chờ duyệt</span>        
+        <br><span class="text-bold">{{ getDayVn($tt->thoigian) }}</span>
     </td>
 @elseif($tt->trangthai == 'BTL')
     <td align="center">

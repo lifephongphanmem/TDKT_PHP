@@ -23,7 +23,7 @@ class CreateDsphongtraothiduaKhenthuongTable extends Migration
             $table->string('phanloai')->nullable();
             $table->integer('soluong')->nullable();// số lượng giải thưởng, khen thưởng
             $table->double('sotien')->nullable();// số tiền (tương đương )
-            $table->string('ghichu')->nullable();//
+            $table->string('ghichu')->nullable();//           
             $table->timestamps();
         });
     }

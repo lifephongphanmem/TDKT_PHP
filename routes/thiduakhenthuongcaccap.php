@@ -17,8 +17,7 @@ Route::group(['prefix'=>'PhongTraoThiDua'], function(){
 
 Route::group(['prefix'=>'HoSoThiDua'], function(){
     Route::get('ThongTin','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThongTin');
-    Route::get('Them','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThemHoSo');
-    
+    Route::get('Them','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThemHoSo');    
     Route::post('Them','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuHoSo');    
     Route::get('Sua','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThayDoi');
     Route::post('Sua','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuHoSo');
@@ -26,6 +25,8 @@ Route::group(['prefix'=>'HoSoThiDua'], function(){
 
     Route::get('ThemDoiTuong','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThemDoiTuong');
     Route::get('ThemDoiTuongTapThe','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ThemDoiTuongTapThe');
+    Route::get('LayDoiTuong','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LayDoiTuong');
+
     Route::get('LayTieuChuan','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LayTieuChuan');
     Route::get('LuuTieuChuan','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@LuuTieuChuan');
     Route::post('ChuyenHoSo','NghiepVu\ThiDuaKhenThuong\dshosothiduaController@ChuyenHoSo');

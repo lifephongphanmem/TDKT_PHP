@@ -17,16 +17,8 @@ class dshosokhenthuong_khenthuong extends Model
         'phanloai', //cá nhân, tập thể           
         //Thông tin cá nhân 
         'madoituong',
-        'maccvc',
-        'tendoituong',
-        'ngaysinh',
-        'gioitinh',
-        'chucvu',
-        'lanhdao',
-        //Thông tin tập thể
         'matapthe',
         'tentapthe',
-        'ghichu', //
         //Kết quả đánh giá
         'ketqua',
         'mahinhthuckt',
