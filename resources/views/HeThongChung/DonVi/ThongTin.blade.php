@@ -108,11 +108,15 @@
                                             <td></td>
                                             <td></td>
                                             <td style="text-align: center">{{ $k++ }}</td>
-                                            <td class="em" style="font-style: italic;">{{ $ct_x->tendiaban }}
-                                            </td>
-                                            <td></td>
+                                            <td class="em" style="font-style: italic;">{{ $ct_x->tendiaban }}</td>
+                                            <td>{{ $a_donvi[$ct_x->madonviQL] ?? '' }}</td>
                                             <td style="text-align: center">
                                                 @if (chkPhanQuyen('dsdonvi', 'modify'))
+                                                    <a href={{ '/DonVi/QuanLy?madiaban=' . $ct_x->madiaban }}
+                                                        class="btn btn-sm btn-clean btn-icon"
+                                                        title="Thay đổi đơn vị quản lý địa bàn">
+                                                        <i class="icon-lg la fa-edit text-primary"></i></a>
+
                                                     <a href="{{ '/DonVi/DanhSach?madiaban=' . $ct_x->madiaban }}"
                                                         class="btn btn-sm btn-clean btn-icon" title="Danh sách đơn vị">
                                                         <i class="icon-lg la la-clipboard-list text-dark"></i></a>

@@ -62,21 +62,20 @@
             <div class="form-group row">
                 <div class="col-md-12">
 
-                    <table class="table table-striped table-bordered table-hover" id="sample_4">
+                    <table class="table table-striped table-bordered table-hover" id="sample_3">
                         <thead>
                             <tr class="text-center">
                                 <th rowspan="2" width="2%">STT</th>
                                 <th rowspan="2">Đơn vị phát động</th>
                                 <th rowspan="2">Nội dung hồ sơ</th>
-                                <th colspan="5">Phong trào</th>
+                                <th colspan="4">Phong trào</th>
                                 <th rowspan="2" style="text-align: center" width="10%">Thao tác</th>
                             </tr>
                             <tr class="text-center">
 
-                                <th width="8%">Ngày<br>bắt đầu</th>
-                                <th width="8%">Ngày<br>kết thúc</th>
+                                <th width="10%">Thời gian</th>
                                 <th width="8%">Trạng thái</th>
-                                <th width="5%">Số<br>hồ sơ</th>
+                                <th width="6%">Số hồ<br>sơ đã<br>nhận</th>
                                 <th width="15%">Pham vị phát động</th>
                             </tr>
                         </thead>
@@ -85,8 +84,8 @@
                                 <td style="text-align: center">{{ $key + 1 }}</td>
                                 <td>{{ $tt->tendonvi }}</td>
                                 <td>{{ $tt->noidung }}</td>
-                                <td>{{ getDayVn($tt->tungay) }}</td>
-                                <td>{{ getDayVn($tt->denngay) }}</td>
+                                <td class="text-center">Từ {{ getDayVn($tt->tungay) }}</br> đến
+                                    {{ getDayVn($tt->denngay) }}</td>
                                 <td style="text-align: center">{{ $a_trangthaihoso[$tt->nhanhoso] }}</td>
                                 <td style="text-align: center">{{ chkDbl($tt->sohoso) }}</td>
                                 <td>{{ $a_phamvi[$tt->phamviapdung] ?? '' }}</td>
@@ -103,11 +102,11 @@
                                                 class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-lg la la-clipboard-list text-dark"></i></a>
 
-                                            <button title="Kết thúc phong trào" type="button"
+                                            {{-- <button title="Kết thúc phong trào" type="button"
                                                 onclick="setKetQua('{{ $tt->maphongtraotd }}')"
                                                 class="btn btn-sm btn-clean btn-icon" data-target="#modal-KetThuc"
                                                 data-toggle="modal">
-                                                <i class="icon-lg la fa-check text-warning"></i></button>
+                                                <i class="icon-lg la fa-check text-warning"></i></button> --}}
                                         @else
                                             <a title="Danh sách chi tiết"
                                                 href="{{ url('/XetDuyetHoSoThiDua/DanhSach?maphongtraotd=' .$tt->maphongtraotd .'&madonvi=' .$inputs['madonvi'] .'&trangthai=false') }}"

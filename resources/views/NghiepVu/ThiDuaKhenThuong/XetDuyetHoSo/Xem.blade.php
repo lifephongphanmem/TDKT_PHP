@@ -14,15 +14,7 @@
     <!-- END PAGE LEVEL PLUGINS -->
     <script>
         jQuery(document).ready(function() {
-            TableManaged3.init();
-            $('#madonvi').change(function() {
-                window.location.href = '/XetDuyetHoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
-            });
-            $('#nam').change(function() {
-                window.location.href = '/XetDuyetHoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
-            });
+            TableManaged3.init();            
         });
     </script>
 @stop
@@ -47,7 +39,6 @@
 
             <div class="form-group row">
                 <div class="col-md-12">
-
                     <table class="table table-striped table-bordered table-hover" id="sample_4">
                         <thead>
                             <tr class="text-center">
@@ -72,27 +63,7 @@
                                         href="{{ url('/HoSoThiDua/Xem?mahosotdkt=' . $tt->mahosotdkt) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-dark"></i></a>
-
-                                    @if (in_array($tt->trangthai_hoso, ['CD', 'CNXKT']))
-                                        <button title="Trả lại hồ sơ" type="button"
-                                            onclick="confirmTraLai('{{ $tt->mahosotdkt }}', '{{ $inputs['madonvi'] }}', '/XetDuyetHoSoThiDua/TraLai')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#modal-tralai"
-                                            data-toggle="modal">
-                                            <i class="icon-lg la la-reply text-danger"></i></button>
-                                        @if ($tt->chuyentiephoso)
-                                            <button title="Chuyển hồ sơ đăng ký" type="button"
-                                                onclick="confirmChuyen('{{ $tt->mahosotdkt }}','/XetDuyetHoSoThiDua/ChuyenHoSo')"
-                                                class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm"
-                                                data-toggle="modal">
-                                                <i class="icon-lg la fa-share-square text-success"></i></button>
-                                        @else
-                                            <button title="Nhận hồ sơ đăng ký" type="button"
-                                                onclick="confirmNhan('{{ $tt->mahosotdkt }}','/XetDuyetHoSoThiDua/NhanHoSo','{{ $inputs['madonvi'] }}')"
-                                                class="btn btn-sm btn-clean btn-icon" data-target="#nhan-modal-confirm"
-                                                data-toggle="modal">
-                                                <i class="icon-lg la fa-share-square text-success"></i></button>
-                                        @endif
-                                    @endif
+                                    
                                 </td>
                             </tr>
                         @endforeach
@@ -102,8 +73,4 @@
         </div>
     </div>
     <!--end::Card-->
-    @include('includes.modal.modal-delete')
-    @include('includes.modal.modal_unapprove_hs')
-    @include('includes.modal.modal_approve_hs')
-    @include('includes.modal.modal_accept_hs')
 @stop

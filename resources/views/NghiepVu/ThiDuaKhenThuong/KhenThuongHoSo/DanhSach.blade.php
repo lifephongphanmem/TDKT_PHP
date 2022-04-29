@@ -14,20 +14,14 @@
     <!-- END PAGE LEVEL PLUGINS -->
     <script>
         jQuery(document).ready(function() {
-            TableManagedclass.init();
-            $('#madonvi').change(function() {
-                window.location.href = '/XetDuyetHoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
-            });
-            $('#nam').change(function() {
-                window.location.href = '/XetDuyetHoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
-            });
+            TableManagedclass.init();            
         });
     </script>
 @stop
 
 @section('content')
+    {!! Form::model($model, ['method' => 'POST','url' => '/KhenThuongHoSoThiDua/LuuHoSo', 'class' => 'form', 'id' => 'frm_KhenThuong', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {{ Form::hidden('mahosokt', null) }}
     <!--begin::Card-->
     <div class="card card-custom wave wave-animate-slow wave-info" style="min-height: 600px">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
@@ -44,9 +38,49 @@
                     <textarea class="form-control" readonly>{{ $m_phongtrao->noidung }}</textarea>
                 </div>
             </div>
+            <h4 class="form-section" style="color: #0000ff">Thông tin chung</h4>
+            <div class="form-group row">
+                <div class="col-md-8">
+                    <label style="font-weight: bold">Đơn vị khen thưởng</label>
+                    {!! Form::text('tendonvi', $model->donvikhenthuong, ['class' => 'form-control text-bold']) !!}
+                </div>
+                <div class="col-md-4">
+                    <label style="font-weight: bold">Cấp độ khen thưởng</label>
+                    {!! Form::text('tendonvi', $model->capdokhenthuong, ['class' => 'form-control text-bold']) !!}
+                </div>
+            </div>
 
             <div class="form-group row">
-                <h4 class="form-section" style="color: #0000ff">Danh sách hồ sơ đăng ký</h4>
+                <div class="col-md-12">
+                    <label style="font-weight: bold">Nôi dung khen thưởng</label>
+                    {!! Form::textarea('noidung', $model->noidung, ['class' => 'form-control text-bold', 'rows' => 2]) !!}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label style="font-weight: bold">Số quyết định</label>
+                    {!! Form::text('soquyetdinh', $model->soquyetdinh, ['class' => 'form-control text-bold']) !!}
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold">Ngày quyết định</label>
+                    {!! Form::input('date', 'ngayhoso', $model->ngayhoso, ['class' => 'form-control']) !!}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label style="font-weight: bold">Chức vụ người ký</label>
+                    {!! Form::text('chucvunguoiky', $model->chucvunguoiky, ['class' => 'form-control text-bold']) !!}
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold">Họ tên người ký</label>
+                    {!! Form::text('hotennguoiky', $model->hotennguoiky, ['class' => 'form-control text-bold']) !!}
+                </div>
+            </div>
+
+            <h4 class="form-section" style="color: #0000ff">Danh sách hồ sơ đăng ký</h4>
+            <div class="form-group row">
                 <div class="col-md-12">
                     <table class="table table-striped table-bordered table-hover dulieubang">
                         <thead>
@@ -61,7 +95,14 @@
                             <tr>
                                 <td style="text-align: center">{{ $key + 1 }}</td>
                                 <td>{{ $a_donvi[$tt->madonvi_kt] ?? '' }}</td>
-                                <td class="text-center">{{ $tt->ketqua }}</td>
+                                @if ($tt->ketqua == 0)
+                                    <td class="text-center"></td>
+                                @else
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la fa-check text-success"></i></button>
+                                    </td>
+                                @endif
                                 <td style="text-align: center">
                                     <button title="Danh sách tiêu chuẩn" type="button"
                                         onclick="getHoSo('{{ $tt->mahosokt }}','{{ $tt->mahosotdkt }}', '{{ $a_donvi[$tt->madonvi_kt] ?? '' }}')"
@@ -74,8 +115,8 @@
                 </div>
             </div>
 
+            <h4 class="form-section" style="color: #0000ff">Danh sách khen thưởng theo cá nhân</h4>
             <div class="form-group row">
-                <h4 class="form-section" style="color: #0000ff">Danh sách khen thưởng theo cá nhân</h4>
                 <div class="col-md-12">
                     <table class="table table-striped table-bordered table-hover dulieubang">
                         <thead>
@@ -97,14 +138,22 @@
                                 <td>{{ $tt->tendoituong }}</td>
                                 <td>{{ $a_danhhieu[$tt->madanhhieutd] ?? '' }}</td>
                                 <td style="text-align: center">{{ $tt->tongdieukien . '/' . $tt->tongtieuchuan }}</td>
-                                <td class="text-center">{{ $tt->ketqua }}</td>                               
+                                @if ($tt->ketqua == 0)
+                                    <td class="text-center"></td>
+                                @else
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la fa-check text-dark"></i></button>
+                                    </td>
+                                @endif
                                 <td>{{ $a_hinhthuckt[$tt->mahinhthuckt] ?? '' }}</td>
                                 <td class="text-center">
                                     <button title="Danh sách tiêu chuẩn" type="button"
                                         onclick="getIdBack('{{ $tt->id }}')" class="btn btn-sm btn-clean btn-icon"
                                         data-target="#modal-tieuchuan" data-toggle="modal">
                                         <i class="icon-lg la fa-eye text-dark"></i></button>
-                                    <a title="In kết quả" href="{{ url('/KhenThuongHoSoThiDua/InKetQua?id=' . $tt->id) }}"
+                                    <a title="In kết quả"
+                                        href="{{ url('/KhenThuongHoSoThiDua/InKetQua?id=' . $tt->id) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-print text-dark"></i></a>
                                     {{-- @if ($m_phongtrao->trangthai == 'CC')
@@ -121,8 +170,8 @@
                 </div>
             </div>
 
+            <h4 class="form-section" style="color: #0000ff">Danh sách khen thưởng theo tập thể</h4>
             <div class="form-group row">
-                <h4 class="form-section" style="color: #0000ff">Danh sách khen thưởng theo tập thể</h4>
                 <div class="col-md-12">
                     <table class="table table-striped table-bordered table-hover dulieubang">
                         <thead>
@@ -162,10 +211,66 @@
                     </table>
                 </div>
             </div>
+
+            <h4 class="form-section" style="color: #0000ff">Danh sách tài liệu kèm theo</h4>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label>Tờ trình: </label>
+                    {!! Form::file('totrinh', null, ['id' => 'totrinh', 'class' => 'form-control']) !!}
+                    @if ($model->totrinh != '')
+                        <span class="form-control" style="border-style: none">
+                            <a href="{{ url('/data/totrinh/' . $model->totrinh) }}"
+                                target="_blank">{{ $model->totrinh }}</a>
+                        </span>
+                    @endif
+                </div>
+                <div class="col-lg-6">
+                    <label>Quyết định khen thưởng: </label>
+                    {!! Form::file('qdkt', null, ['id' => 'qdkt', 'class' => 'form-control']) !!}
+                    @if ($model->qdkt != '')
+                        <span class="form-control" style="border-style: none">
+                            <a href="{{ url('/data/qdkt/' . $model->qdkt) }}" target="_blank">{{ $model->qdkt }}</a>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label>Biên bản: </label>
+                    {!! Form::file('bienban', null, ['id' => 'bienban', 'class' => 'form-control']) !!}
+                    @if ($model->bienban != '')
+                        <span class="form-control" style="border-style: none">
+                            <a href="{{ url('/data/bienban/' . $model->bienban) }}"
+                                target="_blank">{{ $model->bienban }}</a>
+                        </span>
+                    @endif
+                </div>
+                <div class="col-lg-6">
+                    <label>Tài liệu khác: </label>
+                    {!! Form::file('tailieukhac', null, ['id' => 'tailieukhac', 'class' => 'form-control']) !!}
+                    @if ($model->tailieukhac != '')
+                        <span class="form-control" style="border-style: none">
+                            <a href="{{ url('/data/tailieukhac/' . $model->tailieukhac) }}"
+                                target="_blank">{{ $model->tailieukhac }}</a>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <a href="{{ url('/KhenThuongHoSoThiDua/ThongTin?madonvi=' . $model->madonvi) }}"
+                        class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
+                </div>
+            </div>
         </div>
     </div>
     <!--end::Card-->
-
+    {!! Form::close() !!}
     <div id="modal-hoso" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         {!! Form::open(['url' => '/KhenThuongHoSoThiDua/HoSo', 'id' => 'frm_hoso']) !!}
         <input type="hidden" name="mahosokt" />

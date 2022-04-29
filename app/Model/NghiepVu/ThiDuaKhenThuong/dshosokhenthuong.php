@@ -17,6 +17,8 @@ class dshosokhenthuong extends Model
         'mahosotdkt',
         'macumkhoi',
         'phanloai',//Cụm khối; TDKT
+        'soquyetdinh',
+        'thongtinquyetdinh',
         'donvikhenthuong',
         'capkhenthuong',
         'chucvunguoiky',

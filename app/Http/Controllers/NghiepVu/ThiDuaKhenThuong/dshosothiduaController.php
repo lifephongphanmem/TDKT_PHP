@@ -39,10 +39,16 @@ class dshosothiduaController extends Controller
             $donvi = $m_donvi->where('madonvi', $inputs['madonvi'])->first();
             //dd($donvi);
             $capdo = $donvi->capdo ?? '';
-            $model = viewdonvi_dsphongtrao::where('phamviapdung', 'TOANTINH')->orwhere('maphongtraotd', function ($qr) use ($capdo) {
-                $qr->select('maphongtraotd')->from('viewdonvi_dsphongtrao')->where('phamviapdung', 'CUNGCAP')->where('capdo', $capdo)->get();
-            })->orderby('tungay')->get();
 
+            //dd($capdo);
+            //Chưa xét trường hợp Huyện phát động            
+            if($capdo != 'X'){
+                $model = viewdonvi_dsphongtrao::where('phamviapdung', 'TOANTINH')->orwhere('maphongtraotd', function ($qr) use ($capdo) {
+                    $qr->select('maphongtraotd')->from('viewdonvi_dsphongtrao')->where('phamviapdung', 'CUNGCAP')->where('capdo', $capdo)->get();
+                })->orderby('tungay')->get();
+            }else{
+                $model = viewdonvi_dsphongtrao::where('phamviapdung', 'TOANTINH')->orwhere('madonvi', $inputs['madonvi'])->orderby('tungay')->get();
+            }
             $ngayhientai = date('Y-m-d');
             $m_hoso = dshosothiduakhenthuong::wherein('maphongtraotd', array_column($model->toarray(), 'maphongtraotd'))->get();
             //dd($m_hoso);
@@ -60,11 +66,10 @@ class dshosothiduaController extends Controller
                     $DangKy->nhanhoso = 'KETTHUC';
                 }
 
-                $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->wherein('trangthai', ['CD', 'DD']);
+                $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->wherein('trangthai', ['CD', 'DD', 'CNXKT', 'DXKT', 'CXKT']);
                 $DangKy->sohoso = $HoSo == null ? 0 : $HoSo->count();
-                $HoSodv = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->where('madonvi', $inputs['madonvi'])->first();
-                //$trangthai = $m_trangthai_hoso->where('mahoso', $HoSodv->mahosotdkt ?? '')->where('madonvi', $inputs['madonvi'])->first();
 
+                $HoSodv = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->where('madonvi', $inputs['madonvi'])->first();
                 $DangKy->trangthai = $HoSodv->trangthai ?? 'CXD';
                 $DangKy->thoigian = $HoSodv->thoigian ?? '';
                 $DangKy->hosodonvi = $HoSodv == null ? 0 : 1;
