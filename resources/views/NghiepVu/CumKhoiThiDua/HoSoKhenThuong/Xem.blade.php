@@ -253,7 +253,7 @@
             </div>
         </div>
 
-        {!! Form::model($model, ['method' => 'POST', '/CumKhoiThiDua/HoSoKhenThuong/Them', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::model($model, ['method' => 'POST',  '', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
         {{ Form::hidden('madonvi', null, ['id' => 'madonvi']) }}
         {{ Form::hidden('mahosotdkt', null, ['id' => 'mahosotdkt']) }}
         {{ Form::hidden('macumkhoi', null, ['id' => 'macumkhoi']) }}
@@ -293,7 +293,6 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label>Báo cáo thành tích: </label>
-                    {!! Form::file('baocao', null, ['id' => 'baocao', 'class' => 'form-control']) !!}
                     @if ($model->baocao != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/baocao/' . $model->baocao) }}"
@@ -303,7 +302,6 @@
                 </div>
                 <div class="col-lg-6">
                     <label>Biên bản cuộc họp: </label>
-                    {!! Form::file('bienban', null, ['id' => 'bienban', 'class' => 'form-control']) !!}
                     @if ($model->bienban != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/bienban/' . $model->bienban) }}"
@@ -316,7 +314,6 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label>Tài liệu khác: </label>
-                    {!! Form::file('tailieukhac', null, ['id' => 'tailieukhac', 'class' => 'form-control']) !!}
                     @if ($model->tailieukhac != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/tailieukhac/' . $model->tailieukhac) }}"
@@ -327,15 +324,7 @@
             </div>
             <div class="separator separator-dashed my-5"></div>
             <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng cá nhân</h4>
-            @if ($inputs['trangthai'] == 'true')
-                <div class="form-group row">
-                    <div class="col-lg-12">
-                        <button type="button" data-target="#modal-create" data-toggle="modal"
-                            class="btn btn-success btn-xs" onclick="setCaNhan()">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm</button>
-                    </div>
-                </div>
-            @endif
+            
             <div class="row" id="dskhenthuong">
                 <div class="col-md-12">
                     <table id="sample_3" class="table table-striped table-bordered table-hover">
@@ -366,18 +355,12 @@
                                             class="btn btn-sm btn-clean btn-icon" data-target="#modal-tieuchuan"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-list text-primary"></i></button>
-                                        @if ($inputs['trangthai'] == 'true')
+                                        
                                             <button title="Sửa thông tin" type="button"
                                                 onclick="getCaNhan('{{ $tt->id }}')"
                                                 class="btn btn-sm btn-clean btn-icon" data-target="#modal-create"
                                                 data-toggle="modal">
-                                                <i class="icon-lg la fa-edit text-primary"></i></button>
-                                            <button title="Xóa" type="button"
-                                                onclick="delKhenThuong('{{ $tt->id }}','CANHAN')"
-                                                class="btn btn-sm btn-clean btn-icon" data-target="#modal-delete-khenthuong"
-                                                data-toggle="modal">
-                                                <i class="icon-lg la fa-trash text-danger"></i></button>
-                                        @endif
+                                                <i class="icon-lg la fa-edit text-primary"></i></button>                                            
                                     </td>
                                 </tr>
                             @endforeach
@@ -385,20 +368,9 @@
                     </table>
                 </div>
             </div>
-            <div class="separator separator-dashed my-5"></div>
-            <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng tập thể</h4>
 
-            @if ($inputs['trangthai'] == 'true')
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <button type="button" data-target="#modal-create-tapthe" data-toggle="modal"
-                                class="btn btn-success btn-xs">
-                                <i class="fa fa-plus"></i>&nbsp;Thêm đối tượng</button>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            <div class="separator separator-dashed my-5"></div>
+            <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng tập thể</h4>            
             <div class="row" id="dskhenthuongtapthe">
                 <div class="col-md-12">
                     <table id="sample_4" class="table table-striped table-bordered table-hover">
@@ -423,18 +395,12 @@
                                             class="btn btn-sm btn-clean btn-icon" data-target="#modal-tieuchuan"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-list text-primary"></i></button>
-                                        @if ($inputs['trangthai'] == 'true')
+                                       
                                             <button title="Sửa thông tin" type="button"
                                                 onclick="getTapThe('{{ $tt->id }}')"
                                                 class="btn btn-sm btn-clean btn-icon" data-target="#modal-create-tapthe"
                                                 data-toggle="modal">
-                                                <i class="icon-lg la fa-edit text-primary"></i></button>
-                                            <button title="Xóa" type="button"
-                                                onclick="delKhenThuong('{{ $tt->id }}', 'TAPTHE')"
-                                                class="btn btn-sm btn-clean btn-icon" data-target="#modal-delete-khenthuong"
-                                                data-toggle="modal">
-                                                <i class="icon-lg la fa-trash text-danger"></i></button>
-                                        @endif
+                                                <i class="icon-lg la fa-edit text-primary"></i></button>                                            
                                     </td>
                                 </tr>
                             @endforeach
@@ -447,10 +413,7 @@
             <div class="row text-center">
                 <div class="col-lg-12">
                     <a href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/DanhSach?madonvi='.$model->madonvi.'&macumkhoi=' . $model->macumkhoi) }}" class="btn btn-danger mr-5"><i
-                            class="fa fa-reply"></i>&nbsp;Quay lại</a>
-                    @if ($inputs['trangthai'] == 'true')
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
-                    @endif
+                            class="fa fa-reply"></i>&nbsp;Quay lại</a>                   
                 </div>
             </div>
         </div>
@@ -558,7 +521,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
-                        <button type="button" class="btn btn-primary" onclick="ThemDoiTuong()">Cập nhật</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -587,8 +549,7 @@
                                         <optgroup label="{{ $diaban->tendiaban }}">
                                             <?php $donvi = $m_donvi->where('madiaban', $diaban->madiaban); ?>
                                             @foreach ($donvi as $ct)
-                                                <option {{ $ct->madonvi == $inputs['madonvi'] ? 'selected' : '' }}
-                                                    value="{{ $ct->madonvi }}">{{ $ct->tendonvi }}</option>
+                                                <option value="{{ $ct->madonvi }}">{{ $ct->tendonvi }}</option>
                                             @endforeach
                                         </optgroup>
                                     @endforeach
@@ -613,7 +574,6 @@
 
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
-                        <button type="button" class="btn btn-primary" onclick="ThemDoiTuongTapThe()">Cập nhật</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -711,7 +671,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Hủy thao tác</button>
-                    <button type="button" class="btn btn-primary" onclick="LuuTieuChuan()">Cập nhật</button>
                 </div>
             </div>
         </div>

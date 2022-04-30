@@ -16,12 +16,7 @@
         jQuery(document).ready(function() {
             TableManaged3.init();
             $('#madonvi').change(function() {
-                window.location.href = '/PhongTraoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
-            });
-            $('#nam').change(function() {
-                window.location.href = '/PhongTraoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
+                window.location.href = '/CumKhoiThiDua/HoSoKhenThuong/ThongTin?madonvi=' + $('#madonvi').val();
             });
         });
     </script>
@@ -41,6 +36,23 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label style="font-weight: bold">Đơn vị</label>
+                    <select class="form-control select2basic" id="madonvi">
+                        @foreach ($m_diaban as $diaban)
+                            <optgroup label="{{ $diaban->tendiaban }}">
+                                <?php $donvi = $m_donvi->where('madiaban', $diaban->madiaban); ?>
+                                @foreach ($donvi as $ct)
+                                    <option {{ $ct->madonvi == $inputs['madonvi'] ? 'selected' : '' }}
+                                        value="{{ $ct->madonvi }}">{{ $ct->tendonvi }}</option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group row">
                 <div class="col-md-12">
 
@@ -65,7 +77,7 @@
                                 <td class=" text-center">
                                     @if (chkPhanQuyen('dscumkhoi', 'modify'))
                                         <a title="Danh sách chi tiết"
-                                            href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/DanhSach/?macumkhoi=' . $tt->macumkhoi) }}"
+                                            href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/DanhSach/?macumkhoi=' . $tt->macumkhoi.'&madonvi='.$inputs['madonvi']) }}"
                                             class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la la-clipboard-list text-dark"></i></a>                                        
                                     @endif

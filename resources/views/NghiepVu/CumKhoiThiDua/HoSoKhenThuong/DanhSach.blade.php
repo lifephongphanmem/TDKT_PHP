@@ -18,12 +18,17 @@
             $('#madonvi').change(function() {
                 window.location.href = '/CumKhoiThiDua/HoSoKhenThuong/DanhSach?madonvi=' + $('#madonvi')
                     .val() +
-                    '&nam=' + $('#nam').val() + '&macumkhoi=' + '{{ $inputs['macumkhoi'] }}';
+                    '&nam=' + $('#nam').val() + '&macumkhoi=' + $('#macumkhoi').val();
             });
             $('#nam').change(function() {
                 window.location.href = '/CumKhoiThiDua/HoSoKhenThuong/DanhSach?madonvi=' + $('#madonvi')
                     .val() +
-                    '&nam=' + $('#nam').val() + '&macumkhoi=' + '{{ $inputs['macumkhoi'] }}';
+                    '&nam=' + $('#nam').val() + '&macumkhoi=' + $('#macumkhoi').val();
+            });
+            $('#macumkhoi').change(function() {
+                window.location.href = '/CumKhoiThiDua/HoSoKhenThuong/DanhSach?madonvi=' + $('#madonvi')
+                    .val() +
+                    '&nam=' + $('#nam').val() + '&macumkhoi=' + $('#macumkhoi').val();
             });
         });
     </script>
@@ -48,7 +53,7 @@
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <label style="font-weight: bold">Đơn vị</label>
                     <select class="form-control select2basic" id="madonvi">
                         @foreach ($m_diaban as $diaban)
@@ -66,12 +71,24 @@
                     <label style="font-weight: bold">Năm</label>
                     {!! Form::select('nam', getNam(true), $inputs['nam'], ['id' => 'nam', 'class' => 'form-control select2basic']) !!}
                 </div>
+            </div>           
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <label style="font-weight: bold">Cụm, khối thi đua</label>
+                    <select class="form-control select2basic" id="macumkhoi">
+                        @foreach ($m_cumkhoi as $cumkhoi)
+                            <option {{ $cumkhoi->macumkhoi == $inputs['macumkhoi'] ? 'selected' : '' }}
+                                value="{{ $cumkhoi->macumkhoi }}">{{ $cumkhoi->tencumkhoi }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-12">
 
-                    <table class="table table-striped table-bordered table-hover" id="sample_4">
+                    <table class="table table-striped table-bordered table-hover" id="sample_3">
                         <thead>
                             <tr class="text-center">
                                 <th width="2%">STT</th>
@@ -104,7 +121,7 @@
                                             onclick="confirmChuyen('{{ $tt->mahosotdkt }}','/CumKhoiThiDua/HoSoKhenThuong/ChuyenHoSo')"
                                             class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm"
                                             data-toggle="modal">
-                                            <i class="icon-lg la fa-share text-dark"></i></button>
+                                            <i class="icon-lg la fa-share text-primary"></i></button>
 
                                         <button type="button"
                                             onclick="confirmDelete('{{ $tt->id }}','/CumKhoiThiDua/HoSoKhenThuong/Xoa')"
@@ -113,9 +130,9 @@
                                             <i class="icon-lg la fa-trash text-danger"></i></button>
                                     @else
                                         <a title="Hồ sơ đăng ký phong trào"
-                                            href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Sua?mahosotdkt=' . $tt->mahosotdkt . '&trangthai=false') }}"
-                                            class="btn btn-sm btn-clean btn-icon">
-                                            <i class="icon-lg la fa-eye text-primary"></i></a>
+                                            href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Xem?mahosotdkt=' . $tt->mahosotdkt ) }}"
+                                            class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                            <i class="icon-lg la fa-eye text-dark"></i></a>
                                     @endif
 
                                     @if ($tt->trangthai == 'BTL')

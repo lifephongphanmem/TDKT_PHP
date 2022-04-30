@@ -11,6 +11,7 @@ use App\Model\DanhMuc\dmdanhhieuthidua;
 use App\Model\DanhMuc\dmdanhhieuthidua_tieuchuan;
 use App\Model\DanhMuc\dmloaihinhkhenthuong;
 use App\Model\DanhMuc\dscumkhoi;
+use App\Model\DanhMuc\dscumkhoi_chitiet;
 use App\Model\DanhMuc\dsdiaban;
 use App\Model\DanhMuc\dsdonvi;
 use App\Model\HeThong\trangthaihoso;
@@ -29,13 +30,18 @@ class dshosokhenthuongcumkhoiController extends Controller
             if (!chkPhanQuyen()) {
                 return view('errors.noperm');
             }
-            $inputs = $request->all();
-            $model = dscumkhoi::all();
-            
+            $inputs = $request->all();            
+            $m_donvi = getDonViCK(session('admin')->capdo, null, 'MODEL');
+            $m_diaban = dsdiaban::wherein('madiaban', array_column($m_donvi->toarray(), 'madiaban'))->get();
+            $inputs['madonvi'] = $inputs['madonvi'] ?? $m_donvi->first()->madonvi;
+            $inputs['nam'] = $inputs['nam'] ?? 'ALL';
+            $m_cumkhoi_chitiet = dscumkhoi_chitiet::where('madonvi',$inputs['madonvi'])->get();
+            $model = dscumkhoi::wherein('macumkhoi',array_column($m_cumkhoi_chitiet->toarray(),'macumkhoi'))->get();
             //dd($model);
-            $m_donvi = getDonVi(session('admin')->capdo);
             return view('NghiepVu.CumKhoiThiDua.HoSoKhenThuong.ThongTin')
                 ->with('model', $model)
+                ->with('m_donvi', $m_donvi)
+                ->with('m_diaban', $m_diaban)
                 ->with('a_donvi', array_column($m_donvi->toArray(), 'tendonvi', 'madonvi'))
                 ->with('a_capdo', getPhamViApDung())
                 ->with('inputs', $inputs)
@@ -51,14 +57,16 @@ class dshosokhenthuongcumkhoiController extends Controller
                 return view('errors.noperm');
             }
             $inputs = $request->all();
-            $m_cumkhoi = dscumkhoi::all();
+            
             $m_donvi = getDonViCumKhoi($inputs['macumkhoi'],'MODEL');
             $m_diaban = dsdiaban::wherein('madiaban', array_column($m_donvi->toarray(),'madiaban'))->get();            
             $inputs['madonvi'] = $inputs['madonvi'] ?? $m_donvi->first()->madonvi;
             $inputs['nam'] = $inputs['nam'] ?? date('Y');
             //nếu đơn vị trưởng cụm thì thấy tất cả hồ sơ
             //nếu đơn vị thành viên chỉ thấy hồ sơ của đơn vị mình
-            $model = dshosotdktcumkhoi::where('macumkhoi',$inputs['macumkhoi'])->where('madonvi',$inputs['madonvi'])->get();
+            $model = dshosotdktcumkhoi::where('macumkhoi',$inputs['macumkhoi'])->where('madonvi',$inputs['madonvi'])->get();;
+            $m_cumkhoi_chitiet = dscumkhoi_chitiet::where('madonvi',$inputs['madonvi'])->get();
+            $m_cumkhoi = dscumkhoi::wherein('macumkhoi',array_column($m_cumkhoi_chitiet->toarray(),'macumkhoi'))->get();
             return view('NghiepVu.CumKhoiThiDua.HoSoKhenThuong.DanhSach')
                 ->with('model', $model)
                 ->with('m_cumkhoi', $m_cumkhoi)
@@ -93,11 +101,13 @@ class dshosokhenthuongcumkhoiController extends Controller
             if ($model == null) {
                 $model = new dshosotdktcumkhoi();
                 $model->madonvi = $inputs['madonvi'];
-                $model->tendonvi =$m_donvi->where('madonvi',$inputs['madonvi'])->first()->tendonvi;
+                
                 $model->mahosotdkt = (string)getdate()[0];
                 $model->macumkhoi = $inputs['macumkhoi'];
                 $model->ngayhoso = date('Y-m-d');
             }
+            $model->tendonvi =$m_donvi->where('madonvi',$inputs['madonvi'])->first()->tendonvi;
+            $model->tencumkhoi = dscumkhoi::where('macumkhoi',$inputs['macumkhoi'])->first()->tencumkhoi;
             $model_khenthuong = dshosotdktcumkhoi_khenthuong::where('mahosotdkt', $model->mahosotdkt)->get();
             $model_tieuchuan = dshosotdktcumkhoi_tieuchuan::where('mahosotdkt', $model->mahosotdkt)->get();
             //dd( $model);
@@ -603,6 +613,60 @@ class dshosokhenthuongcumkhoiController extends Controller
             $trangthai->save();
 
             return redirect('CumKhoiThiDua/HoSoKhenThuong/DanhSach?madonvi='.$model->madonvi.'&macumkhoi=' . $model->macumkhoi);
+        } else
+            return view('errors.notlogin');
+    }
+
+    public function LayDoiTuong(Request $request)
+    {
+        $result = array(
+            'status' => 'fail',
+            'message' => 'error',
+        );
+        if (!Session::has('admin')) {
+            $result = array(
+                'status' => 'fail',
+                'message' => 'permission denied',
+            );
+            die(json_encode($result));
+        }
+        //dd($request);
+        $inputs = $request->all();
+        $model = dshosotdktcumkhoi_khenthuong::findorfail($inputs['id']);        
+        die(json_encode($model));
+    }
+
+    public function XemHoSo(Request $request)
+    {
+        if (Session::has('admin')) {
+            //tài khoản SSA; tài khoản quản trị + có phân quyền
+            if (!chkPhanQuyen()) {
+                return view('errors.noperm');
+            }
+            $m_donvi = dsdonvi::all();
+            $m_diaban = dsdiaban::all();
+            $m_danhhieu = dmdanhhieuthidua::all();
+            $inputs = $request->all();
+            $model = dshosotdktcumkhoi::where('mahosotdkt', $inputs['mahosotdkt'])->first();            
+            $model->tendonvi =$m_donvi->where('madonvi',$model->madonvi)->first()->tendonvi;
+            $model->tencumkhoi = dscumkhoi::where('macumkhoi',$model->macumkhoi)->first()->tencumkhoi;
+            $model_khenthuong = dshosotdktcumkhoi_khenthuong::where('mahosotdkt', $model->mahosotdkt)->get();
+            $model_tieuchuan = dshosotdktcumkhoi_tieuchuan::where('mahosotdkt', $model->mahosotdkt)->get();
+            //dd( $model);
+            
+            return view('NghiepVu.CumKhoiThiDua.HoSoKhenThuong.Xem')
+                ->with('model', $model)
+                ->with('model_khenthuong', $model_khenthuong->where('phanloai', 'CANHAN'))
+                ->with('model_tapthe', $model_khenthuong->where('phanloai', 'TAPTHE'))
+                ->with('model_tieuchuan', $model_tieuchuan)
+                ->with('a_danhhieu', array_column($m_danhhieu->toArray(), 'tendanhhieutd', 'madanhhieutd'))
+                ->with('a_tieuchuan', array_column(dmdanhhieuthidua_tieuchuan::all()->toArray(), 'tentieuchuandhtd', 'matieuchuandhtd'))
+                ->with('a_loaihinhkt', array_column(dmloaihinhkhenthuong::all()->toArray(), 'tenloaihinhkt', 'maloaihinhkt'))
+                ->with('inputs', $inputs)
+                ->with('m_donvi', $m_donvi)
+                ->with('m_diaban', $m_diaban)
+                ->with('m_danhhieu', $m_danhhieu)
+                ->with('pageTitle', 'Hồ sơ khen thưởng');
         } else
             return view('errors.notlogin');
     }

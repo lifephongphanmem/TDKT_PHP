@@ -126,7 +126,7 @@ class khenthuonghosokhenthuongcumkhoiController extends Controller
                 ->with('a_donvi', array_column(viewdiabandonvi::all()->toArray(), 'tendonvi', 'madonvi'))
                 ->with('a_danhhieu', array_column(dmdanhhieuthidua::all()->toArray(), 'tendanhhieutd', 'madanhhieutd'))
                 ->with('inputs', $inputs)
-                ->with('pageTitle', 'Kết quả phong trào thi đua');
+                ->with('pageTitle', 'Thông tin hồ sơ khen thưởng');
         } else
             return view('errors.notlogin');
     }

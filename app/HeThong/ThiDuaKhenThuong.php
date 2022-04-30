@@ -172,6 +172,20 @@ function getDonViCumKhoi($macumkhoi, $kieudulieu = 'ARRAY')
     }
 }
 
+function getDonViCK($capdo, $madonvi = null, $kieudulieu = 'ARRAY')
+{
+    $donvi = \App\Model\DanhMuc\dscumkhoi_chitiet::all();
+    $model = \App\Model\DanhMuc\dsdonvi::wherein('madonvi', array_column($donvi->toarray(), 'madonvi'))->get();
+    switch ($kieudulieu) {
+        case 'MODEL': {
+                return $model;
+                break;
+            }
+        default:
+            return array_column($model->toarray(), 'tendonvi', 'madonvi');
+    }
+}
+
 function getDonViQuanLyCumKhoi($macumkhoi, $kieudulieu = 'ARRAY')
 {
     $m_cum = \App\Model\DanhMuc\dscumkhoi::where('macumkhoi', $macumkhoi)->first();

@@ -103,7 +103,7 @@
 
                                 <td style="text-align: center">
                                     <a title="Thông tin hồ sơ"
-                                        href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Sua?mahosotdkt=' . $tt->mahosotdkt . '&trangthai=false') }}"
+                                        href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Xem?mahosotdkt=' . $tt->mahosotdkt ) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-dark"></i></a>
 

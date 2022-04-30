@@ -20,11 +20,13 @@ Route::group(['prefix'=>'CumKhoiThiDua'], function(){
         Route::post('Them','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LuuHoSo');
         Route::get('Sua','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@Sua');
         Route::post('Sua','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LuuHoSo');
+        Route::get('Xem','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@XemHoSo');
 
         Route::get('ThemDoiTuong','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@ThemDoiTuong');
         Route::get('ThemDoiTuongTapThe','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@ThemDoiTuongTapThe');
         Route::get('LayTieuChuan','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LayTieuChuan');
         Route::get('LuuTieuChuan','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LuuTieuChuan');
+        Route::get('LayDoiTuong','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LayDoiTuong');
         
         Route::get('LayLyDo','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@LayLyDo');
         Route::get('XoaDoiTuong','NghiepVu\CumKhoiThiDua\dshosokhenthuongcumkhoiController@XoaDoiTuong');
@@ -48,5 +50,6 @@ Route::group(['prefix'=>'CumKhoiThiDua'], function(){
         Route::get('DanhSach','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@DanhSach');
         Route::post('HoSo','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@HoSo');
         Route::post('KetQua','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@KetQua');
+        Route::post('PheDuyet','NghiepVu\CumKhoiThiDua\khenthuonghosokhenthuongcumkhoiController@PheDuyet');
     });
 });

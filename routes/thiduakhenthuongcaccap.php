@@ -55,8 +55,11 @@ Route::group(['prefix'=>'KhenThuongHoSoThiDua'], function(){
 
     Route::post('HoSo','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@HoSo');
     Route::post('KetQua','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@KetQua');
+    Route::post('PheDuyet','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@PheDuyet');
 
     Route::get('InKetQua','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@InKetQua');
+    Route::get('InQuyetDinh','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@InQuyetDinh');
+    Route::post('InQuyetDinh','NghiepVu\ThiDuaKhenThuong\khenthuonghosothiduaController@LuuQuyetDinh');
 });
 //
 

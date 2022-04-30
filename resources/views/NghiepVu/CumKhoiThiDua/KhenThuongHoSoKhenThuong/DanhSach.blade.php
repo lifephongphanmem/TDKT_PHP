@@ -51,14 +51,33 @@
                     {!! Form::select('capkhenthuong', getPhamViApDung(), null, ['class' => 'form-control']) !!}
                 </div>
             </div>
+
             <div class="form-group row">
-                <div class="col-lg-6">
-                    <label>Chức vụ người ký</label>
-                    {!! Form::text('chucvunguoiky', null, ['class' => 'form-control']) !!}
+                <div class="col-md-12">
+                    <label style="font-weight: bold">Nôi dung khen thưởng</label>
+                    {!! Form::textarea('noidung', $model->noidung, ['class' => 'form-control text-bold', 'rows' => 2]) !!}
                 </div>
-                <div class="col-lg-6">
-                    <label>Họ tên người ký</label>
-                    {!! Form::text('hotennguoiky', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label style="font-weight: bold">Số quyết định</label>
+                    {!! Form::text('soquyetdinh', $model->soquyetdinh, ['class' => 'form-control text-bold']) !!}
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold">Ngày quyết định</label>
+                    {!! Form::input('date', 'ngayhoso', $model->ngayhoso, ['class' => 'form-control']) !!}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label style="font-weight: bold">Chức vụ người ký</label>
+                    {!! Form::text('chucvunguoiky', $model->chucvunguoiky, ['class' => 'form-control text-bold']) !!}
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight: bold">Họ tên người ký</label>
+                    {!! Form::text('hotennguoiky', $model->hotennguoiky, ['class' => 'form-control text-bold']) !!}
                 </div>
             </div>
 
@@ -117,6 +136,11 @@
                                 <td class="text-center">{{ $tt->ketqua }}</td>
                                 <td>{{ $a_hinhthuckt[$tt->mahinhthuckt] ?? '' }}</td>
                                 <td class="text-center">
+                                    <button title="Xem thông tin" type="button"
+                                        onclick="getCaNhan('{{ $tt->id }}')"
+                                        class="btn btn-sm btn-clean btn-icon" data-target="#modal-canhan"
+                                        data-toggle="modal">
+                                        <i class="icon-lg la fa-edit text-dark"></i></button>
                                     <button title="Danh sách tiêu chuẩn" type="button"
                                         onclick="getIdBack('{{ $tt->id }}')" class="btn btn-sm btn-clean btn-icon"
                                         data-target="#modal-tieuchuan" data-toggle="modal">
@@ -124,7 +148,7 @@
                                     <a title="In kết quả" href="{{ url('/XetDuyetHoSoThiDua/InKetQua?id=' . $tt->id) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-print text-dark"></i></a>
-                                        <button title="Thay đổi" type="button"
+                                    <button title="Thay đổi" type="button"
                                         onclick="setKetQua('{{ $tt->id }}','{{ $a_donvi[$tt->madonvi_kt] ?? '' }}', '{{ $tt->mahinhthuckt }}')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#modal-ketqua"
                                         data-toggle="modal">
@@ -177,6 +201,52 @@
                     </table>
                 </div>
             </div>
+
+            <h4 class="form-section" style="color: #0000ff">Danh sách tài liệu kèm theo</h4>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label>Tờ trình: </label>
+                    {!! Form::file('totrinh', null, ['id' => 'totrinh', 'class' => 'form-control']) !!}
+                    @if ($model->totrinh != '')
+                        <span class="form-control" style="border-style: none">
+                            <a href="{{ url('/data/totrinh/' . $model->totrinh) }}"
+                                target="_blank">{{ $model->totrinh }}</a>
+                        </span>
+                    @endif
+                </div>
+                <div class="col-lg-6">
+                    <label>Quyết định khen thưởng: </label>
+                    {!! Form::file('qdkt', null, ['id' => 'qdkt', 'class' => 'form-control']) !!}
+                    @if ($model->qdkt != '')
+                        <span class="form-control" style="border-style: none">
+                            <a href="{{ url('/data/qdkt/' . $model->qdkt) }}" target="_blank">{{ $model->qdkt }}</a>
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label>Biên bản: </label>
+                    {!! Form::file('bienban', null, ['id' => 'bienban', 'class' => 'form-control']) !!}
+                    @if ($model->bienban != '')
+                        <span class="form-control" style="border-style: none">
+                            <a href="{{ url('/data/bienban/' . $model->bienban) }}"
+                                target="_blank">{{ $model->bienban }}</a>
+                        </span>
+                    @endif
+                </div>
+                <div class="col-lg-6">
+                    <label>Tài liệu khác: </label>
+                    {!! Form::file('tailieukhac', null, ['id' => 'tailieukhac', 'class' => 'form-control']) !!}
+                    @if ($model->tailieukhac != '')
+                        <span class="form-control" style="border-style: none">
+                            <a href="{{ url('/data/tailieukhac/' . $model->tailieukhac) }}"
+                                target="_blank">{{ $model->tailieukhac }}</a>
+                        </span>
+                    @endif
+                </div>
+            </div>
         </div>
 
         <div class="card-footer">
@@ -184,9 +254,8 @@
                 <div class="col-lg-12">
                     <a href="{{ url('/CumKhoiThiDua/KhenThuongHoSoKhenThuong/ThongTin?madonvi='.$model->madonvi.'&macumkhoi=' . $model->macumkhoi) }}" class="btn btn-danger mr-5"><i
                             class="fa fa-reply"></i>&nbsp;Quay lại</a>
-                    {{-- @if ($inputs['trangthai'] == 'true')
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
-                    @endif --}}
+                   
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>                    
                 </div>
             </div>
         </div>
@@ -276,6 +345,206 @@
         </div>
     </div>
     {!! Form::close() !!}
+
+    
+    {{-- Cá nhân --}}
+    {!! Form::open(['url' => '', 'id' => 'frm_ThemCaNhan', 'class' => 'form', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    <input type="hidden" name="madoituong" id="madoituong" />
+    <div class="modal fade bs-modal-lg" id="modal-canhan" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm mới thông tin đối tượng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body" id="ttpthemmoi">
+                    <div class="form-group row">
+                        <div class="col-lg-11">
+                            <label class="form-control-label">Tên đối tượng</label>
+                            {!! Form::text('tendoituong', null, ['id' => 'tendoituong', 'class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-lg-1">
+                            <label class="control-label">Chọn</label>
+                            <button type="button" class="btn btn-default" data-target="#modal-doituong" data-toggle="modal">
+                                <i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="form-control-label">Ngày sinh</label>
+                            {!! Form::input('date', 'ngaysinh', null, ['id' => 'ngaysinh', 'class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-control-label">Giới tính</label>
+                            {!! Form::select('gioitinh', getGioiTinh(), null, ['id' => 'gioitinh', 'class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-control-label">Chức vụ/Chức danh</label>
+                            {!! Form::text('chucvu', null, ['id' => 'chucvu', 'class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="form-control-label">Lãnh đạo đơn vị</label>
+                            {!! Form::select('lanhdao', ['0' => 'Không', '1' => 'Có'], null, ['id' => 'lanhdao', 'class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-control-label">Mã CCVC</label>
+                            {!! Form::text('maccvc', null, ['id' => 'maccvc', 'class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="control-label">Đăng ký danh hiệu thi đua</label>
+                            <select id="madanhhieutd" name="madanhhieutd" class="form-control js-example-basic-single">
+                                @foreach ($m_danhhieu->where('phanloai', 'CANHAN') as $nhom)
+                                    <option value="{{ $nhom->madanhhieutd }}">{{ $nhom->tendanhhieutd }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label class="form-control-label">Tên đề tài, sáng kiến</label>
+                            {!! Form::text('tensangkien', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-8">
+                            <label class="form-control-label">Đơn vị công nhận</label>
+                            {!! Form::text('donvicongnhan', null, ['class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-control-label">Ngày công nhận</label>
+                            {!! Form::input('date', 'thoigiancongnhan', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label class="form-control-label">Thành tích đạt được</label>
+                            {!! Form::textarea('thanhtichdatduoc', null, ['class' => 'form-control', 'rows' => 2]) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>Tài liệu đính kèm: </label>
+                            {!! Form::file('filedk', null, ['id' => 'filedk', 'class' => 'form-control']) !!}
+                            {{-- @if ($model->tailieukhac != '')
+                                <span class="form-control" style="border-style: none">
+                                    <a href="{{ url('/data/tailieukhac/' . $model->tailieukhac) }}"
+                                        target="_blank">{{ $model->tailieukhac }}</a>
+                                </span>
+                            @endif --}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+    {!! Form::close() !!}
+
+    {{-- tập thể --}}
+    {!! Form::open(['url' => '', 'id' => 'frm_ThemTapThe', 'class' => 'form', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    <div class="modal fade bs-modal-lg" id="modal-tapthe" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm mới thông tin đối tượng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label style="font-weight: bold">Đơn vị</label>
+                                <select class="form-control select2me" name="matapthe" id="matapthe">
+                                    @foreach ($m_diaban as $diaban)
+                                        <optgroup label="{{ $diaban->tendiaban }}">
+                                            <?php $donvi = $m_donvi->where('madiaban', $diaban->madiaban); ?>
+                                            @foreach ($donvi as $ct)
+                                                <option value="{{ $ct->madonvi }}">{{ $ct->tendonvi }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Đăng ký danh hiệu thi đua</label>
+                                <select id="madanhhieutd_kt" name="madanhhieutd_kt"
+                                    class="form-control js-example-basic-single">
+                                    @foreach ($m_danhhieu->where('phanloai', 'TAPTHE') as $nhom)
+                                        <option value="{{ $nhom->madanhhieutd }}">{{ $nhom->tendanhhieutd }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+    {!! Form::close() !!}
+
+    {{-- Thông tin tiêu chuẩn --}}
+    <div class="modal fade bs-modal-lg" id="modal-tieuchuan" tabindex="-1" role="dialog" aria-hidden="true">
+        <input type="hidden" id="madoituong_tc" name="madoituong_tc" />
+        <input type="hidden" id="madoituong_tc" name="madoituong_tc" />
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông tin tiêu chuẩn của đối tượng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-control-label">Tên đối tượng</label>
+                            {!! Form::text('tendoituong_tc', null, ['id' => 'tendoituong_tc', 'class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-control-label">Danh hiệu đăng ký</label>
+                            {!! Form::select('madanhhieutd_tc', $a_danhhieu, null, ['id' => 'madanhhieutd_tc', 'class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" id="dstieuchuan">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 
     <script>
         function setKetQua(id, tendt, mahinhthuckt) {

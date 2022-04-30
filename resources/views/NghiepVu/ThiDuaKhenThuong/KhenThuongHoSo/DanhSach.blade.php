@@ -16,6 +16,86 @@
         jQuery(document).ready(function() {
             TableManagedclass.init();            
         });
+
+        function getTieuChuan(madoituong, madanhhieutd, tendt) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $('#madoituong_tc').val(madoituong);
+            $('#tendoituong_tc').val(tendt);
+            $('#madanhhieutd_tc').val(madanhhieutd).trigger('change');
+
+            $.ajax({
+                url: '/HoSoThiDua/LayTieuChuan',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    madoituong: madoituong,
+                    madanhhieutd: madanhhieutd,
+                    madonvi: $('#madonvi').val(),
+                    maphongtraotd: $('#frm_ThayDoi').find("[name='maphongtraotd']").val(),
+                    mahosotdkt: $('#frm_ThayDoi').find("[name='mahosotdkt']").val()
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data.status == 'success') {
+                        $('#dstieuchuan').replaceWith(data.message);
+                    }
+                }
+            })
+        }
+
+        function setCaNhan() {
+            $('#frm_ThemCaNhan').find("[name='madoituong']").val('NULL');
+        }
+
+        function getCaNhan(id) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                url: '/HoSoThiDua/LayDoiTuong',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id,
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    var form = $('#frm_ThemCaNhan');
+                    form.find("[name='madoituong']").val(data.madoituong);
+                    form.find("[name='tendoituong']").val(data.tendoituong);
+                    form.find("[name='ngaysinh']").val(data.ngaysinh);
+                    form.find("[name='gioitinh']").val(data.gioitinh).trigger('change');;
+                    form.find("[name='chucvu']").val(data.chucvu);
+                    form.find("[name='maccvc']").val(data.maccvc);
+                    form.find("[name='lanhdao']").val(data.lanhdao).trigger('change');
+                    form.find("[name='madanhhieutd']").val(data.madanhhieutd).trigger('change');;
+                    form.find("[name='tensangkien']").val(data.tensangkien);
+                    form.find("[name='donvicongnhan']").val(data.donvicongnhan);
+                    form.find("[name='thoigiancongnhan']").val(data.thoigiancongnhan);
+                    form.find("[name='thanhtichdatduoc']").val(data.thanhtichdatduoc);
+                    //filedk: form.find("[name='filedk']").val(data.madoituong),
+                }
+            })
+        }
+
+        function getTapThe(id) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                url: '/HoSoThiDua/LayDoiTuong',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id,
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    var form = $('#frm_ThemTapThe');
+                    form.find("[name='matapthe']").val(data.matapthe).trigger('change');
+                    form.find("[name='madanhhieutd_kt']").val(data.madanhhieutd).trigger('change');
+                    //filedk: form.find("[name='filedk']").val(data.madoituong),
+                }
+            })
+        }
     </script>
 @stop
 
@@ -128,7 +208,7 @@
                                 <th width="5%">Số chỉ<br>tiêu</th>
                                 <th width="5%">Đạt tiêu<br>chuẩn</th>
                                 <th width="15%">Hình thức<br>khen thưởng</th>
-                                <th style="text-align: center" width="10%">Thao tác</th>
+                                <th style="text-align: center" width="15%">Thao tác</th>
                             </tr>
                         </thead>
                         @foreach ($model_canhan as $key => $tt)
@@ -148,10 +228,16 @@
                                 @endif
                                 <td>{{ $a_hinhthuckt[$tt->mahinhthuckt] ?? '' }}</td>
                                 <td class="text-center">
+                                    <button title="Xem chi tiết" type="button"
+                                        onclick="getCaNhan('{{ $tt->id }}')" class="btn btn-sm btn-clean btn-icon"
+                                        data-target="#modal-canhan" data-toggle="modal">
+                                        <i class="icon-lg la fa-eye text-dark"></i></button> 
+
                                     <button title="Danh sách tiêu chuẩn" type="button"
-                                        onclick="getIdBack('{{ $tt->id }}')" class="btn btn-sm btn-clean btn-icon"
+                                        onclick="getTieuChuan('{{ $tt->id }}')" class="btn btn-sm btn-clean btn-icon"
                                         data-target="#modal-tieuchuan" data-toggle="modal">
-                                        <i class="icon-lg la fa-eye text-dark"></i></button>
+                                        <i class="icon-lg la fa-list text-dark"></i></button>
+                                    
                                     <a title="In kết quả"
                                         href="{{ url('/KhenThuongHoSoThiDua/InKetQua?id=' . $tt->id) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
@@ -306,6 +392,203 @@
             </div>
         </div>
         {!! Form::close() !!}
+    </div>
+    {{-- Cá nhân --}}
+    {!! Form::open(['url' => '', 'id' => 'frm_ThemCaNhan', 'class' => 'form', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    <input type="hidden" name="madoituong" id="madoituong" />
+    <div class="modal fade bs-modal-lg" id="modal-canhan" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm mới thông tin đối tượng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body" id="ttpthemmoi">
+                    <div class="form-group row">
+                        <div class="col-lg-11">
+                            <label class="form-control-label">Tên đối tượng</label>
+                            {!! Form::text('tendoituong', null, ['id' => 'tendoituong', 'class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-lg-1">
+                            <label class="control-label">Chọn</label>
+                            <button type="button" class="btn btn-default" data-target="#modal-doituong" data-toggle="modal">
+                                <i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="form-control-label">Ngày sinh</label>
+                            {!! Form::input('date', 'ngaysinh', null, ['id' => 'ngaysinh', 'class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-control-label">Giới tính</label>
+                            {!! Form::select('gioitinh', getGioiTinh(), null, ['id' => 'gioitinh', 'class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-control-label">Chức vụ/Chức danh</label>
+                            {!! Form::text('chucvu', null, ['id' => 'chucvu', 'class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="form-control-label">Lãnh đạo đơn vị</label>
+                            {!! Form::select('lanhdao', ['0' => 'Không', '1' => 'Có'], null, ['id' => 'lanhdao', 'class' => 'form-control']) !!}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-control-label">Mã CCVC</label>
+                            {!! Form::text('maccvc', null, ['id' => 'maccvc', 'class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="control-label">Đăng ký danh hiệu thi đua</label>
+                            <select id="madanhhieutd" name="madanhhieutd" class="form-control js-example-basic-single">
+                                @foreach ($m_danhhieu->where('phanloai', 'CANHAN') as $nhom)
+                                    <option value="{{ $nhom->madanhhieutd }}">{{ $nhom->tendanhhieutd }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label class="form-control-label">Tên đề tài, sáng kiến</label>
+                            {!! Form::text('tensangkien', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-8">
+                            <label class="form-control-label">Đơn vị công nhận</label>
+                            {!! Form::text('donvicongnhan', null, ['class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-control-label">Ngày công nhận</label>
+                            {!! Form::input('date', 'thoigiancongnhan', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label class="form-control-label">Thành tích đạt được</label>
+                            {!! Form::textarea('thanhtichdatduoc', null, ['class' => 'form-control', 'rows' => 2]) !!}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label>Tài liệu đính kèm: </label>
+                            {!! Form::file('filedk', null, ['id' => 'filedk', 'class' => 'form-control']) !!}
+                            {{-- @if ($model->tailieukhac != '')
+                                <span class="form-control" style="border-style: none">
+                                    <a href="{{ url('/data/tailieukhac/' . $model->tailieukhac) }}"
+                                        target="_blank">{{ $model->tailieukhac }}</a>
+                                </span>
+                            @endif --}}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+    {!! Form::close() !!}
+
+    {{-- tập thể --}}
+    {!! Form::open(['url' => '', 'id' => 'frm_ThemTapThe', 'class' => 'form', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    <div class="modal fade bs-modal-lg" id="modal-tapthe" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thêm mới thông tin đối tượng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label style="font-weight: bold">Đơn vị</label>
+                                <select class="form-control select2me" name="matapthe" id="matapthe">
+                                    @foreach ($m_diaban as $diaban)
+                                        <optgroup label="{{ $diaban->tendiaban }}">
+                                            <?php $donvi = $m_donvi->where('madiaban', $diaban->madiaban); ?>
+                                            @foreach ($donvi as $ct)
+                                                <option value="{{ $ct->madonvi }}">{{ $ct->tendonvi }}</option>
+                                            @endforeach
+                                        </optgroup>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Đăng ký danh hiệu thi đua</label>
+                                <select id="madanhhieutd_kt" name="madanhhieutd_kt"
+                                    class="form-control js-example-basic-single">
+                                    @foreach ($m_danhhieu->where('phanloai', 'TAPTHE') as $nhom)
+                                        <option value="{{ $nhom->madanhhieutd }}">{{ $nhom->tendanhhieutd }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+    {!! Form::close() !!}
+
+    {{-- Thông tin tiêu chuẩn --}}
+    <div class="modal fade bs-modal-lg" id="modal-tieuchuan" tabindex="-1" role="dialog" aria-hidden="true">
+        <input type="hidden" id="madoituong_tc" name="madoituong_tc" />
+        <input type="hidden" id="madoituong_tc" name="madoituong_tc" />
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Thông tin tiêu chuẩn của đối tượng</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-control-label">Tên đối tượng</label>
+                            {!! Form::text('tendoituong_tc', null, ['id' => 'tendoituong_tc', 'class' => 'form-control']) !!}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-control-label">Danh hiệu đăng ký</label>
+                            {!! Form::select('madanhhieutd_tc', $a_danhhieu, null, ['id' => 'madanhhieutd_tc', 'class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" id="dstieuchuan">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
 
     <script>
