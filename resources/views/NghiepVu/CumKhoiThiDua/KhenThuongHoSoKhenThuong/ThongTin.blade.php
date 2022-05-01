@@ -104,7 +104,7 @@
 
                                 <td style="text-align: center">
                                     <a title="Thông tin hồ sơ"
-                                        href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Xem?mahosotdkt=' . $tt->mahosotdkt ) }}"
+                                        href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Xem?mahosotdkt=' . $tt->mahosotdkt) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-dark"></i></a>
                                     @if ($tt->trangthai == 'CXKT')
@@ -113,10 +113,24 @@
                                             class="btn btn-sm btn-clean btn-icon" data-target="#khenthuong-modal"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-user-check text-success"></i></button>
-                                    @else
+                                    @endif
+
+                                    @if ($tt->trangthai == 'DXKT')
                                         <a title="Thông tin hồ sơ khen thưởng"
                                             href="{{ url('/CumKhoiThiDua/KhenThuongHoSoKhenThuong/DanhSach?mahosokt=' . $tt->mahosokt) }}"
                                             class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la fa-user-check text-dark"></i></a>
+                                        <button title="Phê duyệt hồ sơ khen thưởng" type="button"
+                                            onclick="setPheDuyet('{{ $tt->mahosokt }}')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#modal-PheDuyet"
+                                            data-toggle="modal">
+                                            <i class="icon-lg la fa-check text-success"></i></button>
+                                    @endif
+
+                                    @if ($tt->trangthai == 'DKT')
+                                        <a title="Thông tin hồ sơ khen thưởng"
+                                            href="{{ url('/CumKhoiThiDua/KhenThuongHoSoKhenThuong/Xem?mahosokt=' . $tt->mahosokt) }}"
+                                            class="btn btn-sm btn-clean btn-icon" target="_blank">
                                             <i class="icon-lg la fa-user-check text-dark"></i></a>
                                     @endif
                                 </td>
@@ -128,6 +142,36 @@
         </div>
     </div>
     <!--end::Card-->
+
+    <!--Modal phê duyệt hồ sơ khen thưởng-->
+    <div class="modal fade" id="modal-PheDuyet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {!! Form::open(['url' => '/CumKhoiThiDua/KhenThuongHoSoKhenThuong/PheDuyet', 'method' => 'post', 'files' => true, 'id' => 'frm_PheDuyet', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Đồng ý phê duyệt hồ sơ khen thưởng?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                </div>
+                <input type="hidden" name="mahosokt" id="mahosokt">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            Bạn đồng ý phê duyệt hồ sơ khen thưởng và gửi kết quả đến các đơn vị tham gia.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Đồng ý</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <!--Modal Nhận hồ sơ-->
     <div id="khenthuong-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
@@ -154,7 +198,7 @@
                             <label>Cấp độ khen thưởng</label>
                             {!! Form::select('capkhenthuong', getPhamViApDung(), 'T', ['class' => 'form-control']) !!}
                         </div>
-                   
+
                         <div class="col-lg-6">
                             <label>Ngày ra quyết định</label>
                             {!! Form::input('date', 'ngayhoso', date('Y-m-d'), ['class' => 'form-control']) !!}
@@ -204,6 +248,10 @@
     </div>
 
     <script>
+        function setPheDuyet(mahosokt) {
+            $('#frm_PheDuyet').find("[name='mahosokt']").val(mahosokt);
+        }
+
         function clickKhenThuong() {
             $('#frm_khenthuong').submit();
         }

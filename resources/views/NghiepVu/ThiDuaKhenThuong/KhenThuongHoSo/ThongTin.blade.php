@@ -117,26 +117,26 @@
                                         @else
                                             @if ($tt->trangthai == 'DXKT')
                                                 <a title="Thông tin hồ sơ khen thưởng"
-                                                href="{{ url('/KhenThuongHoSoThiDua/DanhSach?mahosokt=' . $tt->mahosokt) }}"
-                                                class="btn btn-sm btn-clean btn-icon">
-                                                <i class="icon-lg la fa-user-check text-primary"></i></a>
+                                                    href="{{ url('/KhenThuongHoSoThiDua/DanhSach?mahosokt=' . $tt->mahosokt) }}"
+                                                    class="btn btn-sm btn-clean btn-icon">
+                                                    <i class="icon-lg la fa-user-check text-primary"></i></a>
 
                                                 <button title="Phê duyệt hồ sơ khen thưởng" type="button"
-                                                onclick="setPheDuyet('{{ $tt->mahosokt }}')"
-                                                class="btn btn-sm btn-clean btn-icon" data-target="#modal-PheDuyet"
-                                                data-toggle="modal">
-                                                <i class="icon-lg la fa-check text-success"></i></button>
+                                                    onclick="setPheDuyet('{{ $tt->mahosokt }}')"
+                                                    class="btn btn-sm btn-clean btn-icon" data-target="#modal-PheDuyet"
+                                                    data-toggle="modal">
+                                                    <i class="icon-lg la fa-check text-success"></i></button>
                                             @else
                                                 <a title="Thông tin hồ sơ khen thưởng"
-                                                href="{{ url('/KhenThuongHoSoThiDua/Xem?mahosokt=' . $tt->mahosokt) }}"
-                                                class="btn btn-sm btn-clean btn-icon">
-                                                <i class="icon-lg la fa-user-check text-dark"></i></a>
+                                                    href="{{ url('/KhenThuongHoSoThiDua/Xem?mahosokt=' . $tt->mahosokt) }}"
+                                                    class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                                    <i class="icon-lg la fa-user-check text-dark"></i></a>
                                             @endif
-                                            
+
                                             <a title="In quyết định khen thưởng"
-                                            href="{{ url('/KhenThuongHoSoThiDua/InQuyetDinh?mahosokt=' . $tt->mahosokt) }}"
-                                            class="btn btn-sm btn-clean btn-icon" target="_blank">
-                                            <i class="icon-lg la fa-print text-dark"></i></a>
+                                                href="{{ url('/KhenThuongHoSoThiDua/InQuyetDinh?mahosokt=' . $tt->mahosokt) }}"
+                                                class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                                <i class="icon-lg la fa-print text-dark"></i></a>
                                         @endif
                                     @endif
                                 </td>
@@ -216,7 +216,7 @@
             <div class="modal-content">
                 {!! Form::open(['url' => '/XetDuyetHoSoThiDua/KetThuc', 'method' => 'post', 'files' => true, 'id' => 'frm_KetThuc', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
                 <div class="modal-header">
-                    
+
                     <h4 class="modal-title">Đồng ý kết thúc phong trào và xét khen thưởng?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 </div>
@@ -240,14 +240,14 @@
         <!-- /.modal-dialog -->
     </div>
 
-        <!--Modal phê duyệt hồ sơ khen thưởng-->
-        <div class="modal fade" id="modal-PheDuyet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <!--Modal phê duyệt hồ sơ khen thưởng-->
+    <div class="modal fade" id="modal-PheDuyet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 {!! Form::open(['url' => '/KhenThuongHoSoThiDua/PheDuyet', 'method' => 'post', 'files' => true, 'id' => 'frm_PheDuyet', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}
                 <div class="modal-header">
-                    
+
                     <h4 class="modal-title">Đồng ý phê duyệt hồ sơ khen thưởng?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 </div>
@@ -274,10 +274,11 @@
         function setPheDuyet(mahosokt) {
             $('#frm_PheDuyet').find("[name='mahosokt']").val(mahosokt);
         }
+
         function setKetQua(maphongtraotd) {
             $('#frm_KetThuc').find("[name='maphongtraotd']").val(maphongtraotd);
         }
-    
+
         function clickKhenThuong() {
             $('#frm_khenthuong').submit();
         }

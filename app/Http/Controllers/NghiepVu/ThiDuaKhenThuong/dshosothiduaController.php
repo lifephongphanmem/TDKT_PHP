@@ -7,12 +7,11 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\DanhMuc\dmdanhhieuthidua;
-use App\Model\DanhMuc\dmdanhhieuthidua_tieuchuan;
 use App\Model\DanhMuc\dmloaihinhkhenthuong;
 use App\Model\DanhMuc\dsdiaban;
 use App\Model\DanhMuc\dsdonvi;
 use App\Model\HeThong\trangthaihoso;
+use App\Model\NghiepVu\ThiDuaKhenThuong\dshosokhenthuong;
 use App\Model\NghiepVu\ThiDuaKhenThuong\dshosothiduakhenthuong;
 use App\Model\NghiepVu\ThiDuaKhenThuong\dshosothiduakhenthuong_khenthuong;
 use App\Model\NghiepVu\ThiDuaKhenThuong\dshosothiduakhenthuong_tieuchuan;
@@ -51,6 +50,7 @@ class dshosothiduaController extends Controller
             }
             $ngayhientai = date('Y-m-d');
             $m_hoso = dshosothiduakhenthuong::wherein('maphongtraotd', array_column($model->toarray(), 'maphongtraotd'))->get();
+            $m_hoso_khenthuong = dshosokhenthuong::wherein('maphongtraotd', array_column($model->toarray(), 'maphongtraotd'))->where('trangthai','DKT')->get();
             //dd($m_hoso);
             //dd($ngayhientai);
             foreach ($model as $DangKy) {
@@ -66,8 +66,9 @@ class dshosothiduaController extends Controller
                     $DangKy->nhanhoso = 'KETTHUC';
                 }
 
-                $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->wherein('trangthai', ['CD', 'DD', 'CNXKT', 'DXKT', 'CXKT']);
+                $HoSo = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->wherein('trangthai', ['CD', 'DD', 'CNXKT', 'DXKT', 'CXKT', 'DKT']);
                 $DangKy->sohoso = $HoSo == null ? 0 : $HoSo->count();
+                $DangKy->mahosokt = $m_hoso_khenthuong->where('maphongtraotd', $DangKy->maphongtraotd)->where('madonvi', $inputs['madonvi'])->first()->mahosokt ?? null;
 
                 $HoSodv = $m_hoso->where('maphongtraotd', $DangKy->maphongtraotd)->where('madonvi', $inputs['madonvi'])->first();
                 $DangKy->trangthai = $HoSodv->trangthai ?? 'CXD';
@@ -227,23 +228,24 @@ class dshosothiduaController extends Controller
 
             if (isset($inputs['baocao'])) {
                 $filedk = $request->file('baocao');
-                $inputs['baocao'] = $filedk->getClientOriginalExtension();
+                $inputs['baocao'] = $inputs['mahosotdkt'].'_baocao.'. $filedk->getClientOriginalExtension();
                 $filedk->move(public_path() . '/data/baocao/', $inputs['baocao']);
             }
             if (isset($inputs['bienban'])) {
                 $filedk = $request->file('bienban');
-                $inputs['bienban'] = $filedk->getClientOriginalExtension();
+                $inputs['bienban'] =$inputs['mahosotdkt'].'_bienban.'. $filedk->getClientOriginalExtension();
                 $filedk->move(public_path() . '/data/bienban/', $inputs['bienban']);
             }
             if (isset($inputs['tailieukhac'])) {
                 $filedk = $request->file('tailieukhac');
-                $inputs['tailieukhac'] = $filedk->getClientOriginalExtension();
+                $inputs['tailieukhac'] =$inputs['mahosotdkt'].'tailieukhac.'. $filedk->getClientOriginalExtension();
                 $filedk->move(public_path() . '/data/tailieukhac/', $inputs['tailieukhac']);
             }
 
             $model = dshosothiduakhenthuong::where('mahosotdkt', $inputs['mahosotdkt'])->first();
             if ($model == null) {
                 $inputs['trangthai'] = 'CC';
+                $inputs['phanloai'] = 'THIDUA';
                 dshosothiduakhenthuong::create($inputs);
                 $trangthai = new trangthaihoso();
                 $trangthai->trangthai = $inputs['trangthai'];

@@ -27,6 +27,9 @@
         <span class="badge badge-success">Đã khen thưởng</span>
         <br>Thời gian:<br><b>{{ getDayVn($tt->thoigian) }}</b>
     </td>
+    @elseif($tt->trangthai == 'DXKT')
+<td align="center"><span class="badge badge-warning">Đang xét khen thưởng</span>
+    </td>
 @else
     <td align="center">
         <span class="badge badge-success">Đã duyệt</span>

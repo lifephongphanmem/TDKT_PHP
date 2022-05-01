@@ -80,7 +80,7 @@
                                             href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/DanhSach/?macumkhoi=' . $tt->macumkhoi.'&madonvi='.$inputs['madonvi']) }}"
                                             class="btn btn-sm btn-clean btn-icon">
                                             <i class="icon-lg la la-clipboard-list text-dark"></i></a>                                        
-                                    @endif
+                                    @endif                                    
                                 </td>
                             </tr>
                         @endforeach

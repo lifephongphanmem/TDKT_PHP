@@ -16,15 +16,18 @@
         jQuery(document).ready(function() {
             TableManaged3.init();
             $('#madonvi').change(function() {
-                window.location.href = '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/ThongTin?madonvi=' + $('#madonvi').val() +
-                '&macumkhoi=' + $('#macumkhoi').val() + '&nam=' + $('#nam').val();
+                window.location.href = '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/ThongTin?madonvi=' + $(
+                        '#madonvi').val() +
+                    '&macumkhoi=' + $('#macumkhoi').val() + '&nam=' + $('#nam').val();
             });
             $('#nam').change(function() {
-                window.location.href = '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/ThongTin?madonvi=' + $('#madonvi').val() +
+                window.location.href = '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/ThongTin?madonvi=' + $(
+                        '#madonvi').val() +
                     '&macumkhoi=' + $('#macumkhoi').val() + '&nam=' + $('#nam').val();
             });
             $('#macumkhoi').change(function() {
-                window.location.href = '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/ThongTin?madonvi=' + $('#madonvi').val() +
+                window.location.href = '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/ThongTin?madonvi=' + $(
+                        '#madonvi').val() +
                     '&macumkhoi=' + $('#macumkhoi').val() + '&nam=' + $('#nam').val();
             });
         });
@@ -71,7 +74,7 @@
                                 value="{{ $cumkhoi->macumkhoi }}">{{ $cumkhoi->tencumkhoi }}</option>
                         @endforeach
                     </select>
-                </div>                
+                </div>
             </div>
 
             <div class="form-group row">
@@ -94,34 +97,45 @@
                         @foreach ($model as $key => $tt)
                             <tr>
                                 <td class="text-center">{{ $key + 1 }}</td>
-                                <td>{{ $a_donvi[$tt->madonvi] ?? ''}}</td>
+                                <td>{{ $a_donvi[$tt->madonvi] ?? '' }}</td>
                                 <td>{{ $tt->noidung }}</td>
-                                <td>{{ $a_loaihinhkt[$tt->maloaihinhkt] ?? ''}}</td>
+                                <td>{{ $a_loaihinhkt[$tt->maloaihinhkt] ?? '' }}</td>
                                 <td class="text-center">{{ getDayVn($tt->ngayhoso) }}</td>
                                 @include('includes.td.td_trangthai_hoso')
-                                <td>{{ $a_donvi[$tt->madonvi_nhan] ?? ''}}</td>
+                                <td>{{ $a_donvi[$tt->madonvi_nhan] ?? '' }}</td>
 
                                 <td style="text-align: center">
                                     <a title="Thông tin hồ sơ"
-                                        href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Xem?mahosotdkt=' . $tt->mahosotdkt ) }}"
+                                        href="{{ url('/CumKhoiThiDua/HoSoKhenThuong/Xem?mahosotdkt=' . $tt->mahosotdkt) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-eye text-dark"></i></a>
 
                                     @if (in_array($tt->trangthai_hoso, ['CD']))
                                         <button title="Trả lại hồ sơ" type="button"
-                                            onclick="confirmTraLai('{{ $tt->mahosotdkt }}', '{{$inputs['madonvi']}}', '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/TraLai')" class="btn btn-sm btn-clean btn-icon"
-                                            data-target="#modal-tralai" data-toggle="modal">
+                                            onclick="confirmTraLai('{{ $tt->mahosotdkt }}', '{{ $inputs['madonvi'] }}', '/CumKhoiThiDua/XetDuyetHoSoKhenThuong/TraLai')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#modal-tralai"
+                                            data-toggle="modal">
                                             <i class="icon-lg la la-reply text-danger"></i></button>
 
-                                            <button title="Nhận hồ sơ đăng ký" type="button" onclick="confirmNhan('{{$tt->mahosotdkt}}','/CumKhoiThiDua/XetDuyetHoSoKhenThuong/NhanHoSo','{{$inputs['madonvi']}}')" class="btn btn-sm btn-clean btn-icon" data-target="#nhan-modal-confirm" data-toggle="modal">
-                                                <i class="icon-lg la fa-share-square text-success"></i></button>
-                                           
+                                        <button title="Nhận hồ sơ đăng ký" type="button"
+                                            onclick="confirmNhan('{{ $tt->mahosotdkt }}','/CumKhoiThiDua/XetDuyetHoSoKhenThuong/NhanHoSo','{{ $inputs['madonvi'] }}')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#nhan-modal-confirm"
+                                            data-toggle="modal">
+                                            <i class="icon-lg la fa-share-square text-success"></i></button>
                                     @endif
 
                                     @if (in_array($tt->trangthai_hoso, ['CNXKT']))
-                                    <button title="Chuyển hồ sơ đăng ký" type="button" onclick="confirmChuyen('{{$tt->mahosotdkt}}','/XetDuyetHoSoThiDua/ChuyenHoSo')" class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm" data-toggle="modal">
-                                        <i class="icon-lg la fa-share-square text-success"></i></button>
-                                        
+                                        <button title="Chuyển hồ sơ đăng ký" type="button"
+                                            onclick="confirmChuyen('{{ $tt->mahosotdkt }}','/XetDuyetHoSoThiDua/ChuyenHoSo')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#chuyen-modal-confirm"
+                                            data-toggle="modal">
+                                            <i class="icon-lg la fa-share-square text-success"></i></button>
+                                    @endif
+                                    @if ($tt->trangthai == 'DKT')
+                                        <a title="Thông tin hồ sơ khen thưởng"
+                                            href="{{ url('/CumKhoiThiDua/KhenThuongHoSoKhenThuong/Xem?mahosokt=' . $tt->mahosokt) }}"
+                                            class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                            <i class="icon-lg la fa-user-check text-dark"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -132,7 +146,7 @@
         </div>
     </div>
     <!--end::Card-->
-   
+
     @include('includes.modal.modal_unapprove_hs')
     {{-- @include('includes.modal.modal_approve_hs') --}}
     @include('includes.modal.modal_accept_hs')

@@ -14,22 +14,89 @@
     <!-- END PAGE LEVEL PLUGINS -->
     <script>
         jQuery(document).ready(function() {
-            TableManagedclass.init();
-            $('#madonvi').change(function() {
-                window.location.href = '/XetDuyetHoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
-            });
-            $('#nam').change(function() {
-                window.location.href = '/XetDuyetHoSoThiDua/ThongTin?madonvi=' + $('#madonvi').val() +
-                    '&nam=' + $('#nam').val();
-            });
+            TableManagedclass.init();            
         });
+        function getTieuChuan(id, madanhhieutd, tendt) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');            
+            $('#tendoituong_tc').val(tendt);
+            $('#madanhhieutd_tc').val(madanhhieutd).trigger('change');
+
+            $.ajax({
+                url: '/CumKhoiThiDua/KhenThuongHoSoKhenThuong/LayTieuChuan',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id,
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data.status == 'success') {
+                        $('#dstieuchuan').replaceWith(data.message);
+                    }
+                }
+            })
+        }
+
+        function setCaNhan() {
+            $('#frm_ThemCaNhan').find("[name='madoituong']").val('NULL');
+        }
+
+        function getCaNhan(id) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                url: '/HoSoThiDua/LayDoiTuong',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id,
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    var form = $('#frm_ThemCaNhan');
+                    form.find("[name='madoituong']").val(data.madoituong);
+                    form.find("[name='tendoituong']").val(data.tendoituong);
+                    form.find("[name='ngaysinh']").val(data.ngaysinh);
+                    form.find("[name='gioitinh']").val(data.gioitinh).trigger('change');;
+                    form.find("[name='chucvu']").val(data.chucvu);
+                    form.find("[name='maccvc']").val(data.maccvc);
+                    form.find("[name='lanhdao']").val(data.lanhdao).trigger('change');
+                    form.find("[name='madanhhieutd']").val(data.madanhhieutd).trigger('change');;
+                    form.find("[name='tensangkien']").val(data.tensangkien);
+                    form.find("[name='donvicongnhan']").val(data.donvicongnhan);
+                    form.find("[name='thoigiancongnhan']").val(data.thoigiancongnhan);
+                    form.find("[name='thanhtichdatduoc']").val(data.thanhtichdatduoc);
+                    //filedk: form.find("[name='filedk']").val(data.madoituong),
+                }
+            })
+        }
+
+        function getTapThe(id) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+            $.ajax({
+                url: '/HoSoThiDua/LayDoiTuong',
+                type: 'GET',
+                data: {
+                    _token: CSRF_TOKEN,
+                    id: id,
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    var form = $('#frm_ThemTapThe');
+                    form.find("[name='matapthe']").val(data.matapthe).trigger('change');
+                    form.find("[name='madanhhieutd_kt']").val(data.madanhhieutd).trigger('change');
+                    //filedk: form.find("[name='filedk']").val(data.madoituong),
+                }
+            })
+        }
     </script>
 @stop
 
 @section('content')
     <!--begin::Card-->
-    {!! Form::model($model, ['method' => 'POST', '/CumKhoiThiDua/HoSoKhenThuong/Them', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::model($model, ['method' => 'POST','url'=>'/CumKhoiThiDua/KhenThuongHoSoKhenThuong/DanhSach', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {{ Form::hidden('mahosokt', null) }}
     <div class="card card-custom wave wave-animate-slow wave-info" style="min-height: 600px">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
@@ -97,7 +164,14 @@
                             <tr>
                                 <td style="text-align: center">{{ $key + 1 }}</td>
                                 <td>{{ $a_donvi[$tt->madonvi_kt] ?? '' }}</td>
-                                <td class="text-center">{{ $tt->ketqua }}</td>
+                                @if ($tt->ketqua == 0)
+                                    <td class="text-center"></td>
+                                @else
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la fa-check text-success"></i></button>
+                                    </td>
+                                @endif
                                 <td style="text-align: center">
                                     <button title="Sửa trạng thái" type="button"
                                         onclick="getHoSo('{{ $tt->mahosokt }}', '{{ $a_donvi[$tt->madonvi_kt] ?? '' }}','{{ $tt->mahosotdkt }}')"
@@ -123,7 +197,7 @@
                                 <th width="5%">Số chỉ<br>tiêu</th>
                                 <th width="5%">Đạt tiêu<br>chuẩn</th>
                                 <th width="15%">Hình thức<br>khen thưởng</th>
-                                <th style="text-align: center" width="10%">Thao tác</th>
+                                <th style="text-align: center" width="15%">Thao tác</th>
                             </tr>
                         </thead>
                         @foreach ($model_canhan as $key => $tt)
@@ -133,19 +207,26 @@
                                 <td>{{ $tt->tendoituong }}</td>
                                 <td>{{ $a_danhhieu[$tt->madanhhieutd] ?? '' }}</td>
                                 <td style="text-align: center">{{ $tt->tongdieukien . '/' . $tt->tongtieuchuan }}</td>
-                                <td class="text-center">{{ $tt->ketqua }}</td>
+                                @if ($tt->ketqua == 0)
+                                    <td class="text-center"></td>
+                                @else
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la fa-check text-success"></i></button>
+                                    </td>
+                                @endif
                                 <td>{{ $a_hinhthuckt[$tt->mahinhthuckt] ?? '' }}</td>
                                 <td class="text-center">
                                     <button title="Xem thông tin" type="button"
                                         onclick="getCaNhan('{{ $tt->id }}')"
                                         class="btn btn-sm btn-clean btn-icon" data-target="#modal-canhan"
                                         data-toggle="modal">
-                                        <i class="icon-lg la fa-edit text-dark"></i></button>
-                                    <button title="Danh sách tiêu chuẩn" type="button"
-                                        onclick="getIdBack('{{ $tt->id }}')" class="btn btn-sm btn-clean btn-icon"
-                                        data-target="#modal-tieuchuan" data-toggle="modal">
                                         <i class="icon-lg la fa-eye text-dark"></i></button>
-                                    <a title="In kết quả" href="{{ url('/XetDuyetHoSoThiDua/InKetQua?id=' . $tt->id) }}"
+                                    <button title="Danh sách tiêu chuẩn" type="button"
+                                        onclick="getTieuChuan('{{ $tt->id }}','{{ $tt->madanhhieutd }}','{{ $tt->tendoituong }}')" class="btn btn-sm btn-clean btn-icon"
+                                        data-target="#modal-tieuchuan" data-toggle="modal">
+                                        <i class="icon-lg la fa-list text-dark"></i></button>
+                                    <a title="In kết quả" href="{{ url('/CumKhoiThiDua/KhenThuongHoSoKhenThuong/InKetQua?id=' . $tt->id) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
                                         <i class="icon-lg la fa-print text-dark"></i></a>
                                     <button title="Thay đổi" type="button"
@@ -172,20 +253,28 @@
                                 <th width="5%">Số chỉ<br>tiêu</th>
                                 <th width="5%">Đạt tiêu<br>chuẩn</th>
                                 <th width="15%">Hình thức<br>khen thưởng</th>
-                                <th style="text-align: center" width="10%">Thao tác</th>
+                                <th style="text-align: center" width="15%">Thao tác</th>
                             </tr>
                         </thead>
+                        <?php $i = 1; ?>
                         @foreach ($model_tapthe as $key => $tt)
                             <tr>
-                                <td style="text-align: center">{{ $key + 1 }}</td>
-                                <td>{{ $a_donvi[$tt->madonvi_kt] ?? '' }}</td>
+                                <td style="text-align: center">{{ $i++ }}</td>
+                                <td>{{ $tt->tentapthe }}</td>
                                 <td>{{ $a_danhhieu[$tt->madanhhieutd] ?? '' }}</td>
                                 <td class="text-center">{{ $tt->tongdieukien . '/' . $tt->tongtieuchuan }}</td>
-                                <td class="text-center">{{ $tt->ketqua }}</td>
+                                @if ($tt->ketqua == 0)
+                                    <td class="text-center"></td>
+                                @else
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-clean btn-icon">
+                                            <i class="icon-lg la fa-check text-success"></i></button>
+                                    </td>
+                                @endif
                                 <td>{{ $a_hinhthuckt[$tt->mahinhthuckt] ?? '' }}</td>
                                 <td style="text-align: center">
                                     <button title="Danh sách tiêu chuẩn" type="button"
-                                        onclick="getIdBack('{{ $tt->id }}')" class="btn btn-sm btn-clean btn-icon"
+                                        onclick="getTieuChuan('{{ $tt->id }}','{{ $tt->madanhhieutd }}','{{ $tt->tentapthe }}')" class="btn btn-sm btn-clean btn-icon"
                                         data-target="#modal-tieuchuan" data-toggle="modal">
                                         <i class="icon-lg la fa-eye text-dark"></i></button>
 

@@ -137,6 +137,12 @@
                                                 class="btn btn-sm btn-clean btn-icon">
                                                 <i class="icon-lg la fa-check-square text-dark"></i></a>
                                         @endif
+                                        @if ($tt->mahosokt != null)
+                                            <a title="Thông tin hồ sơ khen thưởng"
+                                                href="{{ url('/KhenThuongHoSoThiDua/Xem?mahosokt=' . $tt->mahosokt) }}"
+                                                class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                                <i class="icon-lg la fa-user-check text-dark"></i></a>
+                                        @endif
                                     @endif
 
                                     @if ($tt->trangthai == 'BTL')

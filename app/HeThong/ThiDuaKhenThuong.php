@@ -273,6 +273,15 @@ function getDonVi($capdo, $chucnang = null, $tenquyen = null)
     return App\Model\View\viewdiabandonvi::all();
 }
 
+function setArrayAll($array)
+{
+    $a_kq = ['ALL'=>'Tất cả'];
+    foreach($array as $k=>$v){
+        $a_kq[(string)$k] = $v;
+    }
+    return $a_kq;
+}
+
 function setChuyenHoSo($capdo, $hoso, $a_hoanthanh)
 {
     if ($capdo == 'H') {

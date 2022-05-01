@@ -14,11 +14,11 @@
     <!-- END PAGE LEVEL PLUGINS -->
     <script>
         jQuery(document).ready(function() {
-            TableManagedclass.init();
+            TableManagedclass.init();            
         });
 
         function getTieuChuan(id, madanhhieutd, tendt) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');            
             $('#tendoituong_tc').val(tendt);
             $('#madanhhieutd_tc').val(madanhhieutd).trigger('change');
 
@@ -95,13 +95,13 @@
 @stop
 
 @section('content')
-    {!! Form::model($model, ['method' => 'POST', 'url' => '/KhenThuongHoSoThiDua/LuuHoSo', 'class' => 'form', 'id' => 'frm_KhenThuong', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::model($model, ['method' => 'POST','url' => '/KhenThuongHoSoThiDua/LuuHoSo', 'class' => 'form', 'id' => 'frm_KhenThuong', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
     {{ Form::hidden('mahosokt', null) }}
     <!--begin::Card-->
     <div class="card card-custom wave wave-animate-slow wave-info" style="min-height: 600px">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
-                <h3 class="card-label text-uppercase">Danh sách khen thưởng theo phong trào thi đua</h3>
+                <h3 class="card-label text-uppercase">Thông tin hồ sơ khen thưởng theo phong trào thi đua</h3>
             </div>
             <div class="card-toolbar">
             </div>
@@ -179,10 +179,6 @@
                                     </td>
                                 @endif
                                 <td style="text-align: center">
-                                    <button title="Thay đổi trạng thái hồ sơ" type="button"
-                                        onclick="getHoSo('{{ $tt->mahosokt }}','{{ $tt->mahosotdkt }}', '{{ $a_donvi[$tt->madonvi_kt] ?? '' }}')"
-                                        class="btn btn-sm btn-clean btn-icon" data-target="#modal-hoso" data-toggle="modal">
-                                        <i class="icon-lg la fa-edit text-dark"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -223,17 +219,16 @@
                                 @endif
                                 <td>{{ $a_hinhthuckt[$tt->mahinhthuckt] ?? '' }}</td>
                                 <td class="text-center">
-                                    <button title="Xem chi tiết" type="button" onclick="getCaNhan('{{ $tt->id }}')"
-                                        class="btn btn-sm btn-clean btn-icon" data-target="#modal-canhan"
-                                        data-toggle="modal">
-                                        <i class="icon-lg la fa-eye text-dark"></i></button>
+                                    <button title="Xem chi tiết" type="button"
+                                        onclick="getCaNhan('{{ $tt->id }}')" class="btn btn-sm btn-clean btn-icon"
+                                        data-target="#modal-canhan" data-toggle="modal">
+                                        <i class="icon-lg la fa-eye text-dark"></i></button> 
 
                                     <button title="Danh sách tiêu chuẩn" type="button"
-                                        onclick="getTieuChuan('{{ $tt->id }}','{{ $tt->madanhhieutd }}','{{ $tt->tendoituong }}')"
-                                        class="btn btn-sm btn-clean btn-icon" data-target="#modal-tieuchuan"
-                                        data-toggle="modal">
+                                        onclick="getTieuChuan('{{ $tt->id }}','{{ $tt->madanhhieutd }}','{{ $tt->tendoituong }}')" class="btn btn-sm btn-clean btn-icon"
+                                        data-target="#modal-tieuchuan" data-toggle="modal">
                                         <i class="icon-lg la fa-list text-dark"></i></button>
-
+                                    
                                     <a title="In kết quả"
                                         href="{{ url('/KhenThuongHoSoThiDua/InKetQua?id=' . $tt->id) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">
@@ -298,7 +293,6 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label>Tờ trình: </label>
-                    {!! Form::file('totrinh', null, ['id' => 'totrinh', 'class' => 'form-control']) !!}
                     @if ($model->totrinh != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/totrinh/' . $model->totrinh) }}"
@@ -308,7 +302,6 @@
                 </div>
                 <div class="col-lg-6">
                     <label>Quyết định khen thưởng: </label>
-                    {!! Form::file('qdkt', null, ['id' => 'qdkt', 'class' => 'form-control']) !!}
                     @if ($model->qdkt != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/qdkt/' . $model->qdkt) }}" target="_blank">{{ $model->qdkt }}</a>
@@ -320,7 +313,6 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label>Biên bản: </label>
-                    {!! Form::file('bienban', null, ['id' => 'bienban', 'class' => 'form-control']) !!}
                     @if ($model->bienban != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/bienban/' . $model->bienban) }}"
@@ -330,7 +322,6 @@
                 </div>
                 <div class="col-lg-6">
                     <label>Tài liệu khác: </label>
-                    {!! Form::file('tailieukhac', null, ['id' => 'tailieukhac', 'class' => 'form-control']) !!}
                     @if ($model->tailieukhac != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/tailieukhac/' . $model->tailieukhac) }}"
@@ -342,13 +333,7 @@
 
         </div>
         <div class="card-footer">
-            <div class="row text-center">
-                <div class="col-lg-12">
-                    <a href="{{ url('/KhenThuongHoSoThiDua/ThongTin?madonvi=' . $model->madonvi) }}"
-                        class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
-                </div>
-            </div>
+            
         </div>
     </div>
     <!--end::Card-->
@@ -407,8 +392,7 @@
                         </div>
                         <div class="col-lg-1">
                             <label class="control-label">Chọn</label>
-                            <button type="button" class="btn btn-default" data-target="#modal-doituong"
-                                data-toggle="modal">
+                            <button type="button" class="btn btn-default" data-target="#modal-doituong" data-toggle="modal">
                                 <i class="fa fa-plus"></i></button>
                         </div>
                     </div>
