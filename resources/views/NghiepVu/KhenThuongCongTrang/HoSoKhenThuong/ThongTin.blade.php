@@ -30,7 +30,8 @@
                         '#madonvi').val() +
                     '&nam=' + $('#nam').val() + '&maloaihinhkt=' + $('#maloaihinhkt').val();
             });
-        });
+        });        
+    
     </script>
 @stop
 
@@ -42,7 +43,7 @@
                 <h3 class="card-label text-uppercase">Danh sách hồ sơ trình khen thưởng</h3>
             </div>
             <div class="card-toolbar">
-                @if (chkPhanQuyen('dshosokhenthuongcongtrong', 'modify'))
+                @if (chkPhanQuyen('dshosokhenthuongcongtrang', 'modify'))
                     <button type="button" class="btn btn-success btn-xs" data-target="#taohoso-modal" data-toggle="modal">
                         <i class="fa fa-plus"></i>&nbsp;Thêm mới</button>
                 @endif
@@ -124,7 +125,7 @@
 
                                         @if ($tt->trangthai == 'DKT')
                                             <a title="Thông tin hồ sơ khen thưởng"
-                                                href="{{ url('/KhenThuongCongTrang/KhenThuongHoSoKhenThuong/Xem?mahosokt=' . $tt->mahosokt) }}"
+                                                href="{{ url('/KhenThuongCongTrang/QuyetDinhKhenThuong/Xem?mahosokt=' . $tt->mahosokt) }}"
                                                 class="btn btn-sm btn-clean btn-icon" target="_blank">
                                                 <i class="icon-lg la fa-user-check text-dark"></i></a>
                                         @endif
@@ -132,8 +133,8 @@
 
                                     @if ($tt->trangthai == 'BTL')
                                         <button title="Lý do hồ sơ bị trả lại" type="button"
-                                            onclick="viewLiDo('{{ $tt->mahosotdkt }}','{{ $inputs['madonvi'] }}')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#lydo-show"
+                                            onclick="viewLyDo('{{ $tt->mahosotdkt }}','{{ $inputs['madonvi'] }}', '/KhenThuongCongTrang/HoSoKhenThuong/LayLyDo')"
+                                            class="btn btn-sm btn-clean btn-icon" data-target="#tralai-modal"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-archive text-info"></i></button>
                                     @endif
@@ -187,6 +188,9 @@
         </div>
     </div>
     {!! Form::close() !!}
+    
+    
+    @include('includes.modal.modal-lydo')
     @include('includes.modal.modal-delete')
     @include('includes.modal.modal_approve_hs')
 @stop

@@ -197,7 +197,7 @@
             </div>
         </div>
 
-        {!! Form::model($model, ['method' => 'POST', 'url' => '/KhenThuongCongTrang/HoSoKhenThuong/Sua', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::model($model, ['method' => 'POST', 'class' => 'form', 'id' => 'frm_ThayDoi', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
         {{ Form::hidden('madonvi', null, ['id' => 'madonvi']) }}
         {{ Form::hidden('mahosotdkt', null, ['id' => 'mahosotdkt']) }}
         <div class="card-body">
@@ -229,7 +229,6 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label>Báo cáo thành tích: </label>
-                    {!! Form::file('baocao', null, ['id' => 'baocao', 'class' => 'form-control']) !!}
                     @if ($model->baocao != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/baocao/' . $model->baocao) }}"
@@ -239,7 +238,6 @@
                 </div>
                 <div class="col-lg-6">
                     <label>Biên bản cuộc họp: </label>
-                    {!! Form::file('bienban', null, ['id' => 'bienban', 'class' => 'form-control']) !!}
                     @if ($model->bienban != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/bienban/' . $model->bienban) }}"
@@ -252,7 +250,6 @@
             <div class="form-group row">
                 <div class="col-lg-6">
                     <label>Tài liệu khác: </label>
-                    {!! Form::file('tailieukhac', null, ['id' => 'tailieukhac', 'class' => 'form-control']) !!}
                     @if ($model->tailieukhac != '')
                         <span class="form-control" style="border-style: none">
                             <a href="{{ url('/data/tailieukhac/' . $model->tailieukhac) }}"
@@ -261,17 +258,9 @@
                     @endif
                 </div>
             </div>
+
             <div class="separator separator-dashed my-5"></div>
-            <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng cá nhân</h4>
-
-            <div class="form-group row">
-                <div class="col-lg-12">
-                    <button type="button" data-target="#modal-create" data-toggle="modal" class="btn btn-success btn-xs"
-                        onclick="setCaNhan()">
-                        <i class="fa fa-plus"></i>&nbsp;Thêm</button>
-                </div>
-            </div>
-
+            <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng cá nhân</h4>          
             <div class="row" id="dskhenthuong">
                 <div class="col-md-12">
                     <table id="sample_3" class="table table-striped table-bordered table-hover">
@@ -310,12 +299,6 @@
                                             class="btn btn-sm btn-clean btn-icon" data-target="#modal-create"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-edit text-primary"></i></button>
-                                        <button title="Xóa" type="button"
-                                            onclick="delKhenThuong('{{ $tt->id }}','CANHAN')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#modal-delete-khenthuong"
-                                            data-toggle="modal">
-                                            <i class="icon-lg la fa-trash text-danger"></i></button>
-
                                     </td>
                                 </tr>
                             @endforeach
@@ -323,20 +306,9 @@
                     </table>
                 </div>
             </div>
+
             <div class="separator separator-dashed my-5"></div>
             <h4 class="text-dark font-weight-bold mb-10">Danh sách khen thưởng tập thể</h4>
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <button type="button" onclick="setTapThe()" data-target="#modal-create-tapthe" data-toggle="modal"
-                            class="btn btn-success btn-xs">
-                            <i class="fa fa-plus"></i>&nbsp;Thêm</button>
-                    </div>
-                </div>
-            </div>
-
             <div class="row" id="dskhenthuongtapthe">
                 <div class="col-md-12">
                     <table id="sample_4" class="table table-striped table-bordered table-hover">
@@ -369,12 +341,6 @@
                                             class="btn btn-sm btn-clean btn-icon" data-target="#modal-create-tapthe"
                                             data-toggle="modal">
                                             <i class="icon-lg la fa-edit text-primary"></i></button>
-                                        <button title="Xóa" type="button"
-                                            onclick="delKhenThuong('{{ $tt->id }}', 'TAPTHE')"
-                                            class="btn btn-sm btn-clean btn-icon" data-target="#modal-delete-khenthuong"
-                                            data-toggle="modal">
-                                            <i class="icon-lg la fa-trash text-danger"></i></button>
-
                                     </td>
                                 </tr>
                             @endforeach
@@ -385,12 +351,7 @@
         </div>
         <div class="card-footer">
             <div class="row text-center">
-                <div class="col-lg-12">
-                    <a href="{{ url('/KhenThuongCongTrang/HoSoKhenThuong/ThongTin?madonvi=' . $model->madonvi) }}"
-                        class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
-
-                </div>
+                
             </div>
         </div>
         {!! Form::close() !!}
@@ -398,7 +359,7 @@
     <!--end::Card-->
 
     {{-- Cá nhân --}}
-    {!! Form::open(['url' => '/KhenThuongCongTrang/HoSoKhenThuong/CaNhan', 'id' => 'frm_ThemCaNhan', 'class' => 'form', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['url' => '', 'id' => 'frm_ThemCaNhan', 'class' => 'form', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
     <input type="hidden" name="madoituong" id="madoituong" />
     <input type="hidden" name="mahosotdkt" value="{{ $model->mahosotdkt }}" />
     <div class="modal fade bs-modal-lg" id="modal-create" tabindex="-1" role="dialog" aria-hidden="true">
@@ -500,7 +461,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
-                    <button type="submit"  class="btn btn-primary">Hoàn thành</button>
                 </div>
                 <!-- /.modal-content -->
             </div>
@@ -510,7 +470,7 @@
     {!! Form::close() !!}
 
     {{-- tập thể --}}
-    {!! Form::open(['url' => '/KhenThuongCongTrang/HoSoKhenThuong/TapThe', 'id' => 'frm_ThemTapThe', 'class' => 'form', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['url' => '', 'id' => 'frm_ThemTapThe', 'class' => 'form', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
     <input type="hidden" name="mahosotdkt" value="{{ $model->mahosotdkt }}" />
     <input type="hidden" name="matapthe" />
     <div class="modal fade bs-modal-lg" id="modal-create-tapthe" tabindex="-1" role="dialog" aria-hidden="true">
@@ -548,7 +508,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">Thoát</button>
-                    <button type="submit" class="btn btn-primary" >Hoàn thành</button>
                 </div>
                 <!-- /.modal-content -->
             </div>

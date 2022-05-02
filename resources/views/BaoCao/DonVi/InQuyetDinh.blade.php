@@ -31,16 +31,19 @@
 
 @section('content')
     <!--begin::Card-->
-    {!! Form::model($model, ['method' => 'POST','url' => '/KhenThuongHoSoThiDua/InQuyetDinh', 'class' => 'form', 'id' => 'frm_KhenThuong', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
-    {{ Form::hidden('mahosokt', null) }}
-    {{ Form::hidden('thongtinquyetdinh', null) }}
-    <div class="card card-custom wave wave-animate-slow wave-primary" style="min-height: 600px">
+    
+    <div class="card card-custom" style="min-height: 600px">
         <div class="card-header flex-wrap border-0 pt-6 pb-0">
             <div class="card-title">
                 <h3 class="card-label text-uppercase">In quyết định123</h3>
             </div>
-            <div class="card-toolbar"></div>
+            <div class="card-toolbar">
+                <button onclick="setGiaTri()" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành123</button>
+            </div>
         </div>
+        {!! Form::model($model, ['method' => 'POST','url' => '/KhenThuongHoSoThiDua/InQuyetDinh', 'class' => 'form', 'id' => 'frm_KhenThuong', 'files' => true, 'enctype' => 'multipart/form-data']) !!}
+    {{ Form::hidden('mahosokt', null) }}
+    {{ Form::hidden('thongtinquyetdinh', null) }}
         <div class="card-body">
             <div class="form-group row">
                 <div class="col-lg-12">
@@ -60,8 +63,8 @@
                 <div class="col-lg-12">
                     <a href="{{ url('/KhenThuongHoSoThiDua/ThongTin?madonvi=' . $model->madonvi) }}"
                         class="btn btn-danger mr-5"><i class="fa fa-reply"></i>&nbsp;Quay lại</a>
-                    <button onclick="setGiaTri()" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành123</button>
-                    <button type="submit" onclick="setGiaTri()" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button>
+                    {{-- <button onclick="setGiaTri()" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành123</button> --}}
+                    {{-- <button type="submit" onclick="setGiaTri()" class="btn btn-primary"><i class="fa fa-check"></i>Hoàn thành</button> --}}
                 </div>
             </div>
         </div>
@@ -70,8 +73,9 @@
     {!! Form::close() !!}
     <script>
         function setGiaTri(){
-            var myHTML = document.getElementById('kt-ckeditor-1').innerHTML;
-            alert(myHTML);
+            var editorText = CKEDITOR.instances['kt-ckeditor-1'].getData();
+            //var myHTML = document.getElementById('kt-ckeditor-1').innerHTML;
+            alert(editorText);
             document.getElementById("thongtinquyetdinh").value = 123;
             
         }

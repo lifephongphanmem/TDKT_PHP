@@ -318,9 +318,12 @@ function setChuyenHoSo($capdo, $hoso, $a_hoanthanh)
     }
 }
 
+//Nhận và trả lại
 function setNhanHoSo($madonvi_nhan, $hoso, $a_hoanthanh)
 {
     if ($madonvi_nhan == $hoso->madonvi_nhan) {
+        if (isset($a_hoanthanh['madonvi_nhan']))
+            $hoso->madonvi_nhan = $a_hoanthanh['madonvi_nhan'];
         if (isset($a_hoanthanh['trangthai']))
             $hoso->trangthai = $a_hoanthanh['trangthai'];
         if (isset($a_hoanthanh['lydo']))
@@ -330,6 +333,8 @@ function setNhanHoSo($madonvi_nhan, $hoso, $a_hoanthanh)
     }
 
     if ($madonvi_nhan == $hoso->madonvi_nhan_h) {
+        if (isset($a_hoanthanh['madonvi_nhan']))
+            $hoso->madonvi_nhan_h = $a_hoanthanh['madonvi_nhan'];
         if (isset($a_hoanthanh['trangthai']))
             $hoso->trangthai_h = $a_hoanthanh['trangthai'];
         if (isset($a_hoanthanh['lydo']))
@@ -339,6 +344,8 @@ function setNhanHoSo($madonvi_nhan, $hoso, $a_hoanthanh)
     }
 
     if ($madonvi_nhan == $hoso->madonvi_nhan_t) {
+        if (isset($a_hoanthanh['madonvi_nhan']))
+            $hoso->madonvi_nhan_t = $a_hoanthanh['madonvi_nhan'];
         if (isset($a_hoanthanh['trangthai']))
             $hoso->trangthai_t = $a_hoanthanh['trangthai'];
         if (isset($a_hoanthanh['lydo']))
@@ -348,6 +355,8 @@ function setNhanHoSo($madonvi_nhan, $hoso, $a_hoanthanh)
     }
 
     if ($madonvi_nhan == $hoso->madonvi_nhan_tw) {
+        if (isset($a_hoanthanh['madonvi_nhan']))
+            $hoso->madonvi_nhan_tw = $a_hoanthanh['madonvi_nhan'];
         if (isset($a_hoanthanh['trangthai']))
             $hoso->trangthai_tw = $a_hoanthanh['trangthai'];
         if (isset($a_hoanthanh['lydo']))
@@ -360,6 +369,10 @@ function setNhanHoSo($madonvi_nhan, $hoso, $a_hoanthanh)
 function setTrangThaiHoSo($madonvi, $hoso, $a_hoanthanh)
 {
     if ($madonvi == $hoso->madonvi) {
+        if (isset($a_hoanthanh['madonvi']))
+            $hoso->madonvi = $a_hoanthanh['madonvi'];
+        if (isset($a_hoanthanh['madonvi_nhan']))
+            $hoso->madonvi_nhan = $a_hoanthanh['madonvi_nhan'];   
         if (isset($a_hoanthanh['trangthai']))
             $hoso->trangthai = $a_hoanthanh['trangthai'];
         if (isset($a_hoanthanh['lydo']))
@@ -369,6 +382,10 @@ function setTrangThaiHoSo($madonvi, $hoso, $a_hoanthanh)
     }
 
     if ($madonvi == $hoso->madonvi_h) {
+        if (isset($a_hoanthanh['madonvi']))
+            $hoso->madonvi_h = $a_hoanthanh['madonvi'];
+        if (isset($a_hoanthanh['madonvi_nhan']))
+            $hoso->madonvi_nhan_h = $a_hoanthanh['madonvi_nhan'];   
         if (isset($a_hoanthanh['trangthai']))
             $hoso->trangthai_h = $a_hoanthanh['trangthai'];
         if (isset($a_hoanthanh['lydo']))
@@ -378,6 +395,10 @@ function setTrangThaiHoSo($madonvi, $hoso, $a_hoanthanh)
     }
 
     if ($madonvi == $hoso->madonvi_t) {
+        if (isset($a_hoanthanh['madonvi']))
+            $hoso->madonvi_t = $a_hoanthanh['madonvi'];
+        if (isset($a_hoanthanh['madonvi_nhan']))
+            $hoso->madonvi_nhan_t = $a_hoanthanh['madonvi_nhan'];   
         if (isset($a_hoanthanh['trangthai']))
             $hoso->trangthai_t = $a_hoanthanh['trangthai'];
         if (isset($a_hoanthanh['lydo']))
@@ -387,6 +408,10 @@ function setTrangThaiHoSo($madonvi, $hoso, $a_hoanthanh)
     }
 
     if ($madonvi == $hoso->madonvi_tw) {
+        if (isset($a_hoanthanh['madonvi']))
+            $hoso->madonvi_tw = $a_hoanthanh['madonvi'];
+        if (isset($a_hoanthanh['madonvi_nhan']))
+            $hoso->madonvi_nhan_tw = $a_hoanthanh['madonvi_nhan'];   
         if (isset($a_hoanthanh['trangthai']))
             $hoso->trangthai_tw = $a_hoanthanh['trangthai'];
         if (isset($a_hoanthanh['lydo']))

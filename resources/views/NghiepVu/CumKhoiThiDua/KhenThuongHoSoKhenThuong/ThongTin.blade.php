@@ -173,7 +173,7 @@
         <!-- /.modal-dialog -->
     </div>
 
-    <!--Modal Nhận hồ sơ-->
+    <!--Modal tạo hồ sơ-->
     <div id="khenthuong-modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade kt_select2_modal">
         {!! Form::open(['url' => '/CumKhoiThiDua/KhenThuongHoSoKhenThuong/KhenThuong', 'id' => 'frm_khenthuong']) !!}
         <input type="hidden" name="mahosotdkt" />
