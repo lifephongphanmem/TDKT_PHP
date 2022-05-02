@@ -11,3 +11,4 @@ include('hethong.php');
 include('danhmuc.php');
 include('thiduakhenthuongcaccap.php');
 include('cumkhoi.php');
+include('timkiem.php');
