@@ -156,7 +156,11 @@
 												</li>												
 
 												@include("HeThong.main_subphongtraothidua")
+
+												@include("HeThong.main_subhoso")
 												
+												@include("HeThong.main_subxetduyethoso")
+
 												@include("HeThong.main_subkhenthuongcongtrang")
 
 												<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
@@ -207,6 +211,12 @@
 													<h4 class="menu-text">Quản lý Văn bản pháp lý, tài liệu</h4>
 													<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 												</li>
+
+												<li class="menu-section">
+													<h4 class="menu-text">Tra cứu, tìm kiếm</h4>
+													<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+												</li>
+												@include("HeThong.main_subtracuu")
 
 												<li class="menu-section">
 													<h4 class="menu-text">Thống kê, báo cáo</h4>

@@ -19,8 +19,8 @@ class CreateDshosokhenthuongKhenthuongTable extends Migration
             $table->string('mahosokt')->nullable();
             $table->string('mahosotdkt')->nullable();//lưu trữ sau cần dùng
             $table->string('madanhhieutd')->nullable();
-            $table->string('noidungkhenthuong')->nullable();//cá nhân, tập thể           
-            $table->string('phanloai')->nullable();//cá nhân, tập thể            
+            $table->string('noidungkhenthuong')->nullable();//cá nhân, tập thể
+            $table->string('phanloai')->nullable();//cá nhân, tập thể
             $table->string('madoituong')->nullable();
             $table->string('matapthe')->nullable();
             $table->string('madonvi')->nullable();//phục vụ lấy dữ liệu

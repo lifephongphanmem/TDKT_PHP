@@ -3,27 +3,27 @@
         <span class="svg-icon menu-icon">
             <i class="fas fa-folder"></i>
         </span>
-        <span class="menu-text font-weight-bold">Quản lý phong trào thi đua</span>
+        <span class="menu-text font-weight-bold">Quản lý hồ sơ</span>
         <i class="menu-arrow"></i>
     </a>
     <div class="menu-submenu">
         <i class="menu-arrow"></i>
         <ul class="menu-subnav">
-            
             <li class="menu-item" aria-haspopup="true">
-                <a href="{{ url('/PhongTraoThiDua/ThongTin') }}" class="menu-link">
+                <a href="{{ url('/DangKyDanhHieu/HoSo/ThongTin') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
-                    <span class="menu-text font-weight-bold">Danh sách phong trào thi đua</span>
+                    <span class="menu-text font-weight-bold">Hồ sơ đăng ký thi đua</span>
                 </a>
             </li>
+
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/HoSoThiDua/ThongTin') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                     </i>
-                    <span class="menu-text font-weight-bold">Tạo lập hồ sơ đăng ký thi đua</span>
+                    <span class="menu-text font-weight-bold">Hồ sơ đăng ký phong trào thi đua</span>
                 </a>
             </li>
 
