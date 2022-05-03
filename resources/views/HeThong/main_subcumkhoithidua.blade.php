@@ -17,7 +17,7 @@
                     <span class="menu-text font-weight-bold">Danh sách cụm khối</span>
                 </a>
             </li>
-            <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+            {{-- <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                 <a href="javascript:;" class="menu-link menu-toggle">
                     <i class="menu-bullet menu-bullet-dot">
                         <span></span>
@@ -62,7 +62,7 @@
                         </li>
                     </ul>
                 </div>
-            </li>
+            </li> --}}
 
             <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                 <a href="javascript:;" class="menu-link menu-toggle">

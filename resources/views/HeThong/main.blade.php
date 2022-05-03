@@ -161,38 +161,7 @@
 												
 												@include("HeThong.main_subxetduyethoso")
 
-												@include("HeThong.main_subkhenthuongcongtrang")
-
-												<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-													<a href="javascript:;" class="menu-link menu-toggle">
-														<span class="svg-icon menu-icon">
-															<i class="fas fa-folder"></i>
-														</span>
-														<span class="menu-text font-weight-bold">Khen thưởng đột xuất</span>
-														<i class="menu-arrow"></i>
-													</a>
-													<div class="menu-submenu">
-														<i class="menu-arrow"></i>
-														<ul class="menu-subnav">
-															<li class="menu-item" aria-haspopup="true">
-																<a href="{{url('/KhenThuongDotXuat/ThongTin')}}" class="menu-link">
-																	<i class="menu-bullet menu-bullet-dot">
-																		<span></span>
-																	</i>
-																	<span class="menu-text font-weight-bold">Tạo lập hồ sơ đề nghị khen thưởng</span>
-																</a>
-															</li>
-															<li class="menu-item" aria-haspopup="true">
-																<a href="{{url('/KhenThuongDotXuat/XetDuyet')}}" class="menu-link">
-																	<i class="menu-bullet menu-bullet-dot">
-																		<span></span>
-																	</i>
-																	<span class="menu-text font-weight-bold">Duyệt hồ sơ đề nghị khen thưởng</span>																
-																</a>
-															</li>															
-														</ul>
-													</div>
-												</li>
+												@include("HeThong.main_subkhenthuong")												
 
 												<li class="menu-section">
 													<h4 class="menu-text">Cụm khối thi đua</h4>
@@ -222,6 +191,7 @@
 													<h4 class="menu-text">Thống kê, báo cáo</h4>
 													<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
 												</li>
+												@include("HeThong.main_subbaocao")
 
 												@include('HeThong.main_subhethong')
 											</ul>

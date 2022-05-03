@@ -54,7 +54,7 @@
                                 <th width="5%">STT</th>
                                 <th>Tên đơn vị đăng ký</th>
                                 <th>Nội dung hồ sơ</th>
-                                <th>Trạng thái</th>
+                                <th>Đăng ký<br>thi đua</th>
                                 <th width="10%">Ngày nộp<br>hồ sơ</th>
                                 <th width="15%">Thao tác</th>
                             </tr>
@@ -65,9 +65,14 @@
                                 <td style="text-align: center">{{ $i++ }}</td>
                                 <td>{{ $a_donvi[$tt->madonvi] ?? '' }}</td>
                                 <td>{{ $tt->noidung }}</td>
-                                <td></td>
+                                <td class="text-center">
+                                    <a title="Thông tin hồ sơ đăng ký thi đua"
+                                        href="{{ url('/HoSoThiDua/Xem?mahosodk=' . $tt->mahosodk) }}"
+                                        class="btn btn-sm btn-clean btn-icon" target="_blank">
+                                        <i class="icon-lg la fa-eye text-dark"></i></a>
+                                </td>
                                 <td class="text-center">{{ getDayVn($tt->thoigian_hoso) }}</td>
-                                <td style="text-align: center">
+                                <td class="text-center">
                                     <a title="Thông tin hồ sơ"
                                         href="{{ url('/HoSoThiDua/Xem?mahosotdkt=' . $tt->mahosotdkt) }}"
                                         class="btn btn-sm btn-clean btn-icon" target="_blank">

@@ -17,7 +17,7 @@
                     <span class="menu-text font-weight-bold">Hồ sơ đăng ký thi đua</span>
                 </a>
             </li>
-
+            
             <li class="menu-item" aria-haspopup="true">
                 <a href="{{ url('/XetDuyetHoSoThiDua/ThongTin') }}" class="menu-link">
                     <i class="menu-bullet menu-bullet-dot">
@@ -27,6 +27,23 @@
                 </a>
             </li>
             
+            <li class="menu-item" aria-haspopup="true">
+                <a href="{{url('/KhenThuongCongTrang/XetDuyetHoSo/ThongTin')}}" class="menu-link">
+                    <i class="menu-bullet menu-bullet-dot">
+                        <span></span>
+                    </i>
+                    <span class="menu-text font-weight-bold">Hồ sơ đề nghị khen thưởng theo công trạng</span>																
+                </a>
+            </li>
+
+            <li class="menu-item" aria-haspopup="true">
+                <a href="{{url('/KhenThuongDotXuat/XetDuyet/ThongTin')}}" class="menu-link">
+                    <i class="menu-bullet menu-bullet-dot">
+                        <span></span>
+                    </i>
+                    <span class="menu-text font-weight-bold">Hồ sơ đề nghị khen thưởng đột xuất</span>																
+                </a>
+            </li>
         </ul>
     </div>
 </li>
