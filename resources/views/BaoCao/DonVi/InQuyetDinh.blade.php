@@ -53,26 +53,7 @@
                     <div class="card-body">
                         <div id="kt-ckeditor-1-toolbar"></div>
                         <div id="kt-ckeditor-1">
-                            {{$model->thongtinquyetdinh.toHtml()}}
-                            <h1>Quick and simple CKEditor 5 Integration</h1>
-                            <p>Here goes the
-                                <a href="#">Minitial content of the editor</a>. Lorem Ipsum is simply dummy text of the
-                                <em>printing and typesetting</em>industry.
-                            </p>
-                            <blockquote>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                an unknown printer took a galley of type and scrambled. Lorem Ipsum is simply dummy text of
-                                the printing and typesetting industry.</blockquote>
-                            <h3>Flexible &amp; Powerful</h3>
-                            <p>
-                                <strong>Lorem Ipsum has been the industry's</strong>standard dummy text ever since the
-                                1500s, when an unknown printer took a galley of type and scrambled.
-                            </p>
-                            <ul>
-                                <li>List item 1</li>
-                                <li>List item 2</li>
-                                <li>List item 3</li>
-                                <li>List item 4</li>
-                            </ul>
+                            {!! html_entity_decode($model->thongtinquyetdinh) !!}                            
                         </div>
                     </div>
                 </div>
